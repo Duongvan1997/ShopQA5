@@ -1,0 +1,46 @@
+.payment-form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.payment-form-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.payment-methods div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.payment-methods label {
+  flex-grow: 1;
+}
+
+.edit-method,
+.add-method {
+  margin-top: 20px;
+}
+
+.edit-method h3,
+.add-method h3 {
+  margin-bottom: 10px;
+}
+
+.edit-method input,
+.add-method input {
+  width: calc(100% - 100px);
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.edit-method button,
+.add-method button {
+  padding: 5px 10px;
+}
