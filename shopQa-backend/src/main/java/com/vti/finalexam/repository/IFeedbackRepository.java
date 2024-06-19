@@ -1,6 +1,7 @@
 package com.vti.finalexam.repository;
 
 import com.vti.finalexam.entity.Feedback;
+import com.vti.finalexam.entity.Order;
 import com.vti.finalexam.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,11 +13,14 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface IFeedbackRepository extends JpaRepository<Feedback, Integer> {
 
     public Feedback getFeedbackById(int id);
+
+
 
 
     public void deleteById(int id);
@@ -27,4 +31,6 @@ public interface IFeedbackRepository extends JpaRepository<Feedback, Integer> {
     public void deleteByIds(@Param("ids") List<Integer> ids);
 
     <T> Page<Feedback> findAll(Specification<T> where, Pageable pageable);
+    ArrayList<Feedback> findAll();
+
 }

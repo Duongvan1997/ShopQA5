@@ -1,5 +1,7 @@
 package com.vti.finalexam.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -37,20 +39,22 @@ public class Feedback implements Serializable {
     }
     @ManyToOne
     @JoinColumn(name = "customerId", nullable = true)
-    private Customer account_customer;
+
+    private Account customer;
 
     @ManyToOne
     @JoinColumn(name = "productId", nullable = true)
+
     private Product product_feedback;
 
     public Feedback() {
     }
 
-    public Feedback(String comment, Date feedback_date, RATING rating, Customer account_customer, Product product_feedback) {
+    public Feedback(String comment, Date feedback_date, RATING rating, Customer customer, Product product_feedback) {
         this.comment = comment;
         this.feedback_date = feedback_date;
         this.rating = rating;
-        this.account_customer = account_customer;
+        this.customer= customer;
         this.product_feedback = product_feedback;
     }
 
@@ -87,11 +91,11 @@ public class Feedback implements Serializable {
     }
 
     public Account getAccount_customer() {
-        return account_customer;
+        return customer;
     }
 
-    public void setAccount_customer(Customer account_customer) {
-        this.account_customer = account_customer;
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public Product getProduct_feedback() {
