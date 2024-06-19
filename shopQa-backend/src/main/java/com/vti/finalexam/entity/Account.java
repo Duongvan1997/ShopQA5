@@ -1,12 +1,15 @@
 package com.vti.finalexam.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.TemporalType;
 
 
@@ -88,6 +91,9 @@ public class Account implements Serializable {
     @CreationTimestamp
     private Date createdDate;
 
+    @OneToMany(mappedBy = "customerId")
+    private List<Feedback> feedbacks;
+
 
 
     @PrePersist
@@ -102,9 +108,7 @@ public class Account implements Serializable {
         return address;
     }
 
-//    public void setCreatedDate(Date createdDate) {
-//        this.createdDate = createdDate;
-//    }
+
 
     public void setAddress(String address) {
         this.address = address;

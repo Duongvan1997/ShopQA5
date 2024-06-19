@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -22,17 +23,27 @@ public class FeedbackController {
    @Autowired
    private IFeedbackService service;
    @GetMapping
-   public ResponseEntity<?> getAllFeedbacks(Pageable pageable, @RequestParam String search){
+   public ResponseEntity<?> getAllFeedbacks(Pageable pageable, @RequestParam(required = false) String search){
             Page<Feedback> entitiesPage = service.getAllFeedbacks(pageable, search);
             Page<FeedbackDTO> dtoPage = entitiesPage.map(new Function<Feedback, FeedbackDTO>() {
                 @Override
                 public FeedbackDTO apply(Feedback feedback) {
-                    FeedbackDTO dto = new FeedbackDTO(feedback.getId(), feedback.getComment(), feedback.getFeedback_date(), feedback.getRating(), feedback.getAccount_customer().getId(), feedback.getProduct_feedback().getId());
+                    FeedbackDTO dto = new FeedbackDTO(feedback.getId(),
+                                                    feedback.getComment(),
+                                                    feedback.getFeedback_date(),
+                                                    feedback.getRating(),
+                                                    feedback.getAccount_customer().getId(),
+                                                    feedback.getProduct_feedback().getId());
                     return dto;
                 }
             });
             return new ResponseEntity<>(dtoPage, HttpStatus.OK);
    }
+        @GetMapping(value = ("/getAll"))
+        public  ArrayList<Feedback> getFeedback(){
+               return service.getAll();
+        }
+
 
 
         @PostMapping(value = "/customer")
