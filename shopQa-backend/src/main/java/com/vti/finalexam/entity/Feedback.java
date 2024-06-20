@@ -106,6 +106,5 @@ public class Feedback implements Serializable {
     }
 
 
-
-
-}
+    public void setCustomer(Account customer) {  this.customerId = customer;}
+    }
