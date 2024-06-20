@@ -40,7 +40,7 @@ public class Product implements Serializable {
     @JoinColumn(name = "type_id", nullable = true)
     private ProductType typeProduct;
 
-    @OneToMany(mappedBy = "product_feedback")
+    @OneToMany(mappedBy = "id")
     private List<Feedback> feedbacks;
 
     @OneToMany(mappedBy = "product_detail")
