@@ -35,6 +35,7 @@ import UpdateProductDetail from "./ProductDetailManager/UpdateProductDetailById"
 import MangerOrder from "./Order/ManagerOrder";
 import CheckOrder from "./Order/CheckOrder";
 import OrderComfirmation from "../admin/Order/OrderComfirmation";
+import FeedbackManagement from "./FeedbackManagement/FeedbackManagetment";
 const { Sider, Content } = Layout;
 
 function AdminLayout() {
@@ -72,6 +73,10 @@ function AdminLayout() {
               <Menu.SubMenu key="UM" icon={<UserOutlined />} title="Người dùng">
                 <Menu.Item key="users" icon={<BarsOutlined />}>
                   <Link to="users">Quản lý người dùng</Link>
+                </Menu.Item>
+
+                <Menu.Item key="feedback-management" icon={<BarsOutlined />}>
+                  <Link to="feedback-management">Quản lý feedback</Link>
                 </Menu.Item>
                 <Menu.Item key="users/add" icon={<PlusOutlined />}>
                   <Link to="users/add">Thêm người dùng</Link>
@@ -144,6 +149,10 @@ function AdminLayout() {
                 <Route path="/orders" element={<MangerOrder />}></Route>
                 <Route path="/orders-comfirm" element={<OrderComfirmation />} />
                 <Route path="/payment" element={<PaymentMethod />} />
+                <Route
+                  path="/feedback-management"
+                  element={<FeedbackManagement />}
+                />
 
                 <Route
                   path="/orders/checkOrder/:id"

@@ -40,11 +40,13 @@ public class Product implements Serializable {
     @JoinColumn(name = "type_id", nullable = true)
     private ProductType typeProduct;
 
-    @OneToMany(mappedBy = "product_feedback")
+    @OneToMany(mappedBy = "id")
     private List<Feedback> feedbacks;
 
     @OneToMany(mappedBy = "product_detail")
     private List<ProductDetail> productDetails;
+
+
     @Column(name = "`gender_type`")
     @Enumerated(EnumType.STRING)
     private GenderType gender_type;
