@@ -40,6 +40,7 @@ public class Feedback implements Serializable {
     }
     @ManyToOne
     @JoinColumn(name = "customerId", nullable = true)
+
     private Account customerId;
 
     @ManyToOne
@@ -54,6 +55,7 @@ public class Feedback implements Serializable {
         this.comment = comment;
         this.feedback_date = feedback_date;
         this.rating = rating;
+        this.customerId= customer;
         this.customerId = customerId;
         this.product_feedback = product_feedback;
     }
@@ -94,6 +96,9 @@ public class Feedback implements Serializable {
         return customerId;
     }
 
+    public void setCustomer(Customer customer) {
+        this.customerId = customer;
+    }
     public void setAccount_customer(Customer account_customer) {
         this.customerId = customerId;
     }
