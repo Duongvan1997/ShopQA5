@@ -93,7 +93,7 @@ public class Feedback implements Serializable {
         return customerId;
     }
 
-    public void setAccount_customer(Account account_customer) {
+    public void setAccount_customer(Customer account_customer) {
         this.customerId = customerId;
     }
 
@@ -106,5 +106,6 @@ public class Feedback implements Serializable {
     }
 
 
-    public void setCustomer(Account customer) {  this.customerId = customer;}
-    }
+
+
+}
