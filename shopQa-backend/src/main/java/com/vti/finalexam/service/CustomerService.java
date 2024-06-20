@@ -58,14 +58,14 @@ public class CustomerService implements ICustomerService{
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date birthday = dateFormat.parse(accountFormCreating.getBirthday());
         String password = new BCryptPasswordEncoder().encode((CharSequence) accountFormCreating.getPassword());
-        Customer customer = new Customer(accountFormCreating.getUsername(), accountFormCreating.getPhone(), password, accountFormCreating.getFirstName(), accountFormCreating.getLastName(), accountFormCreating.getAddress(), birthday,accountFormCreating.getEmail(), Account.Role.CUSTOMER,accountFormCreating.getGender(), createdate);
+        Account customer = new Account(accountFormCreating.getUsername(), accountFormCreating.getPhone(), password, accountFormCreating.getFirstName(), accountFormCreating.getLastName(), accountFormCreating.getAddress(), birthday,accountFormCreating.getEmail(), Account.Role.CUSTOMER,accountFormCreating.getGender(), createdate);
         Date creating_date = new Date();
         Order order = new Order(
                 creating_date,
                 Order.OderStatus.ADDED_TO_CARD,
                 customer
         );
-        repository.save(customer);
+        accountRepository.save(customer);
         oderRepository.save(order);
 
     }
