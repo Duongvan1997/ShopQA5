@@ -45,6 +45,8 @@ public class Product implements Serializable {
 
     @OneToMany(mappedBy = "product_detail")
     private List<ProductDetail> productDetails;
+
+
     @Column(name = "`gender_type`")
     @Enumerated(EnumType.STRING)
     private GenderType gender_type;

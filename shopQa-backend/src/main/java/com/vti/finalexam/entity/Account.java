@@ -1,5 +1,6 @@
 package com.vti.finalexam.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
@@ -91,8 +92,7 @@ public class Account implements Serializable {
     @CreationTimestamp
     private Date createdDate;
 
-    @OneToMany(mappedBy = "customerId")
-    private List<Feedback> feedbacks;
+
 
 
 

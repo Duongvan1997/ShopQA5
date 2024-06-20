@@ -1,6 +1,7 @@
 package com.vti.finalexam.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -50,11 +51,12 @@ public class Feedback implements Serializable {
     public Feedback() {
     }
 
-    public Feedback(String comment, Date feedback_date, RATING rating, Customer customer, Product product_feedback) {
+    public Feedback(String comment, Date feedback_date, RATING rating, Customer customerId, Product product_feedback) {
         this.comment = comment;
         this.feedback_date = feedback_date;
         this.rating = rating;
         this.customerId= customer;
+        this.customerId = customerId;
         this.product_feedback = product_feedback;
     }
 
@@ -96,6 +98,9 @@ public class Feedback implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customerId = customer;
+    }
+    public void setAccount_customer(Customer account_customer) {
+        this.customerId = customerId;
     }
 
     public Product getProduct_feedback() {

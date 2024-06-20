@@ -12,6 +12,7 @@ public class Customer extends Account{
     @Getter
     @OneToMany(mappedBy = "customer")
     private List<Order> orders_buy;
+
     @OneToMany(mappedBy = "customerId")
     private List<Feedback> feedbacks;
 
