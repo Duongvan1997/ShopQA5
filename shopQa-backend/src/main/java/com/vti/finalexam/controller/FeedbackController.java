@@ -12,8 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "api/v1/feedbacks")
@@ -40,8 +42,12 @@ public class FeedbackController {
             return new ResponseEntity<>(dtoPage, HttpStatus.OK);
    }
         @GetMapping(value = ("/getAll"))
-        public  ArrayList<Feedback> getFeedback(){
-               return service.getAll();
+        public ResponseEntity<?> getFeedback(){
+            ArrayList<Feedback> listResponse = service.getAll();
+            List<FeedbackDTO> listRespo = listResponse.stream()
+                    .map(e -> new FeedbackDTO(e))
+                    .collect(Collectors.toList());
+            return new ResponseEntity<>(listRespo, HttpStatus.OK);
         }
 
 

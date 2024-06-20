@@ -30,7 +30,7 @@ public class OrderController {
     private IOrderItemService orderItemService;
 
     @Autowired
-    private ICustomerService customerService;
+    private IAccountService customerService;
 
     @Autowired
     private IProductDetailService productDetailService;
@@ -191,7 +191,7 @@ public class OrderController {
     }
     @GetMapping(value = "/getCartByCustomer/{id}")
     public ResponseEntity<?> getCartByCustomerId(@PathVariable(name = "id") int id){
-        Customer customer = customerService.getCustomerById(id);
+        Account customer = customerService.getAccountById(id);
         List<Order> orders = service.getOrderByCustomer(id);
         int cartId = 0;
         for (Order order: orders){
@@ -221,7 +221,7 @@ public class OrderController {
 
     @GetMapping(value = "/status/{id}")
     public ResponseEntity<?> getOrderByCustomerId(@PathVariable(name = "id") int id){
-        Customer customer = customerService.getCustomerById(id);
+        Account customer = customerService.getAccountById(id);
         List<Order> orders = service.getOrderByCustomer(id);
         ArrayList<CustomerOrderDTO> customerOrderDTOS = new ArrayList<>();
         for(Order order : orders){

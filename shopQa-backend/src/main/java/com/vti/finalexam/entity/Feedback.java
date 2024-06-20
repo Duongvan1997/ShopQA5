@@ -38,20 +38,19 @@ public class Feedback implements Serializable {
         EXCELLENT;
 
     }
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "customerId", nullable = true)
 
     private Account customerId;
 
     @ManyToOne
-    @JoinColumn(name = "id", nullable = true)
-
+    @JoinColumn(name = "productId", nullable = true)
     private Product product_feedback;
 
     public Feedback() {
     }
 
-    public Feedback(String comment, Date feedback_date, RATING rating, Customer customerId, Product product_feedback) {
+    public Feedback(String comment, Date feedback_date, RATING rating, Account customerId, Product product_feedback) {
         this.comment = comment;
         this.feedback_date = feedback_date;
         this.rating = rating;

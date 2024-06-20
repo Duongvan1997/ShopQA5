@@ -33,6 +33,16 @@ public class FeedbackDTO {
         this.product_id = product_id;
     }
 
+    public FeedbackDTO(Feedback feedback) {
+        this.id =feedback.getId();
+        this.comment = feedback.getComment();
+        this.feedback_date = feedback.getFeedback_date();
+        this.rating = feedback.getRating();
+        this.customer_id = feedback.getAccount_customer().getId();
+        if(feedback.getProduct_feedback() != null)
+            this.product_id = feedback.getProduct_feedback().getId();
+    }
+
     public String getComment() {
         return comment;
     }

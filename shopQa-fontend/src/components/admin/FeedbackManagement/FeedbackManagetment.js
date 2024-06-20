@@ -26,11 +26,11 @@ function FeedbackManagement() {
         const feedbacksFormatted = response.data.map((feedback) => {
           return {
             feedback_id: feedback.id,
-            customer_id: feedback.customerId,
-            product_id: feedback.productId,
+            customer_id: feedback.customer_id,
+            product_id: feedback.product_id,
             rating: feedback.rating,
             comment: feedback.comment,
-            feedback_date: feedback.date,
+            feedback_date: feedback.feedback_date,
           };
         });
         console.log("response :", response.data);
