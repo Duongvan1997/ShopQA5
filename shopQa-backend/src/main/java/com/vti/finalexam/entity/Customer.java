@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 @DiscriminatorValue("CUSTOMER")
 public class Customer extends Account{
-
+@Getter
     @OneToMany(mappedBy = "customer")
     private List<Order> orders_buy;
 
