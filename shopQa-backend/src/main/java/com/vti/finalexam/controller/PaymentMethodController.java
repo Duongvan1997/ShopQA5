@@ -59,9 +59,27 @@ public class PaymentMethodController {
 
     @PutMapping(value = "update/{id}")
     public ResponseEntity<?> updatePaymentMethod(@PathVariable(name = "id") int id, @RequestBody(required = false) PaymentMethodCreating formCreating){
+
+
+                    if (formCreating.getDescription_payment() == null) {
+                        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                    }
         service.updatePaymentMethod(id, formCreating);
         return new ResponseEntity<String>("Update successfull!", HttpStatus.OK);
     }
+
+
+    //  @PutMapping("/update/{id}")
+    //    public ResponseEntity<PaymentMethod> updatePaymentMethod(
+    //        @PathVariable Long id,
+    //        @RequestBody PaymentMethod paymentMethod
+    //    ) {
+    //        if (paymentMethod.getDescriptionPayment() == null) {
+    //            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    //        }
+    //        PaymentMethod updatedPaymentMethod = paymentMethodService.updatePaymentMethod(id, paymentMethod);
+    //        return new ResponseEntity<>(updatedPaymentMethod, HttpStatus.OK);
+    //    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getPaymentMethodById(@PathVariable(name = "id") int id){
