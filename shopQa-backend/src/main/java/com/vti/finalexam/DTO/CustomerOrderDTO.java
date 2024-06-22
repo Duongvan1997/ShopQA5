@@ -2,13 +2,14 @@ package com.vti.finalexam.DTO;
 
 import com.vti.finalexam.entity.Order;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class CustomerOrderDTO {
     private int idOrder;
     private Order.OderStatus oderStatus;
     private String checkFeedback;
-    private Date orderDate;
+    private LocalDate orderDate;
     private String paymentName;
     private int totalQuantity;
     private float totalAmount;
@@ -29,7 +30,7 @@ public class CustomerOrderDTO {
         this.checkFeedback = checkFeedback;
     }
 
-    public CustomerOrderDTO(int idOrder, Order.OderStatus oderStatus, String checkFeedback, Date orderDate, String paymentName, int totalQuantity, float totalAmount, String img_url, String color, int subQuantity, String productName) {
+    public CustomerOrderDTO(int idOrder, Order.OderStatus oderStatus, String checkFeedback, LocalDate orderDate, String paymentName, int totalQuantity, float totalAmount, String img_url, String color, int subQuantity, String productName) {
         this.idOrder = idOrder;
         this.oderStatus = oderStatus;
         this.checkFeedback = checkFeedback;
@@ -55,11 +56,11 @@ public class CustomerOrderDTO {
         this.oderStatus = oderStatus;
     }
 
-    public Date getOrderDate() {
+    public LocalDate getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(LocalDate orderDate) {
         this.orderDate = orderDate;
     }
 

@@ -5,6 +5,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -24,13 +25,15 @@ public class Sale implements Serializable {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "startSale", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date start_date;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @CreationTimestamp
+    private LocalDate start_date;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "endSale", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date end_date;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @CreationTimestamp
+    private LocalDate end_date;
 
     @OneToMany(mappedBy = "sale")
     private List<Product> products;
@@ -62,19 +65,19 @@ public class Sale implements Serializable {
         this.percent_sale = percent_sale;
     }
 
-    public Date getStart_date() {
+    public LocalDate getStart_date() {
         return start_date;
     }
 
-    public void setStart_date(Date start_date) {
+    public void setStart_date(LocalDate start_date) {
         this.start_date = start_date;
     }
 
-    public Date getEnd_date() {
+    public LocalDate getEnd_date() {
         return end_date;
     }
 
-    public void setEnd_date(Date end_date) {
+    public void setEnd_date(LocalDate end_date) {
         this.end_date = end_date;
     }
 
@@ -86,7 +89,7 @@ public class Sale implements Serializable {
         this.products = products;
     }
 
-    public Sale(String sale_info, float percent_sale, Date start_date, Date end_date) {
+    public Sale(String sale_info, float percent_sale, LocalDate start_date, LocalDate end_date) {
         this.sale_info = sale_info;
         this.percent_sale = percent_sale;
         this.start_date = start_date;

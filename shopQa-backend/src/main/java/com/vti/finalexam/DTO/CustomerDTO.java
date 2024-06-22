@@ -3,6 +3,7 @@ package com.vti.finalexam.DTO;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.vti.finalexam.entity.Account;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class CustomerDTO {
@@ -10,11 +11,11 @@ public class CustomerDTO {
     private String username;
     private String address;
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date birthday;
+    private LocalDate birthday;
     private String email;
 
     private Account.Gender gender;
-    private Date createdDate;
+    private LocalDate createdDate;
 
     public int getId() {
         return id;
@@ -24,7 +25,7 @@ public class CustomerDTO {
         this.id = id;
     }
 
-    public CustomerDTO(int id, String username, String address, Date birthday, String email, Account.Gender gender, Date createdDate) {
+    public CustomerDTO(int id, String username, String address, LocalDate birthday, String email, Account.Gender gender, LocalDate createdDate) {
         this.id = id;
         this.username = username;
         this.address = address;
@@ -52,11 +53,11 @@ public class CustomerDTO {
         this.address = address;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -78,11 +79,11 @@ public class CustomerDTO {
         this.gender = gender;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 }

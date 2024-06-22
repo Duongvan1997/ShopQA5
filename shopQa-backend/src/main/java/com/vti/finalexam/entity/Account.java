@@ -30,7 +30,7 @@ public class Account implements Serializable {
     @Column(name = "phone", length = 20, nullable = false)
     private String phone;
 
-    public Account(String username, String phone, String password, String firstName, String lastName, String address, Date birthday, String email, Role role, Gender gender, Date createdDate) {
+    public Account(String username, String phone, String password, String firstName, String lastName, String address, LocalDate birthday, String email, Role role, Gender gender, LocalDate createdDate) {
 
         this.username = username;
         this.phone = phone;
@@ -66,8 +66,9 @@ public class Account implements Serializable {
     private String address;
 
     @Column(name = "birthday", updatable = true)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date birthday;
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @CreationTimestamp
+    private LocalDate birthday;
 
     @Column(name = "email", length = 50, nullable = false, updatable = false)
     private String email;
@@ -88,9 +89,9 @@ public class Account implements Serializable {
 
 
     @Column(name = "create_date", updatable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+//    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date createdDate;
+    private LocalDate createdDate;
 
 
 
@@ -114,11 +115,11 @@ public class Account implements Serializable {
         this.address = address;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -131,7 +132,7 @@ public class Account implements Serializable {
     }
 
 
-    public Account(int id, String username, String password, String firstName, String lastName, String address, Date birthday, String email, Role role, Gender gender, Date createdDate) {
+    public Account(int id, String username, String password, String firstName, String lastName, String address, LocalDate birthday, String email, Role role, Gender gender, LocalDate createdDate) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -156,11 +157,11 @@ public class Account implements Serializable {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 

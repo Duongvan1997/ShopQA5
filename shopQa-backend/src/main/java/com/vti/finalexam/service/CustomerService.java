@@ -54,12 +54,14 @@ public class CustomerService implements ICustomerService{
 
     @Override
     public void createCustomer(AccountFormCreating accountFormCreating) throws ParseException {
-        Date createdate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date birthday = dateFormat.parse(accountFormCreating.getBirthday());
+        LocalDate createdate = LocalDate.now();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date birthday = dateFormat.parse(accountFormCreating.getBirthday());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthday =  LocalDate.parse(accountFormCreating.getBirthday(), formatter);
         String password = new BCryptPasswordEncoder().encode((CharSequence) accountFormCreating.getPassword());
         Account customer = new Account(accountFormCreating.getUsername(), accountFormCreating.getPhone(), password, accountFormCreating.getFirstName(), accountFormCreating.getLastName(), accountFormCreating.getAddress(), birthday,accountFormCreating.getEmail(), Account.Role.CUSTOMER,accountFormCreating.getGender(), createdate);
-        Date creating_date = new Date();
+        LocalDate creating_date = LocalDate.now();
         Order order = new Order(
                 creating_date,
                 Order.OderStatus.ADDED_TO_CARD,
@@ -73,8 +75,9 @@ public class CustomerService implements ICustomerService{
     @Override
     public void updateCustomer(int id, AccountFormUpdating accountFormUpdating) throws ParseException {
         Customer customer = repository.getCustomerById(id);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date birthday = dateFormat.parse(accountFormUpdating.getBirthday());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthday =  LocalDate.parse(accountFormUpdating.getBirthday(), formatter);
         String password = new BCryptPasswordEncoder().encode((CharSequence) accountFormUpdating.getPassword());
         customer.setPassword(password);
         customer.setFirstName(accountFormUpdating.getFirstName());

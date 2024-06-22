@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -21,9 +22,9 @@ public class Feedback implements Serializable {
     private String comment;
 
     @Column(name = "feedbackDate", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
+//    @Temporal(TemporalType.TIMESTAMP)
     @CreationTimestamp
-    private Date feedback_date;
+    private LocalDate feedback_date;
 
     @Column(name = "rating", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -50,7 +51,7 @@ public class Feedback implements Serializable {
     public Feedback() {
     }
 
-    public Feedback(String comment, Date feedback_date, RATING rating, Account customerId, Product product_feedback) {
+    public Feedback(String comment, LocalDate feedback_date, RATING rating, Account customerId, Product product_feedback) {
         this.comment = comment;
         this.feedback_date = feedback_date;
         this.rating = rating;
@@ -75,11 +76,11 @@ public class Feedback implements Serializable {
         this.comment = comment;
     }
 
-    public Date getFeedback_date() {
+    public LocalDate getFeedback_date() {
         return feedback_date;
     }
 
-    public void setFeedback_date(Date feedback_date) {
+    public void setFeedback_date(LocalDate feedback_date) {
         this.feedback_date = feedback_date;
     }
 

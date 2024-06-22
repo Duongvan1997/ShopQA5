@@ -58,7 +58,6 @@ public class Product implements Serializable {
     public Product(String name, String description, String image_url, float price, ProductType typeProduct) {
         this.name = name;
         this.description = description;
-
         this.image_url = image_url;
         this.price = price;
         this.typeProduct = typeProduct;
