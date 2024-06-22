@@ -1,46 +1,140 @@
-.payment-form-container {
-  max-width: 500px;
+.payment-method-list {
+  max-width: 600px;
   margin: 0 auto;
   padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
-.payment-form-container h2 {
+.payment-method-list h2 {
   text-align: center;
   margin-bottom: 20px;
 }
 
-.payment-methods div {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.payment-method-list ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.payment-method-list li {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.payment-methods label {
-  flex-grow: 1;
+.payment-method-list li:hover {
+  background-color: #f9f9f9;
 }
 
-.edit-method,
+.payment-method-list li span {
+  display: block;
+  font-weight: bold;
+}
+
+.payment-method-list li p {
+  margin: 5px 0 0;
+  color: #666;
+}
+.payment-method {
+  display: flex;
+  flex-direction: row;
+}
+
+.payment-method-list .edit-icon,
+.payment-method-list .delete-icon {
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 .add-method {
   margin-top: 20px;
 }
 
-.edit-method h3,
 .add-method h3 {
   margin-bottom: 10px;
 }
 
-.edit-method input,
-.add-method input {
-  width: calc(100% - 100px);
-  padding: 5px;
-  margin-right: 10px;
+.add-method-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
-.edit-method button,
-.add-method button {
+.add-method-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.add-method-container button {
+  padding: 10px 15px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-method-container button:hover {
+  background-color: #0056b3;
+}
+
+.save-button {
   padding: 5px 10px;
+  border: none;
+  background-color: #28a745;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.save-button:hover {
+  background-color: #218838;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
+
+.edit-method {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.delete-confirm-dialog {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.delete-confirm-dialog button {
+  margin: 5px;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-confirm-dialog button:first-child {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.delete-confirm-dialog button:last-child {
+  background-color: #6c757d;
+  color: #fff;
 }

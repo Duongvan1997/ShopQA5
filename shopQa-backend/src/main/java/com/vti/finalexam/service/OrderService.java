@@ -26,7 +26,7 @@ public class OrderService implements IOrderService{
     @Autowired
     private IPaymentMethodRepository paymentMethodRepository;
     @Autowired
-    private ICustomerRepository customerRepository;
+    private IAccountRepository customerRepository;
     @Autowired
     private IEmployeeRepository employeeRepository;
 
@@ -51,7 +51,7 @@ public class OrderService implements IOrderService{
 
     @Override
     public void customer_createOder(OrderCustomerCreatForm formCreating) {
-        Customer customer = customerRepository.getCustomerById(formCreating.getCustomer_id());
+        Account customer = customerRepository.getAccountById(formCreating.getCustomer_id());
         PaymentMethod paymentMethod = paymentMethodRepository.getPaymentMethodById(formCreating.getPayment_method_id());
         Date creating_date = new Date();
         float total_amout = 0;
@@ -82,7 +82,7 @@ public class OrderService implements IOrderService{
 
     @Override
     public void createCart(OrderFormCreating formCreating) {
-        Customer customer = customerRepository.getCustomerById(formCreating.getCustomer_id());
+        Account customer = customerRepository.getAccountById(formCreating.getCustomer_id());
         Date creating_date = new Date();
         Order order = new Order(
                 customer.getAddress(),
@@ -117,7 +117,7 @@ public class OrderService implements IOrderService{
 
     @Override
     public List<Order> getOrderByCustomer(int id) {
-        Customer customer = customerRepository.getCustomerById(id);
+        Account customer = customerRepository.getAccountById(id);
         return repository.getOrderByCustomer(customer);
     }
 

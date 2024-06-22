@@ -37,7 +37,7 @@ public class Order implements Serializable {
     public Order(Date oderDate, int customerId, PaymentMethod paymentMethod) {
     }
 
-    public Order(float total_amount, String address, String phone, Date oder_date, OderStatus oderStatus, Customer customer, PaymentMethod payment_method) {
+    public Order(float total_amount, String address, String phone, Date oder_date, OderStatus oderStatus, Account customer, PaymentMethod payment_method) {
         this.total_amount = total_amount;
         this.address = address;
         this.phone = phone;
@@ -47,7 +47,7 @@ public class Order implements Serializable {
         this.payment_method = payment_method;
     }
 
-    public Order(String address, String phone, Date oder_date, OderStatus oderStatus, Customer customer, PaymentMethod payment_method) {
+    public Order(String address, String phone, Date oder_date, OderStatus oderStatus, Account customer, PaymentMethod payment_method) {
         this.address = address;
         this.phone = phone;
         this.oder_date = oder_date;
@@ -56,7 +56,7 @@ public class Order implements Serializable {
         this.payment_method = payment_method;
     }
 
-    public Order(String address, String phone, Date oder_date, OderStatus oderStatus, Customer customer) {
+    public Order(String address, String phone, Date oder_date, OderStatus oderStatus, Account customer) {
         this.address = address;
         this.phone = phone;
         this.oder_date = oder_date;
@@ -84,20 +84,20 @@ public class Order implements Serializable {
         ADDED_TO_CARD, TO_PAY, TO_RECEIVE, COMPLETED, CANCELED, FEEDBACK_COMPLETED;
     }
 
-    public Order(float total_amount, Date oder_date, OderStatus oderStatus, Customer customer) {
+    public Order(float total_amount, Date oder_date, OderStatus oderStatus, Account customer) {
         this.total_amount = total_amount;
         this.oder_date = oder_date;
         this.oderStatus = oderStatus;
         this.customer = customer;
     }
 
-    public Order(Date oder_date, OderStatus oderStatus, Customer customer) {
+    public Order(Date oder_date, OderStatus oderStatus, Account customer) {
         this.oder_date = oder_date;
         this.oderStatus = oderStatus;
         this.customer = customer;
     }
 
-    public Order(Date oder_date, OderStatus oderStatus, Customer customer, PaymentMethod payment_method) {
+    public Order(Date oder_date, OderStatus oderStatus, Account customer, PaymentMethod payment_method) {
         this.oder_date = oder_date;
         this.oderStatus = oderStatus;
         this.customer = customer;
@@ -157,7 +157,7 @@ public class Order implements Serializable {
         return customer;
     }
 
-    public void setCustomer(Customer customer) {
+    public void setCustomer(Account customer) {
         this.customer = customer;
     }
 
@@ -165,7 +165,7 @@ public class Order implements Serializable {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(Account employee) {
         this.employee = employee;
     }
 

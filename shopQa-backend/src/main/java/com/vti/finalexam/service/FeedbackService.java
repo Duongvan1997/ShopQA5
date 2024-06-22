@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class FeedbackService implements IFeedbackService{
     @Autowired
     private IFeedbackRepository repository;
     @Autowired
-    private ICustomerService customerService;
+    private IAccountService customerService;
     @Autowired
     private IProductService productService;
 
@@ -45,11 +46,16 @@ public class FeedbackService implements IFeedbackService{
 
 //    @Override
    public void createFeedback(FeedbackCreating feedbackCreating) {
-        Customer customer = customerService.getCustomerById(feedbackCreating.getCustomer_id());
+        Account customer = customerService.getAccountById(feedbackCreating.getCustomer_id());
         Date creating_date = new Date();
         Product product = productService.getProductById(feedbackCreating.getProduct_id());
         Feedback feedback = new Feedback(feedbackCreating.getComment(),creating_date, feedbackCreating.getRating(), customer, product);
         repository.save(feedback);
+    }
+
+    @Override
+    public ArrayList<Feedback> getAll() {
+        return repository.findAll();
     }
 
     @Override

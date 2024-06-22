@@ -13,6 +13,7 @@ import {
   PlusOutlined,
   BarsOutlined,
   FileTextOutlined,
+  PercentageOutlined,
 } from "@ant-design/icons";
 import {
   Routes,
@@ -35,6 +36,11 @@ import UpdateProductDetail from "./ProductDetailManager/UpdateProductDetailById"
 import MangerOrder from "./Order/ManagerOrder";
 import CheckOrder from "./Order/CheckOrder";
 import OrderComfirmation from "../admin/Order/OrderComfirmation";
+import AddSales from "./Sales-Manager/AddSales";
+import SalesManager from "./Sales-Manager/SalesManager";
+import UpdateSales from "./Sales-Manager/UpdateSales";
+import FeedbackManagement from "./FeedbackManagement/FeedbackManagetment";
+
 const { Sider, Content } = Layout;
 
 function AdminLayout() {
@@ -73,6 +79,10 @@ function AdminLayout() {
                 <Menu.Item key="users" icon={<BarsOutlined />}>
                   <Link to="users">Quản lý người dùng</Link>
                 </Menu.Item>
+
+                <Menu.Item key="feedback-management" icon={<BarsOutlined />}>
+                  <Link to="feedback-management">Quản lý feedback</Link>
+                </Menu.Item>
                 <Menu.Item key="users/add" icon={<PlusOutlined />}>
                   <Link to="users/add">Thêm người dùng</Link>
                 </Menu.Item>
@@ -105,6 +115,14 @@ function AdminLayout() {
                 <Menu.Item key="product_detail" icon={<BarsOutlined />}>
                   <Link to="products-detail">Chi tiết sản phẩm</Link>
                 </Menu.Item>
+              </Menu.SubMenu>
+              <Menu.SubMenu key="sale" icon={<PercentageOutlined />} title="Khuyến mãi">
+                  <Menu.Item key="sales/create" icon={<PlusOutlined />}>
+                      <Link to="sales/create">Thêm khuyến mãi</Link>
+                  </Menu.Item>
+                  <Menu.Item key="sales" icon={<BarsOutlined />}>
+                      <Link to="sales">Quản lý khuyến mãi</Link>
+                  </Menu.Item>
               </Menu.SubMenu>
               <Menu.Item key="settings" icon={<SettingOutlined />}>
                 <Link to="settings">Settings</Link>
@@ -144,11 +162,18 @@ function AdminLayout() {
                 <Route path="/orders" element={<MangerOrder />}></Route>
                 <Route path="/orders-comfirm" element={<OrderComfirmation />} />
                 <Route path="/payment" element={<PaymentMethod />} />
+                <Route
+                  path="/feedback-management"
+                  element={<FeedbackManagement />}
+                />
 
                 <Route
                   path="/orders/checkOrder/:id"
                   element={<CheckOrder />}
                 ></Route>
+                <Route path="/sales/create" element={<AddSales/>}></Route>
+                <Route path="/sales/" element={<SalesManager/>}></Route>
+                <Route path="/sales/:id" element={<UpdateSales/>}></Route>
               </Routes>
             </Content>
           </Layout>

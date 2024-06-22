@@ -1,5 +1,8 @@
 package com.vti.finalexam.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -35,9 +38,10 @@ public class Feedback implements Serializable {
         EXCELLENT;
 
     }
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "customerId", nullable = true)
-    private Customer account_customer;
+
+    private Account customerId;
 
     @ManyToOne
     @JoinColumn(name = "productId", nullable = true)
@@ -46,11 +50,12 @@ public class Feedback implements Serializable {
     public Feedback() {
     }
 
-    public Feedback(String comment, Date feedback_date, RATING rating, Customer account_customer, Product product_feedback) {
+    public Feedback(String comment, Date feedback_date, RATING rating, Account customerId, Product product_feedback) {
         this.comment = comment;
         this.feedback_date = feedback_date;
         this.rating = rating;
-        this.account_customer = account_customer;
+//        this.customerId= customer;
+        this.customerId = customerId;
         this.product_feedback = product_feedback;
     }
 
@@ -87,11 +92,14 @@ public class Feedback implements Serializable {
     }
 
     public Account getAccount_customer() {
-        return account_customer;
+        return customerId;
     }
 
+    public void setCustomer(Customer customer) {
+        this.customerId = customer;
+    }
     public void setAccount_customer(Customer account_customer) {
-        this.account_customer = account_customer;
+        this.customerId = customerId;
     }
 
     public Product getProduct_feedback() {
