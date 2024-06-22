@@ -11,6 +11,7 @@ import Checkout from "./Checkout/Checkout";
 import Order from "./Order/Order";
 import GenderFill from "./FillterGender/GenderFill";
 import FemaleFilter from "./FillterGender/FemaleFilter";
+import AboutShop  from "./AboutShop/AboutShop";
 function ClientLayout() {
     return (
         <div className="ClientLayout">
@@ -25,6 +26,7 @@ function ClientLayout() {
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/male" element={<GenderFill />} />
                     <Route path="/female" element={<FemaleFilter />} />
+                    <Route path="/about-us" element={<AboutShop />} />
                 </Routes>
             </div>
             <Footer />
