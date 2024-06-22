@@ -43,6 +43,7 @@ public class OrderController {
         Page<OrderDTO> dtoPage = entitiesPage.map(new Function<Order, OrderDTO>() {
             @Override
             public OrderDTO apply(Order order) {
+
                 if(order.getOderStatus() == Order.OderStatus.ADDED_TO_CARD){
                     OrderDTO dto = new OrderDTO(order.getId(),
                                                 order.getOder_date(),
@@ -53,7 +54,7 @@ public class OrderController {
                     dto.setPhone(customer.getPhone());
 
                     return dto;
-                }else if(order.getOderStatus() == Order.OderStatus.TO_PAY){
+                }else if(order.getOderStatus() == Order.OderStatus.TO_PAY || order.getOderStatus() == Order.OderStatus.CANCELED){
                     OrderDTO dto = new OrderDTO(order.getId(),
                                                 order.getTotal_amount(),
                                                 order.getOder_date(),
@@ -62,14 +63,25 @@ public class OrderController {
                                                 order.getPayment_method().getId());
                     return dto;
                 }else{
-                    OrderDTO dto = new OrderDTO(order.getId(),
-                                                order.getTotal_amount(),
-                                                order.getOder_date(),
-                                                order.getOderStatus(),
-                                                order.getCustomer().getId(),
-                                                order.getEmployee().getId(),
-                                                order.getPayment_method().getId());
-                    return dto;
+                    if(order.getEmployee() == null){
+                        OrderDTO dto = new OrderDTO(order.getId(),
+                                order.getTotal_amount(),
+                                order.getOder_date(),
+                                order.getOderStatus(),
+                                order.getCustomer().getId(),
+                                order.getPayment_method().getId());
+                        return dto;
+                    }else{
+                        OrderDTO dto = new OrderDTO(order.getId(),
+                                order.getTotal_amount(),
+                                order.getOder_date(),
+                                order.getOderStatus(),
+                                order.getCustomer().getId(),
+                                order.getEmployee().getId(),
+                                order.getPayment_method().getId());
+                        return dto;
+                    }
+
                 }
 
             }
@@ -85,7 +97,7 @@ public class OrderController {
            for(Order order : orders){
                if(order.getOderStatus() == Order.OderStatus.ADDED_TO_CARD){
                   continue;
-               }else if(order.getOderStatus() == Order.OderStatus.TO_PAY){
+               }else if(order.getOderStatus() == Order.OderStatus.TO_PAY || order.getOderStatus() == Order.OderStatus.CANCELED){
                    OrderDTO dto = new OrderDTO(order.getId(),
                                                 order.getTotal_amount(),
                                                 order.getOder_date(),
@@ -96,16 +108,29 @@ public class OrderController {
                                                 order.getPayment_method().getDescription_payment());
                    orderDTOS.add(dto);
                }else{
-                   OrderDTO dto = new OrderDTO(order.getId(),
-                                                order.getTotal_amount(),
-                                                order.getOder_date(),
-                                                order.getOderStatus(),
-                                                (order.getCustomer().getFirstName()+order.getCustomer().getLastName()),
-                                                (order.getEmployee().getFirstName()+order.getEmployee().getLastName()),
-                                                order.getAddress(),
-                                                order.getPhone(),
-                                                order.getPayment_method().getDescription_payment());
-                   orderDTOS.add(dto);
+                   if(order.getEmployee() == null){
+                       OrderDTO dto = new OrderDTO(order.getId(),
+                               order.getTotal_amount(),
+                               order.getOder_date(),
+                               order.getOderStatus(),
+                               (order.getCustomer().getFirstName()+order.getCustomer().getLastName()),
+                               order.getAddress(),
+                               order.getPhone(),
+                               order.getPayment_method().getDescription_payment());
+                       orderDTOS.add(dto);
+                   }else{
+                       OrderDTO dto = new OrderDTO(order.getId(),
+                               order.getTotal_amount(),
+                               order.getOder_date(),
+                               order.getOderStatus(),
+                               (order.getCustomer().getFirstName()+order.getCustomer().getLastName()),
+                               (order.getEmployee().getFirstName()+order.getEmployee().getLastName()),
+                               order.getAddress(),
+                               order.getPhone(),
+                               order.getPayment_method().getDescription_payment());
+                       orderDTOS.add(dto);
+                   }
+
                }
            }
 
