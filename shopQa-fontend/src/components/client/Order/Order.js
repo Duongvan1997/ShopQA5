@@ -1,7 +1,18 @@
-import "./Order.css"
+import "./Order.css";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { message, Spin, Tabs, ConfigProvider, Space, Table, Tag, Image, Flex, Button, Popconfirm } from "antd";
+import {
+  message,
+  Spin,
+  Tabs,
+  ConfigProvider,
+  Table,
+  Tag,
+  Image,
+  Flex,
+  Button,
+  Popconfirm,
+} from "antd";
 import axios from "axios";
 
 const userData = JSON.parse(localStorage.getItem("user"));
@@ -11,11 +22,11 @@ function convertDateTimeFormat(originalDateTimeString) {
   const originalDate = new Date(originalDateTimeString);
 
   // Lấy các thành phần ngày tháng năm, giờ phút
-  const day = originalDate.getDate().toString().padStart(2, '0');
-  const month = (originalDate.getMonth() + 1).toString().padStart(2, '0');
+  const day = originalDate.getDate().toString().padStart(2, "0");
+  const month = (originalDate.getMonth() + 1).toString().padStart(2, "0");
   const year = originalDate.getFullYear();
-  const hours = originalDate.getHours().toString().padStart(2, '0');
-  const minutes = originalDate.getMinutes().toString().padStart(2, '0');
+  const hours = originalDate.getHours().toString().padStart(2, "0");
+  const minutes = originalDate.getMinutes().toString().padStart(2, "0");
 
   // Định dạng ngày giờ mới
   const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}`;
@@ -40,35 +51,49 @@ function Order() {
 
   const items = [
     {
-      key: '1',
-      label: 'Chờ xác nhận',
-      children: <div className="ContentOfMyOrder">{tabKey === "1" && <TO_PAY />}</div>,
+      key: "1",
+      label: "Chờ xác nhận",
+      children: (
+        <div className="ContentOfMyOrder">{tabKey === "1" && <TO_PAY />}</div>
+      ),
     },
     {
-      key: '2',
-      label: 'Đang giao hàng',
-      children: <div className="ContentOfMyOrder">{tabKey === "2" && <TO_RECEIVE />}</div>,
+      key: "2",
+      label: "Đang giao hàng",
+      children: (
+        <div className="ContentOfMyOrder">
+          {tabKey === "2" && <TO_RECEIVE />}
+        </div>
+      ),
     },
     {
-      key: '3',
-      label: 'Đã giao',
-      children: <div className="ContentOfMyOrder">{tabKey === "3" && <COMPLETED />}</div>,
+      key: "3",
+      label: "Đã giao",
+      children: (
+        <div className="ContentOfMyOrder">
+          {tabKey === "3" && <COMPLETED />}
+        </div>
+      ),
     },
     {
-      key: '4',
-      label: 'Đã huỷ',
-      children: <div className="ContentOfMyOrder">{tabKey === "4" && <CANCELED />}</div>,
-    }
-    ,
+      key: "4",
+      label: "Đã huỷ",
+      children: (
+        <div className="ContentOfMyOrder">{tabKey === "4" && <CANCELED />}</div>
+      ),
+    },
     {
-      key: '5',
-      label: 'Đã đánh giá',
-      children: <div className="ContentOfMyOrder">{tabKey === "5" && <FEEDBACK_COMPLETE />}</div>,
-    }
+      key: "5",
+      label: "Đã đánh giá",
+      children: (
+        <div className="ContentOfMyOrder">
+          {tabKey === "5" && <FEEDBACK_COMPLETE />}
+        </div>
+      ),
+    },
   ];
 
   return (
-
     <div className="MyOrder">
       <ConfigProvider
         theme={{
@@ -78,21 +103,24 @@ function Order() {
               inkBarColor: "black",
               itemActiveColor: "black",
               itemHoverColor: "black",
-              itemSelectedColor: "black"
+              itemSelectedColor: "black",
             },
           },
         }}
       >
-        <Tabs defaultActiveKey="1" items={items} centered size="large" onChange={onChange} />
+        <Tabs
+          defaultActiveKey="1"
+          items={items}
+          centered
+          size="large"
+          onChange={onChange}
+        />
       </ConfigProvider>
     </div>
-
-
-  )
+  );
 }
 
 function TO_PAY() {
-
   const [ordereds, setOrdereds] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -100,25 +128,30 @@ function TO_PAY() {
 
   const successMessage = (msg) => {
     messageApi.open({
-      type: 'success',
+      type: "success",
       content: msg,
     });
   };
 
   const errorMessage = (msg) => {
     messageApi.open({
-      type: 'error',
+      type: "error",
       content: msg,
     });
   };
 
   const handleCancelOrder = (_orderId) => {
-    axios.put(`http://localhost:8080/api/v1/orders/cancel/${_orderId}`, {}, {
-      auth: {
-        username: userData.username,
-        password: userData.password,
-      },
-    })
+    axios
+      .put(
+        `http://localhost:8080/api/v1/orders/cancel/${_orderId}`,
+        {},
+        {
+          auth: {
+            username: userData.username,
+            password: userData.password,
+          },
+        }
+      )
       .then((response) => {
         console.log(response.data);
         fetchData();
@@ -128,15 +161,19 @@ function TO_PAY() {
         console.error("Error fetching data:", error);
         errorMessage("Huỷ đơn hàng thất bại");
       });
-  }
+  };
+
+  const handleViewDetail = (orderId) => {
+    navigate(`/order/${orderId}`);
+  };
 
   const columns = [
     {
-      title: 'Đơn hàng',
-      dataIndex: 'group',
-      key: 'group',
-      render: (record) =>
-        <Flex align="center" gap={15} >
+      title: "Đơn hàng",
+      dataIndex: "group",
+      key: "group",
+      render: (record) => (
+        <Flex align="center" gap={15}>
           <Image
             width={60}
             src={record.img_url}
@@ -146,62 +183,71 @@ function TO_PAY() {
             <h3>{record.productName}</h3>
             <span>{record.subQuantity} sản phẩm</span>
           </Flex>
-        </Flex>,
+        </Flex>
+      ),
     },
     {
-      title: 'Ngày đặt hàng',
-      dataIndex: 'orderDate',
-      key: 'orderDate',
-      render: (text) => convertDateTimeFormat(text)
+      title: "Ngày đặt hàng",
+      dataIndex: "orderDate",
+      key: "orderDate",
+      render: (text) => convertDateTimeFormat(text),
     },
     {
-      title: 'Tổng tiền',
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
-      render: (text) => <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + "đ"}</h3>
+      title: "Tổng tiền",
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      render: (text) => (
+        <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</h3>
+      ),
     },
     {
-      title: 'Phương thức thanh toán',
-      dataIndex: 'paymentName',
-      key: 'paymentName'
+      title: "Phương thức thanh toán",
+      dataIndex: "paymentName",
+      key: "paymentName",
     },
     {
-      title: 'Trạng thái',
-      key: 'status',
-      dataIndex: 'status',
+      title: "Trạng thái",
+      key: "status",
+      dataIndex: "status",
       render: (text) => <Tag color="blue">{text.toUpperCase()}</Tag>,
     },
     {
-      title: 'Tuỳ chọn',
-      key: 'action',
-      dataIndex: 'action',
-      render: (text) =>
-        <Popconfirm
-          title="Huỷ đơn hàng này"
-          placement="topRight"
-          description="Bạn muốn huỷ đơn hàng này?"
-          onConfirm={() => handleCancelOrder(text)}
-          okText="Huỷ đơn"
-          cancelText="Quay lại"
-        >
-          <Button>Huỷ đơn</Button>
-        </Popconfirm>
-      ,
-    }
+      title: "Tuỳ chọn",
+      key: "action",
+      dataIndex: "action",
+      render: (text, record) => (
+        <div>
+          <div style={{ marginBottom: 15 }}>
+            <Button onClick={() => handleViewDetail(record.key)}>
+              Xem chi tiết
+            </Button>
+          </div>
+          <Popconfirm
+            title="Huỷ đơn hàng này"
+            placement="topRight"
+            description="Bạn muốn huỷ đơn hàng này?"
+            onConfirm={() => handleCancelOrder(text)}
+            okText="Huỷ đơn"
+            cancelText="Quay lại"
+          >
+            <Button>Huỷ đơn</Button>
+          </Popconfirm>
+        </div>
+      ),
+    },
   ];
 
   const fetchData = async () => {
-
     setLoading(true);
 
-    axios.get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
-      auth: {
-        username: userData.username,
-        password: userData.password,
-      },
-    })
+    axios
+      .get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
+        auth: {
+          username: userData.username,
+          password: userData.password,
+        },
+      })
       .then((response) => {
-
         console.log(response.data);
 
         let dataForState = response.data.map((pd) => {
@@ -209,18 +255,20 @@ function TO_PAY() {
             group: {
               img_url: pd.img_url,
               subQuantity: pd.subQuantity,
-              productName: pd.productName
+              productName: pd.productName,
             },
             status: pd.oderStatus,
             totalAmount: pd.totalAmount,
             key: pd.idOrder,
             orderDate: pd.orderDate,
             paymentName: pd.paymentName,
-            action: pd.idOrder
+            action: pd.idOrder,
           };
         });
 
-        dataForState = dataForState.filter(pd => { return pd.status === "TO_PAY" })
+        dataForState = dataForState.filter((pd) => {
+          return pd.status === "TO_PAY";
+        });
 
         console.log(dataForState);
 
@@ -230,42 +278,46 @@ function TO_PAY() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }
+  };
   const navigate = useNavigate();
   useEffect(() => {
-
-    
-    const userData = JSON.parse(localStorage.getItem('user'));
-        if (userData?.role === "CUSTOMER") {
-            fetchData();
-        } else {
-            navigate("/");
-        }
-
-  }, [])
-
+    const userData = JSON.parse(localStorage.getItem("user"));
+    if (userData?.role === "CUSTOMER") {
+      fetchData();
+    } else {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div className="TO_PAY">
       {contextHolder}
-      <Table columns={columns} dataSource={ordereds} size="large" loading={loading} />
+      <Table
+        columns={columns}
+        dataSource={ordereds}
+        size="large"
+        loading={loading}
+      />
     </div>
-  )
-
+  );
 }
 
 function TO_RECEIVE() {
-
   const [ordereds, setOrdereds] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleViewDetail = (orderId) => {
+    navigate(`/order/${orderId}`);
+  };
 
   const columns = [
     {
-      title: 'Đơn hàng',
-      dataIndex: 'group',
-      key: 'group',
-      render: (record) =>
-        <Flex align="center" gap={15} >
+      title: "Đơn hàng",
+      dataIndex: "group",
+      key: "group",
+      render: (record) => (
+        <Flex align="center" gap={15}>
           <Image
             width={60}
             src={record.img_url}
@@ -275,45 +327,59 @@ function TO_RECEIVE() {
             <h3>{record.productName}</h3>
             <span>{record.subQuantity} sản phẩm</span>
           </Flex>
-        </Flex>,
+        </Flex>
+      ),
     },
     {
-      title: 'Ngày đặt hàng',
-      dataIndex: 'orderDate',
-      key: 'orderDate',
-      render: (text) => convertDateTimeFormat(text)
+      title: "Ngày đặt hàng",
+      dataIndex: "orderDate",
+      key: "orderDate",
+      render: (text) => convertDateTimeFormat(text),
     },
     {
-      title: 'Tổng tiền',
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
-      render: (text) => <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + "đ"}</h3>
+      title: "Tổng tiền",
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      render: (text) => (
+        <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</h3>
+      ),
     },
     {
-      title: 'Phương thức thanh toán',
-      dataIndex: 'paymentName',
-      key: 'paymentName'
+      title: "Phương thức thanh toán",
+      dataIndex: "paymentName",
+      key: "paymentName",
     },
     {
-      title: 'Trạng thái',
-      key: 'status',
-      dataIndex: 'status',
+      title: "Trạng thái",
+      key: "status",
+      dataIndex: "status",
       render: (text) => <Tag color="orange">{text.toUpperCase()}</Tag>,
-    }
+    },
+    {
+      title: "Tuỳ chọn",
+      key: "action",
+      dataIndex: "action",
+      render: (text, record) => (
+        <div style={{ marginBottom: 15 }}>
+          <Button onClick={() => handleViewDetail(record.key)}>
+            Xem chi tiết
+          </Button>
+        </div>
+      ),
+    },
   ];
 
   const fetchData = async () => {
-
     setLoading(true);
 
-    axios.get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
-      auth: {
-        username: userData.username,
-        password: userData.password,
-      },
-    })
+    axios
+      .get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
+        auth: {
+          username: userData.username,
+          password: userData.password,
+        },
+      })
       .then((response) => {
-
         console.log(response.data);
 
         let dataForState = response.data.map((pd) => {
@@ -321,17 +387,19 @@ function TO_RECEIVE() {
             group: {
               img_url: pd.img_url,
               subQuantity: pd.subQuantity,
-              productName: pd.productName
+              productName: pd.productName,
             },
             status: pd.oderStatus,
             totalAmount: pd.totalAmount,
             key: pd.idOrder,
             orderDate: pd.orderDate,
-            paymentName: pd.paymentName
+            paymentName: pd.paymentName,
           };
         });
 
-        dataForState = dataForState.filter(pd => { return pd.status === "TO_RECEIVE" })
+        dataForState = dataForState.filter((pd) => {
+          return pd.status === "TO_RECEIVE";
+        });
 
         console.log(dataForState);
 
@@ -341,35 +409,40 @@ function TO_RECEIVE() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }
+  };
 
   useEffect(() => {
-
     fetchData();
-
-  }, [])
-
+  }, []);
 
   return (
     <div className="TO_RECEIVE">
-      <Table columns={columns} dataSource={ordereds} size="large" loading={loading} />
+      <Table
+        columns={columns}
+        dataSource={ordereds}
+        size="large"
+        loading={loading}
+      />
     </div>
-  )
-
+  );
 }
 
 function COMPLETED() {
-
   const [ordereds, setOrdereds] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleViewDetail = (orderId) => {
+    navigate(`/order/${orderId}`);
+  };
 
   const columns = [
     {
-      title: 'Đơn hàng',
-      dataIndex: 'group',
-      key: 'group',
-      render: (record) =>
-        <Flex align="center" gap={15} >
+      title: "Đơn hàng",
+      dataIndex: "group",
+      key: "group",
+      render: (record) => (
+        <Flex align="center" gap={15}>
           <Image
             width={60}
             src={record.img_url}
@@ -379,62 +452,59 @@ function COMPLETED() {
             <h3>{record.productName}</h3>
             <span>{record.subQuantity} sản phẩm</span>
           </Flex>
-        </Flex>,
+        </Flex>
+      ),
     },
     {
-      title: 'Ngày đặt hàng',
-      dataIndex: 'orderDate',
-      key: 'orderDate',
-      render: (text) => convertDateTimeFormat(text)
+      title: "Ngày đặt hàng",
+      dataIndex: "orderDate",
+      key: "orderDate",
+      render: (text) => convertDateTimeFormat(text),
     },
     {
-      title: 'Tổng tiền',
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
-      render: (text) => <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + "đ"}</h3>
+      title: "Tổng tiền",
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      render: (text) => (
+        <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</h3>
+      ),
     },
     {
-      title: 'Phương thức thanh toán',
-      dataIndex: 'paymentName',
-      key: 'paymentName'
+      title: "Phương thức thanh toán",
+      dataIndex: "paymentName",
+      key: "paymentName",
     },
     {
-      title: 'Trạng thái',
-      key: 'status',
-      dataIndex: 'status',
+      title: "Trạng thái",
+      key: "status",
+      dataIndex: "status",
       render: (text) => <Tag color="green">{text.toUpperCase()}</Tag>,
     },
     {
-      title: 'Tuỳ chọn',
-      key: 'action',
-      dataIndex: 'action',
-      render: (text) =>
-        <Popconfirm
-          title="Đánh giá đơn hàng này"
-          placement="topRight"
-          description="Bạn muốn đánh giá hàng này?"
-          // onConfirm={() => handleCancelOrder(text)}
-          okText="Đánh giá"
-          cancelText="Quay lại" 
-        >
-          <Button>Đánh giá</Button>
-        </Popconfirm>
-      ,
-    }
+      title: "Tuỳ chọn",
+      key: "action",
+      dataIndex: "action",
+      render: (text, record) => (
+        <div style={{ marginBottom: 15 }}>
+          <Button onClick={() => handleViewDetail(record.key)}>
+            Xem chi tiết
+          </Button>
+        </div>  
+      ),
+    },
   ];
 
   const fetchData = async () => {
-
     setLoading(true);
 
-    axios.get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
-      auth: {
-        username: userData.username,
-        password: userData.password,
-      },
-    })
+    axios
+      .get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
+        auth: {
+          username: userData.username,
+          password: userData.password,
+        },
+      })
       .then((response) => {
-
         console.log(response.data);
 
         let dataForState = response.data.map((pd) => {
@@ -442,17 +512,19 @@ function COMPLETED() {
             group: {
               img_url: pd.img_url,
               subQuantity: pd.subQuantity,
-              productName: pd.productName
+              productName: pd.productName,
             },
             status: pd.oderStatus,
             totalAmount: pd.totalAmount,
             key: pd.idOrder,
             orderDate: pd.orderDate,
-            paymentName: pd.paymentName
+            paymentName: pd.paymentName,
           };
         });
 
-        dataForState = dataForState.filter(pd => { return pd.status === "COMPLETED" })
+        dataForState = dataForState.filter((pd) => {
+          return pd.status === "COMPLETED";
+        });
 
         console.log(dataForState);
 
@@ -462,35 +534,35 @@ function COMPLETED() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }
+  };
 
   useEffect(() => {
-
     fetchData();
-
-  }, [])
-
+  }, []);
 
   return (
     <div className="COMPLETED">
-      <Table columns={columns} dataSource={ordereds} size="large" loading={loading} />
+      <Table
+        columns={columns}
+        dataSource={ordereds}
+        size="large"
+        loading={loading}
+      />
     </div>
-  )
-
+  );
 }
 
 function FEEDBACK_COMPLETE() {
-
   const [ordereds, setOrdereds] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const columns = [
     {
-      title: 'Đơn hàng',
-      dataIndex: 'group',
-      key: 'group',
-      render: (record) =>
-        <Flex align="center" gap={15} >
+      title: "Đơn hàng",
+      dataIndex: "group",
+      key: "group",
+      render: (record) => (
+        <Flex align="center" gap={15}>
           <Image
             width={60}
             src={record.img_url}
@@ -500,45 +572,47 @@ function FEEDBACK_COMPLETE() {
             <h3>{record.productName}</h3>
             <span>{record.subQuantity} sản phẩm</span>
           </Flex>
-        </Flex>,
+        </Flex>
+      ),
     },
     {
-      title: 'Ngày đặt hàng',
-      dataIndex: 'orderDate',
-      key: 'orderDate',
-      render: (text) => convertDateTimeFormat(text)
+      title: "Ngày đặt hàng",
+      dataIndex: "orderDate",
+      key: "orderDate",
+      render: (text) => convertDateTimeFormat(text),
     },
     {
-      title: 'Tổng tiền',
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
-      render: (text) => <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + "đ"}</h3>
+      title: "Tổng tiền",
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      render: (text) => (
+        <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</h3>
+      ),
     },
     {
-      title: 'Phương thức thanh toán',
-      dataIndex: 'paymentName',
-      key: 'paymentName'
+      title: "Phương thức thanh toán",
+      dataIndex: "paymentName",
+      key: "paymentName",
     },
     {
-      title: 'Trạng thái',
-      key: 'status',
-      dataIndex: 'status',
+      title: "Trạng thái",
+      key: "status",
+      dataIndex: "status",
       render: (text) => <Tag color="green">{text.toUpperCase()}</Tag>,
-    }
+    },
   ];
 
   const fetchData = async () => {
-
     setLoading(true);
 
-    axios.get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
-      auth: {
-        username: userData.username,
-        password: userData.password,
-      },
-    })
+    axios
+      .get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
+        auth: {
+          username: userData.username,
+          password: userData.password,
+        },
+      })
       .then((response) => {
-
         console.log(response.data);
 
         let dataForState = response.data.map((pd) => {
@@ -546,17 +620,19 @@ function FEEDBACK_COMPLETE() {
             group: {
               img_url: pd.img_url,
               subQuantity: pd.subQuantity,
-              productName: pd.productName
+              productName: pd.productName,
             },
             status: pd.oderStatus,
             totalAmount: pd.totalAmount,
             key: pd.idOrder,
             orderDate: pd.orderDate,
-            paymentName: pd.paymentName
+            paymentName: pd.paymentName,
           };
         });
 
-        dataForState = dataForState.filter(pd => { return pd.status === "COMPLETED" })
+        dataForState = dataForState.filter((pd) => {
+          return pd.status === "COMPLETED";
+        });
 
         console.log(dataForState);
 
@@ -566,35 +642,35 @@ function FEEDBACK_COMPLETE() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }
+  };
 
   useEffect(() => {
-
     fetchData();
-
-  }, [])
-
+  }, []);
 
   return (
     <div className="COMPLETED">
-      <Table columns={columns} dataSource={ordereds} size="large" loading={loading} />
+      <Table
+        columns={columns}
+        dataSource={ordereds}
+        size="large"
+        loading={loading}
+      />
     </div>
-  )
-
+  );
 }
 
 function CANCELED() {
-
   const [ordereds, setOrdereds] = useState([]);
   const [loading, setLoading] = useState(false);
 
   const columns = [
     {
-      title: 'Đơn hàng',
-      dataIndex: 'group',
-      key: 'group',
-      render: (record) =>
-        <Flex align="center" gap={15} >
+      title: "Đơn hàng",
+      dataIndex: "group",
+      key: "group",
+      render: (record) => (
+        <Flex align="center" gap={15}>
           <Image
             width={60}
             src={record.img_url}
@@ -604,45 +680,47 @@ function CANCELED() {
             <h3>{record.productName}</h3>
             <span>{record.subQuantity} sản phẩm</span>
           </Flex>
-        </Flex>,
+        </Flex>
+      ),
     },
     {
-      title: 'Ngày đặt hàng',
-      dataIndex: 'orderDate',
-      key: 'orderDate',
-      render: (text) => convertDateTimeFormat(text)
+      title: "Ngày đặt hàng",
+      dataIndex: "orderDate",
+      key: "orderDate",
+      render: (text) => convertDateTimeFormat(text),
     },
     {
-      title: 'Tổng tiền',
-      dataIndex: 'totalAmount',
-      key: 'totalAmount',
-      render: (text) => <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + "đ"}</h3>
+      title: "Tổng tiền",
+      dataIndex: "totalAmount",
+      key: "totalAmount",
+      render: (text) => (
+        <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</h3>
+      ),
     },
     {
-      title: 'Phương thức thanh toán',
-      dataIndex: 'paymentName',
-      key: 'paymentName'
+      title: "Phương thức thanh toán",
+      dataIndex: "paymentName",
+      key: "paymentName",
     },
     {
-      title: 'Trạng thái',
-      key: 'status',
-      dataIndex: 'status',
+      title: "Trạng thái",
+      key: "status",
+      dataIndex: "status",
       render: (text) => <Tag color="red">{text.toUpperCase()}</Tag>,
-    }
+    },
   ];
 
   const fetchData = async () => {
-
     setLoading(true);
 
-    axios.get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
-      auth: {
-        username: userData.username,
-        password: userData.password,
-      },
-    })
+    axios
+      .get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
+        auth: {
+          username: userData.username,
+          password: userData.password,
+        },
+      })
       .then((response) => {
-
         console.log(response.data);
 
         let dataForState = response.data.map((pd) => {
@@ -650,17 +728,19 @@ function CANCELED() {
             group: {
               img_url: pd.img_url,
               subQuantity: pd.subQuantity,
-              productName: pd.productName
+              productName: pd.productName,
             },
             status: pd.oderStatus,
             totalAmount: pd.totalAmount,
             key: pd.idOrder,
             orderDate: pd.orderDate,
-            paymentName: pd.paymentName
+            paymentName: pd.paymentName,
           };
         });
 
-        dataForState = dataForState.filter(pd => { return pd.status === "CANCELED" })
+        dataForState = dataForState.filter((pd) => {
+          return pd.status === "CANCELED";
+        });
 
         console.log(dataForState);
 
@@ -670,21 +750,22 @@ function CANCELED() {
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
-  }
+  };
 
   useEffect(() => {
-
     fetchData();
-
-  }, [])
-
+  }, []);
 
   return (
     <div className="CANCELED">
-      <Table columns={columns} dataSource={ordereds} size="large" loading={loading} />
+      <Table
+        columns={columns}
+        dataSource={ordereds}
+        size="large"
+        loading={loading}
+      />
     </div>
-  )
-
+  );
 }
 
 export default Order;
