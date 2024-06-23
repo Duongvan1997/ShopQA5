@@ -2,6 +2,7 @@ import { Button, Flex, Image, Table, Tag, message } from "antd";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Feedback from "../Feedback/Feedback";
 
 const userData = JSON.parse(localStorage.getItem("user"));
 
@@ -24,6 +25,16 @@ const OrderDetail = () => {
   const [showReviewColumn, setShowReviewColumn] = useState(false);
 
   const [messageApi, contextHolder] = message.useMessage();
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const hideModal = () => {
+    setIsModalVisible(false);
+  };
 
   const successMessage = (msg) => {
     messageApi.open({
@@ -87,7 +98,7 @@ const OrderDetail = () => {
     },
     showReviewColumn && {
       title: "Đánh giá",
-      render: (text) => <Button color="blue">Đánh giá</Button>,
+      render: (text) => <Button color="blue" onClick={showModal}>Đánh giá</Button>,
     },
   ].filter(Boolean);
 
@@ -173,7 +184,7 @@ const OrderDetail = () => {
   }, [id]);
 
   const handleViewOrder = () => {
-    navigate(`/order`);
+    navigate(-1);
   };
 
   return (
@@ -210,6 +221,7 @@ const OrderDetail = () => {
           {totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}đ
         </h2>
       </div>
+      <Feedback visible={isModalVisible} hideModal={hideModal} />
     </div>
   );
 };
