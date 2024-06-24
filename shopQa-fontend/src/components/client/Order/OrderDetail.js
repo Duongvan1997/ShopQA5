@@ -23,6 +23,7 @@ const OrderDetail = () => {
   const [loading, setLoading] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
   const [showReviewColumn, setShowReviewColumn] = useState(false);
+  const [orderData, setOrderData] = useState({})
 
   const [messageApi, contextHolder] = message.useMessage();
 
@@ -35,6 +36,11 @@ const OrderDetail = () => {
   const hideModal = () => {
     setIsModalVisible(false);
   };
+
+  const onReview = (orderValue) => {
+    showModal()
+    setOrderData(orderValue)
+  }
 
   const successMessage = (msg) => {
     messageApi.open({
@@ -98,7 +104,7 @@ const OrderDetail = () => {
     },
     showReviewColumn && {
       title: "Đánh giá",
-      render: (text) => <Button color="blue" onClick={showModal}>Đánh giá</Button>,
+      render: (value) => <Button color="blue" onClick={() => onReview(value)}>Đánh giá</Button>
     },
   ].filter(Boolean);
 
@@ -141,6 +147,7 @@ const OrderDetail = () => {
           url_img: item.url_img,
           subQuantity: item.quantity,
           product_detail_name: item.product_detail_name,
+          product_detail_id: item.product_detail_id,
         },
         status: orderStatus.oderStatus,
         totalAmount: item.subtotal,
@@ -221,7 +228,7 @@ const OrderDetail = () => {
           {totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}đ
         </h2>
       </div>
-      <Feedback visible={isModalVisible} hideModal={hideModal} />
+      <Feedback visible={isModalVisible} hideModal={hideModal} orderData={orderData} />
     </div>
   );
 };
