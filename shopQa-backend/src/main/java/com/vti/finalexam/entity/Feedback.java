@@ -55,8 +55,6 @@ public class Feedback implements Serializable {
         this.feedback_date = feedback_date;
         this.rating = rating;
         this.customerId = customerId;
-
-        this.customerId = customerId;
         this.product_feedback = product_feedback;
     }
 
