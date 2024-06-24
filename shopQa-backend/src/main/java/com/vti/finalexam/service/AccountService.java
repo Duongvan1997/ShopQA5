@@ -18,6 +18,8 @@ import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -54,8 +56,10 @@ public class AccountService implements IAccountService {
     public void updateAccount(int id, AccountFormUpdating accountFormUpdating) throws ParseException {
         Account account = repository.getAccountById(id);
         String password = new BCryptPasswordEncoder().encode((CharSequence) accountFormUpdating.getPassword());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date birthday = dateFormat.parse(accountFormUpdating.getBirthday());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date birthday = dateFormat.parse(accountFormUpdating.getBirthday());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthday =  LocalDate.parse(accountFormUpdating.getBirthday(), formatter);
         account.setPassword(password);
         account.setFirstName(accountFormUpdating.getFirstName());
         account.setLastName(accountFormUpdating.getLastName());

@@ -6,6 +6,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class EmployeeDTO {
@@ -13,12 +14,12 @@ public class EmployeeDTO {
 
     private String username;
     private String address;
-    private Date birthday;
+    private LocalDate birthday;
     private String email;
-    private Date createdDate;
+    private LocalDate createdDate;
     private Account.Gender gender;
 
-    public EmployeeDTO(int id,String username, String address, Date birthday, String email, Date createdDate, Account.Gender gender) {
+    public EmployeeDTO(int id,String username, String address, LocalDate birthday, String email, LocalDate createdDate, Account.Gender gender) {
         this.id = id;
         this.username = username;
         this.address = address;
@@ -37,11 +38,11 @@ public class EmployeeDTO {
         this.id = id;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -71,11 +72,11 @@ public class EmployeeDTO {
         this.address = address;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 

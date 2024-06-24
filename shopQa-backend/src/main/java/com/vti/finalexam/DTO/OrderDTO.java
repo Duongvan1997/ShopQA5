@@ -4,6 +4,7 @@ import com.vti.finalexam.entity.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class OrderDTO {
 
     private float total_amount;
 
-    private Date oder_date;
+    private LocalDate oder_date;
 
     private Order.OderStatus oderStatus;
 
@@ -57,7 +58,7 @@ public class OrderDTO {
         this.payment_method = payment_method;
     }
 
-    public OrderDTO(int id, float total_amount, Date oder_date, Order.OderStatus oderStatus, int customer_id, int employee_id, String address, String phone, int payment_method_id) {
+    public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, int customer_id, int employee_id, String address, String phone, int payment_method_id) {
         this.id = id;
         this.total_amount = total_amount;
         this.oder_date = oder_date;
@@ -69,7 +70,7 @@ public class OrderDTO {
         this.payment_method_id = payment_method_id;
     }
 
-    public OrderDTO(int id, float total_amount, Date oder_date, Order.OderStatus oderStatus, String customer_name, String address, String phone, String payment_method) {
+    public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, String customer_name, String address, String phone, String payment_method) {
         this.id = id;
         this.total_amount = total_amount;
         this.oder_date = oder_date;
@@ -80,7 +81,7 @@ public class OrderDTO {
         this.payment_method = payment_method;
     }
 
-    public OrderDTO(int id, float total_amount, Date oder_date, Order.OderStatus oderStatus, String customer_name, String employee_name, String address, String phone, String payment_method) {
+    public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, String customer_name, String employee_name, String address, String phone, String payment_method) {
         this.id = id;
         this.total_amount = total_amount;
         this.oder_date = oder_date;
@@ -92,7 +93,7 @@ public class OrderDTO {
         this.payment_method = payment_method;
     }
 
-    public OrderDTO(int id, float total_amount, Date oder_date, Order.OderStatus oderStatus, int customer_id, String address, String phone, int payment_method_id) {
+    public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, int customer_id, String address, String phone, int payment_method_id) {
         this.id = id;
         this.total_amount = total_amount;
         this.oder_date = oder_date;
@@ -129,11 +130,11 @@ public class OrderDTO {
         this.total_amount = total_amount;
     }
 
-    public Date getOder_date() {
+    public LocalDate getOder_date() {
         return oder_date;
     }
 
-    public void setOder_date(Date oder_date) {
+    public void setOder_date(LocalDate oder_date) {
         this.oder_date = oder_date;
     }
 
@@ -169,7 +170,7 @@ public class OrderDTO {
         this.payment_method_id = payment_method_id;
     }
 
-    public OrderDTO(int id, float total_amount, Date oder_date, Order.OderStatus oderStatus, int customer_id, int employee_id, int payment_method_id) {
+    public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, int customer_id, int employee_id, int payment_method_id) {
         this.id =id;
         this.total_amount = total_amount;
         this.oder_date = oder_date;
@@ -179,7 +180,7 @@ public class OrderDTO {
         this.payment_method_id = payment_method_id;
     }
 
-    public OrderDTO(int id, Date oder_date, Order.OderStatus oderStatus, int customer_id) {
+    public OrderDTO(int id, LocalDate oder_date, Order.OderStatus oderStatus, int customer_id) {
         this.id = id;
 
         this.oder_date = oder_date;
@@ -187,7 +188,7 @@ public class OrderDTO {
         this.customer_id = customer_id;
     }
 
-    public OrderDTO(int id, float total_amount, Date oder_date, Order.OderStatus oderStatus, int customer_id, int payment_method_id) {
+    public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, int customer_id, int payment_method_id) {
         this.id = id;
         this.total_amount = total_amount;
         this.oder_date = oder_date;

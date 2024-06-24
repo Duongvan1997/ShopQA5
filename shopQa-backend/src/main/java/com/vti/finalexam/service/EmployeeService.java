@@ -18,6 +18,8 @@ import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 @Service
@@ -41,9 +43,11 @@ public class EmployeeService implements IEmployeeService{
 
     @Override
     public void createEmployee(AccountFormCreating accountFormCreating) throws ParseException {
-        Date createdate = new Date();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date birthday = dateFormat.parse(accountFormCreating.getBirthday());
+        LocalDate createdate = LocalDate.now();
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date birthday = dateFormat.parse(accountFormCreating.getBirthday());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthday =  LocalDate.parse(accountFormCreating.getBirthday(), formatter);
         String password = new BCryptPasswordEncoder().encode((CharSequence) accountFormCreating.getPassword());
         Employee employee = new Employee(accountFormCreating.getUsername(), accountFormCreating.getPhone(), password, accountFormCreating.getFirstName(), accountFormCreating.getLastName(), accountFormCreating.getAddress(), birthday,accountFormCreating.getEmail(), Account.Role.EMPLOYEE,accountFormCreating.getGender(), createdate);
         repository.save(employee);
@@ -52,8 +56,10 @@ public class EmployeeService implements IEmployeeService{
     @Override
     public void updateEmployee(int id, AccountFormUpdating accountFormUpdating) throws ParseException {
         Employee employee = repository.getEmployeeById(id);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date birthday = dateFormat.parse(accountFormUpdating.getBirthday());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date birthday = dateFormat.parse(accountFormUpdating.getBirthday());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate birthday =  LocalDate.parse(accountFormUpdating.getBirthday(), formatter);
         String password = new BCryptPasswordEncoder().encode((CharSequence) accountFormUpdating.getPassword());
         employee.setPassword(password);
         employee.setFirstName(accountFormUpdating.getFirstName());
