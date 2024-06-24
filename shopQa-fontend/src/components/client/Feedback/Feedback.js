@@ -4,41 +4,15 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 
-const Feedback = ({ visible, hideModal, productId }) => {
+const Feedback = ({ visible, hideModal, orderData }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [productName, setProductName] = useState("");
   const [productImage, setProductImage] = useState("");
   const [productPrice, setProductPrice] = useState("");
+  const [productId, setProductId] = useState(null);
 
   const userData = JSON.parse(localStorage.getItem("user"));
-
-  // Function to fetch product details from backend
-  const fetchProductDetails = async (productId) => {
-    try {
-      const response = await axios.get(`http://localhost:8080/api/v1/products/${productId}`);
-      const product = response.data;
-
-      // Ensure the necessary fields are available in the product data
-      if (product && parseInt(product.id) === parseInt(productId) && product.name && product.image_url && product.price) {
-        setProductName(product.name);
-        setProductImage(product.image_url);
-        setProductPrice(product.price);
-      } else {
-        message.error("Failed to fetch product details. Product data is incomplete.");
-      }
-    } catch (error) {
-      console.error("Error fetching product details:", error);
-      message.error("Failed to fetch product details. Please try again.");
-    }
-  };
-
-  // Effect hook to fetch product details when visible or productId changes
-  useEffect(() => {
-    if (visible && productId) {
-      fetchProductDetails(productId);
-    }
-  }, [visible, productId]);
 
   const handleRatingChange = (value) => {
     setRating(value);
@@ -46,6 +20,21 @@ const Feedback = ({ visible, hideModal, productId }) => {
 
   const handleCommentChange = (e) => {
     setComment(e.target.value);
+  };
+
+  const fetchProductDetails = async () => {
+    try {
+      const {data} = await axios.get(`http://localhost:8080/api/v1/productDetails/${orderData.group.product_detail_id}`,{
+        auth: {
+          username: userData.username,
+          password: userData.password,
+        },
+      });
+      setProductId(data.product_id)
+    } catch (error) {
+      console.error("Error fetching product details:", error);
+      message.error("Failed to fetch product details. Please try again.");
+    }
   };
 
   const handleSubmit = async () => {
@@ -76,6 +65,17 @@ const Feedback = ({ visible, hideModal, productId }) => {
       message.error("Failed to create feedback. Please try again.");
     }
   };
+
+  useEffect(() => {
+    const orderDataEmpty = Object.keys(orderData).length === 0
+    if(!orderDataEmpty){
+      setProductImage(orderData.group.url_img)
+      setProductPrice(orderData.totalAmount)
+      setProductName(orderData.group.product_detail_name)
+      fetchProductDetails();
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderData])
 
   return (
     <Modal
