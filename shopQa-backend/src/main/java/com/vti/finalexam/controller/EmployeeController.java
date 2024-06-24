@@ -68,4 +68,11 @@ public class EmployeeController {
         EmployeeDTO dto = new EmployeeDTO(employee.getId(), employee.getUsername(), employee.getAddress(), employee.getBirthday(), employee.getEmail(), employee.getCreatedDate(), employee.getGender());
         return new ResponseEntity<EmployeeDTO>(dto, HttpStatus.OK);
     }
+    @GetMapping(value = "/getEmployee/{id}")
+    public  ResponseEntity<?>getEmployeeByUsername(@PathVariable(name="id") String username){
+        Employee employee=service.getEmployeeByUsername(username);
+        EmployeeDTO dto = new EmployeeDTO(employee.getId(),employee.getUsername(), employee.getAddress(), employee.getBirthday(), employee.getEmail(), employee.getCreatedDate(), employee.getGender());
+        return  new ResponseEntity<EmployeeDTO>(dto,HttpStatus.OK);
+
+    }
 }

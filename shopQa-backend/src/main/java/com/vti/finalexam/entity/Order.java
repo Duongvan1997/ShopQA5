@@ -116,6 +116,7 @@ public class Order implements Serializable {
     @ManyToOne
     @JoinColumn(name="paymentMethodId", nullable = true)
     private PaymentMethod payment_method;
+
     @OneToMany(mappedBy = "order")
     private List<OrderItem> orderItems;
 
