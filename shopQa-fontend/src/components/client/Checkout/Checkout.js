@@ -202,7 +202,7 @@ function Checkout() {
         successMessage();
         setTimeout(() => {
           setIsCompleteOrder(true);
-        }, 2000)
+        }, 2000);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
@@ -277,7 +277,7 @@ function Checkout() {
               />
             </div>
 
-            <div className="Checkout_left_row">
+            <test className="Checkout_left_row">
               <span>Tỉnh (Thành phố)</span>
               <Select
                 options={citys}
@@ -297,7 +297,7 @@ function Checkout() {
                 className="select"
                 placeholder="Chọn tỉnh/thành phố"
               />
-            </div>
+            </test>
 
             <div className="Checkout_left_row_2col">
               <div className="Checkout_left_row">

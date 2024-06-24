@@ -1,92 +1,165 @@
 import { useState, useEffect } from "react";
-import "./OrderComfirmation.css";
-import Pagination from "../../Paginate/Pagination";
+import { Table, message, Modal, Breadcrumb } from "antd";
 import axios from "axios";
+import "./OrderComfirmation.css";
+import moment from "moment";
 
-const ITEMS_PER_PAGE = 5; // Định nghĩa số mục trên mỗi trang
+const ITEMS_PER_PAGE = 4; // Định nghĩa số mục trên mỗi trang
 
 const OrderComfirmation = () => {
+  const { confirm } = Modal;
+  const [messageApi, contextHolder] = message.useMessage();
   const [itemsData, setItemsData] = useState([]);
   const adminData = JSON.parse(localStorage.getItem("user"));
+  const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const handlePageChange = (newPage) => {
-    if (
-      newPage > 0 &&
-      newPage <= Math.ceil(itemsData.length / ITEMS_PER_PAGE)
-    ) {
-      setCurrentPage(newPage);
-    }
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "http://localhost:8080/api/v1/orders/getAll",
-          {
-            auth: {
-              username: adminData.username,
-              password: adminData.password,
-            },
-          }
-        );
-
-        const data = response.data;
-        console.log("API response data:", data); // Log phản hồi từ API
-
-        // Kiểm tra và chuyển đổi dữ liệu thành mảng nếu cần thiết
-        const dataArray = Array.isArray(data) ? data : Object.values(data);
-        console.log("Data array:", dataArray); // Log data array
-
-        const modifiedData = dataArray.map((order) => {
-          console.log("Order item:", order); // Log từng mục đơn hàng
+  const fetchData = () => {
+    setLoading(true);
+    axios
+      .get("http://localhost:8080/api/v1/orders/getAll", {
+        auth: {
+          username: adminData.username,
+          password: adminData.password,
+        },
+      })
+      .then((response) => {
+        const ordersFormatted = response.data.map((order) => {
           return {
             order_id: order.id,
             customer_name: order.customer_name,
             phone: order.phone,
+            status: order.oderStatus,
+            order_date: moment(order.order_date).format("YYYY-MM-DD"),
           };
         });
-        console.log("Modified data:", modifiedData); // Log dữ liệu đã chỉnh sửa
-        setItemsData(modifiedData); // Sử dụng setter của state
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
+        console.log("response:", response.data);
 
+        setItemsData(ordersFormatted);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
     fetchData();
-  }, []); // Chỉ chạy một lần khi component được mount
+  }, [adminData.username, adminData.password]);
 
-  // Tính toán các mục sẽ hiển thị trên trang hiện tại
-  const indexOfLastItem = currentPage * ITEMS_PER_PAGE;
-  const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
-  const currentItems = itemsData.slice(indexOfFirstItem, indexOfLastItem);
+  const handleDelete = async (orderId) => {
+    try {
+      await axios.delete(
+        `http://localhost:8080/api/v1/orders/delete/${orderId}`,
+        {
+          auth: {
+            username: adminData.username,
+            password: adminData.password,
+          },
+        }
+      );
+      setItemsData(itemsData.filter((order) => order.order_id !== orderId));
+    } catch (error) {
+      console.error("Error deleting order: ", error);
+    }
+  };
 
-  // Tổng số trang
-  const totalPages = Math.ceil(itemsData.length / ITEMS_PER_PAGE);
+  const handleUpdateStatus = async (orderId, newStatus) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8080/api/v1/orders/changeStatus/${orderId}`,
+        { status: newStatus },
+        {
+          auth: {
+            username: adminData.username,
+            password: adminData.password,
+          },
+        }
+      );
+      const updatedOrder = response.data;
+      setItemsData(
+        itemsData.map((order) =>
+          order.order_id === orderId
+            ? { ...order, status: updatedOrder.status }
+            : order
+        )
+      );
+    } catch (error) {
+      console.error("Error updating order status: ", error);
+    }
+  };
+
+  const columns = [
+    {
+      title: "Order ID",
+      dataIndex: "order_id",
+    },
+    {
+      title: "Customer Name",
+      dataIndex: "customer_name",
+    },
+    {
+      title: "Phone",
+      dataIndex: "phone",
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+    },
+    {
+      title: "Order Date",
+      dataIndex: "order_date",
+    },
+    {
+      title: "Actions",
+      dataIndex: "actions",
+      render: (_, record) => (
+        <div className="actions">
+          <button
+            className="button1"
+            onClick={() => handleUpdateStatus(record.order_id, "TO_PAY")}
+          >
+            Đã giao
+          </button>
+          <button
+            className="button2"
+            onClick={() =>
+              handleUpdateStatus(record.order_id, "ARE DELIVERING")
+            }
+          >
+            Giao hàng
+          </button>
+          <button
+            className="button3"
+            onClick={() => handleDelete(record.order_id)}
+          >
+            Xóa
+          </button>
+        </div>
+      ),
+    },
+  ];
 
   return (
-    <div className="container">
-      <div className="container-chil">
-        {currentItems.map((order) => (
-          <div className="items" key={order.order_id}>
-            <span className="number-order">Id: {order.order_id}</span>
-            <div className="user">
-              <div>Tên: {order.customer_name}</div>
-              <div>SDT: {order.phone}</div>
-            </div>
-            <div className="comfirm">
-              <button className="button1">Đã giao</button>
-              <button className="button2">Giao hàng</button>
-              <button className="button3">Xóa</button>
-            </div>
-          </div>
-        ))}
-      </div>
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={handlePageChange}
+    <div className="order-comfirmation-container">
+      {contextHolder}
+      <Breadcrumb
+        items={[
+          {
+            title: "Management",
+          },
+          {
+            title: "Order Confirmation",
+          },
+        ]}
+      />
+      <Table
+        columns={columns}
+        dataSource={itemsData}
+        loading={loading}
+        rowKey="order_id"
+        size="large"
       />
     </div>
   );
