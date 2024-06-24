@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -53,7 +54,7 @@ public class OrderService implements IOrderService{
     public void customer_createOder(OrderCustomerCreatForm formCreating) {
         Account customer = customerRepository.getAccountById(formCreating.getCustomer_id());
         PaymentMethod paymentMethod = paymentMethodRepository.getPaymentMethodById(formCreating.getPayment_method_id());
-        Date creating_date = new Date();
+        LocalDate creating_date = LocalDate.now();
         float total_amout = 0;
         Order order = new Order(
                 formCreating.getAddress(),
@@ -83,7 +84,7 @@ public class OrderService implements IOrderService{
     @Override
     public void createCart(OrderFormCreating formCreating) {
         Account customer = customerRepository.getAccountById(formCreating.getCustomer_id());
-        Date creating_date = new Date();
+        LocalDate creating_date = LocalDate.now();
         Order order = new Order(
                 customer.getAddress(),
                 "0",

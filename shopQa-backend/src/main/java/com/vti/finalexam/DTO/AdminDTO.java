@@ -2,6 +2,7 @@ package com.vti.finalexam.DTO;
 
 import com.vti.finalexam.entity.Account;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class AdminDTO {
@@ -9,12 +10,12 @@ public class AdminDTO {
 
     private String username;
     private String address;
-    private Date birthday;
+    private LocalDate birthday;
     private String email;
-    private Date createdDate;
+    private LocalDate createdDate;
     private Account.Gender gender;
 
-    public AdminDTO( int id, String username, String address, Date birthday, String email,  Date createdDate, Account.Gender gender) {
+    public AdminDTO( int id, String username, String address, LocalDate birthday, String email,  LocalDate createdDate, Account.Gender gender) {
         this.id=id;
         this.username = username;
         this.address = address;
@@ -48,11 +49,11 @@ public class AdminDTO {
         this.address = address;
     }
 
-    public Date getBirthday() {
+    public LocalDate getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(LocalDate birthday) {
         this.birthday = birthday;
     }
 
@@ -65,11 +66,11 @@ public class AdminDTO {
     }
 
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 

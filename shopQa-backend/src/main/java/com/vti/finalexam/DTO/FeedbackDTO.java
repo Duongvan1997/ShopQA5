@@ -6,12 +6,13 @@ import com.vti.finalexam.entity.Product;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class FeedbackDTO {
     private int id;
     private String comment;
-    private Date feedback_date;
+    private LocalDate feedback_date;
     private Feedback.RATING rating;
     private int customer_id;
     private int product_id;
@@ -24,7 +25,7 @@ public class FeedbackDTO {
         this.id = id;
     }
 
-    public FeedbackDTO(int id, String comment, Date feedback_date, Feedback.RATING rating, int customer_id, int product_id) {
+    public FeedbackDTO(int id, String comment, LocalDate feedback_date, Feedback.RATING rating, int customer_id, int product_id) {
         this.id =id;
         this.comment = comment;
         this.feedback_date = feedback_date;
@@ -51,11 +52,11 @@ public class FeedbackDTO {
         this.comment = comment;
     }
 
-    public Date getFeedback_date() {
+    public LocalDate getFeedback_date() {
         return feedback_date;
     }
 
-    public void setFeedback_date(Date feedback_date) {
+    public void setFeedback_date(LocalDate feedback_date) {
         this.feedback_date = feedback_date;
     }
 

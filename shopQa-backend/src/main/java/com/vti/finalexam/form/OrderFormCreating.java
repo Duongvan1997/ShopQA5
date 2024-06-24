@@ -2,12 +2,13 @@ package com.vti.finalexam.form;
 
 import com.vti.finalexam.entity.Order;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class OrderFormCreating {
     private float total_amount;
 
-    private Date oder_date;
+    private LocalDate oder_date;
 
     private Order.OderStatus oderStatus;
 
@@ -18,7 +19,7 @@ public class OrderFormCreating {
     private String address;
     private String phone;
 
-    public OrderFormCreating(float total_amount, Date oder_date, Order.OderStatus oderStatus, int customer_id, String address, String phone, int payment_method_id) {
+    public OrderFormCreating(float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, int customer_id, String address, String phone, int payment_method_id) {
         this.total_amount = total_amount;
         this.oder_date = oder_date;
         this.oderStatus = oderStatus;
@@ -54,11 +55,11 @@ public class OrderFormCreating {
         this.total_amount = total_amount;
     }
 
-    public Date getOder_date() {
+    public LocalDate getOder_date() {
         return oder_date;
     }
 
-    public void setOder_date(Date oder_date) {
+    public void setOder_date(LocalDate oder_date) {
         this.oder_date = oder_date;
     }
 
@@ -94,7 +95,7 @@ public class OrderFormCreating {
         this.payment_method_id = payment_method_id;
     }
 
-    public OrderFormCreating(float total_amount, Date oder_date, Order.OderStatus oderStatus, int customer_id, int employee_id, int payment_method_id) {
+    public OrderFormCreating(float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, int customer_id, int employee_id, int payment_method_id) {
         this.total_amount = total_amount;
         this.oder_date = oder_date;
         this.oderStatus = oderStatus;

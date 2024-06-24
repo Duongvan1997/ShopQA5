@@ -114,50 +114,50 @@ function Checkout() {
     );
   };
 
-  const handleChangeCityOption = (selectedCityOption) => {
-    setSelectedCityOption(selectedCityOption);
-    let districts_arr = citys.filter((city) => {
-      return city.value === selectedCityOption.value;
-    });
+  // const handleChangeCityOption = (selectedCityOption) => {
+  //   setSelectedCityOption(selectedCityOption);
+  //   let districts_arr = citys.filter((city) => {
+  //     return city.value === selectedCityOption.value;
+  //   });
 
-    districts_arr = districts_arr[0].districts.map((district) => {
-      return {
-        value: district.code,
-        label: district.name,
-        wards: district.wards,
-      };
-    });
+  //   districts_arr = districts_arr[0].districts.map((district) => {
+  //     return {
+  //       value: district.code,
+  //       label: district.name,
+  //       wards: district.wards,
+  //     };
+  //   });
 
-    setDistrict(districts_arr);
-    setSelectedDistrictOption(null);
-    setSelectedWardOption(null);
-  };
+  //   setDistrict(districts_arr);
+  //   setSelectedDistrictOption(null);
+  //   setSelectedWardOption(null);
+  // };
 
   const handleChangePaymentOption = (selectedPaymentOption) => {
     setSelectedMethod(selectedPaymentOption);
     console.log(selectedPaymentOption);
   };
 
-  const handleChangeDistrictOption = (selectedDistrictOption) => {
-    setSelectedDistrictOption(selectedDistrictOption);
-    let wards_arr = districts.filter((district) => {
-      return district.value === selectedDistrictOption.value;
-    });
+  // const handleChangeDistrictOption = (selectedDistrictOption) => {
+  //   setSelectedDistrictOption(selectedDistrictOption);
+  //   let wards_arr = districts.filter((district) => {
+  //     return district.value === selectedDistrictOption.value;
+  //   });
 
-    wards_arr = wards_arr[0].wards.map((ward) => {
-      return {
-        value: ward.code,
-        label: ward.name,
-      };
-    });
+  //   wards_arr = wards_arr[0].wards.map((ward) => {
+  //     return {
+  //       value: ward.code,
+  //       label: ward.name,
+  //     };
+  //   });
 
-    setWards(wards_arr);
-    setSelectedWardOption(null);
-  };
+  //   setWards(wards_arr);
+  //   setSelectedWardOption(null);
+  // };
 
-  const handleChangeWardOption = (selectedWardOption) => {
-    setSelectedWardOption(selectedWardOption);
-  };
+  // const handleChangeWardOption = (selectedWardOption) => {
+  //   setSelectedWardOption(selectedWardOption);
+  // };
   const handleCompleteOrder = () => {
     // console.log(selectedCityOption);
     // console.log(selectedDistrictOption);
@@ -170,11 +170,11 @@ function Checkout() {
     let fullAddress =
       customerAddress +
       ", " +
-      selectedWardOption.label +
+      selectedWardOption +
       ", " +
-      selectedDistrictOption.label +
+      selectedDistrictOption +
       ", " +
-      selectedCityOption.label;
+      selectedCityOption;
 
     const newOrder = {
       address: fullAddress,
@@ -279,7 +279,7 @@ function Checkout() {
 
             <test className="Checkout_left_row">
               <span>Tỉnh (Thành phố)</span>
-              <Select
+              {/* <Select
                 options={citys}
                 value={selectedCityOption}
                 onChange={handleChangeCityOption}
@@ -296,13 +296,20 @@ function Checkout() {
                 })}
                 className="select"
                 placeholder="Chọn tỉnh/thành phố"
+              /> */}
+               <input
+                type="text"
+                placeholder="Nhập tỉnh"
+                onChange={(e) => {
+                  setSelectedCityOption(e.target.value);
+                }}
               />
             </test>
 
             <div className="Checkout_left_row_2col">
               <div className="Checkout_left_row">
                 <span>Quận (Huyện)</span>
-                <Select
+                {/* <Select
                   options={districts}
                   value={selectedDistrictOption}
                   onChange={handleChangeDistrictOption}
@@ -319,11 +326,18 @@ function Checkout() {
                   })}
                   className="select"
                   placeholder="Chọn quận/huyện"
-                />
+                /> */}
+                 <input
+                type="text"
+                placeholder="Nhập huyện"
+                onChange={(e) => {
+                  setSelectedDistrictOption(e.target.value);
+                }}
+              />
               </div>
               <div className="Checkout_left_row">
                 <span>Phường (Xã)</span>
-                <Select
+                {/* <Select
                   options={wards}
                   value={selectedWardOption}
                   onChange={handleChangeWardOption}
@@ -340,7 +354,14 @@ function Checkout() {
                   })}
                   className="select"
                   placeholder="Chọn phường/xã"
-                />
+                /> */}
+                 <input
+                type="text"
+                placeholder="Nhập xã"
+                onChange={(e) => {
+                  setSelectedWardOption(e.target.value);
+                }}
+              />
               </div>
             </div>
             <div className="Checkout_left_row">
