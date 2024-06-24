@@ -18,6 +18,7 @@ import java.util.List;
 public interface IOderRepository extends JpaRepository<Order, Integer> {
     public Order getOrderById(int id);
     public List<Order> getOrderByCustomer(Account customer);
+
     public void deleteById(int id);
     @Modifying
     @Transactional

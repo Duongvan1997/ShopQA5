@@ -118,14 +118,14 @@ const OrderComfirmation = () => {
         <div className="actions">
           <button
             className="button1"
-            onClick={() => handleUpdateStatus(record.order_id, "TO_PAY")}
+            onClick={() => handleUpdateStatus(record.order_id, "TO_RECEIVE")}
           >
             Đã giao
           </button>
           <button
             className="button2"
             onClick={() =>
-              handleUpdateStatus(record.order_id, "ARE DELIVERING")
+              handleUpdateStatus(record.order_id, "ARE TO_RECEIVE")
             }
           >
             Giao hàng
