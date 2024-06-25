@@ -60,7 +60,7 @@ public class CustomerService implements ICustomerService{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate birthday =  LocalDate.parse(accountFormCreating.getBirthday(), formatter);
         String password = new BCryptPasswordEncoder().encode((CharSequence) accountFormCreating.getPassword());
-        Account customer = new Account(accountFormCreating.getUsername(), accountFormCreating.getPhone(), password, accountFormCreating.getFirstName(), accountFormCreating.getLastName(), accountFormCreating.getAddress(), birthday,accountFormCreating.getEmail(), Account.Role.CUSTOMER,accountFormCreating.getGender(), createdate);
+        Customer customer = new Customer(accountFormCreating.getUsername(), accountFormCreating.getPhone(), password, accountFormCreating.getFirstName(), accountFormCreating.getLastName(), accountFormCreating.getAddress(), birthday,accountFormCreating.getEmail(), Account.Role.CUSTOMER,accountFormCreating.getGender(), createdate);
         LocalDate creating_date = LocalDate.now();
         Order order = new Order(
                 creating_date,

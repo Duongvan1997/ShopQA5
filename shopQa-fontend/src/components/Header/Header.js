@@ -129,12 +129,14 @@ function Header() {
                             </div>
                             <hr></hr>
                             <div className="User-box-option">
-                                {
-                                    currentUser?.role === "ADMIN" ?
-                                        <Link to="/admin"><button>Quản lý</button></Link>
-                                        : ""
+                                {(currentUser?.role === "ADMIN" || currentUser?.role === "EMPLOYEE") && (
+                                    <Link to="/admin"><button>Quản lý</button></Link>
+                                )}
+                                {   
+                                    currentUser?.role === "CUSTOMER" ?
+                                     <Link to="/order"><button>Đơn hàng của bạn</button></Link>
+                                     :""
                                 }
-                                <Link to="/order"><button>Đơn hàng của bạn</button></Link>
                                 <button onClick={handleLogout}>Đăng xuất</button>
                             </div>
                         </div>
