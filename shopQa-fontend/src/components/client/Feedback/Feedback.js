@@ -45,7 +45,7 @@ const Feedback = ({ visible, hideModal, orderData }) => {
 
     const feedbackData = {
       comment: comment,
-      rating: rating,
+      rating: rating-1,
       feedback_date: moment().format("YYYY-MM-DD"),
       customer_id: userData.id,
       product_id: productId,
