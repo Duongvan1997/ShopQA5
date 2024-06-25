@@ -51,7 +51,7 @@ function AdminLayout() {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
-    if (userData?.role === "ADMIN") {
+    if (userData?.role === "ADMIN" || userData?.role === "EMPLOYEE" ) {
       setAdminData(userData);
     } else {
       navigate("/");
@@ -73,7 +73,7 @@ function AdminLayout() {
             </Flex>
             <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
               <Menu.Item key="1" icon={<DashboardOutlined />}>
-                <Link to="report">Tổng quan</Link>
+                <Link to="reports">Báo cáo thống kê</Link>
               </Menu.Item>
               <Menu.SubMenu key="UM" icon={<UserOutlined />} title="Người dùng">
                 <Menu.Item key="users" icon={<BarsOutlined />}>
@@ -137,6 +137,7 @@ function AdminLayout() {
               <Routes>
                 <Route path="/report" element={<ReportChart/>} />
                 <Route path="/users" element={<UserManager />} />
+                <Route path="/reports" element={<ReportChart />} />
                 <Route path="/products" element={<ProductManager />} />
                 <Route
                   path="/products-detail"

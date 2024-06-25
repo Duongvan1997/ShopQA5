@@ -82,15 +82,6 @@ function Order() {
         <div className="ContentOfMyOrder">{tabKey === "4" && <CANCELED />}</div>
       ),
     },
-    {
-      key: "5",
-      label: "Đã đánh giá",
-      children: (
-        <div className="ContentOfMyOrder">
-          {tabKey === "5" && <FEEDBACK_COMPLETE />}
-        </div>
-      ),
-    },
   ];
 
   return (
@@ -491,114 +482,6 @@ function COMPLETED() {
           </Button>
         </div>  
       ),
-    },
-  ];
-
-  const fetchData = async () => {
-    setLoading(true);
-
-    axios
-      .get(`http://localhost:8080/api/v1/orders/status/${userData.id}`, {
-        auth: {
-          username: userData.username,
-          password: userData.password,
-        },
-      })
-      .then((response) => {
-        console.log(response.data);
-
-        let dataForState = response.data.map((pd) => {
-          return {
-            group: {
-              img_url: pd.img_url,
-              subQuantity: pd.subQuantity,
-              productName: pd.productName,
-            },
-            status: pd.oderStatus,
-            totalAmount: pd.totalAmount,
-            key: pd.idOrder,
-            orderDate: pd.orderDate,
-            paymentName: pd.paymentName,
-          };
-        });
-
-        dataForState = dataForState.filter((pd) => {
-          return pd.status === "COMPLETED";
-        });
-
-        console.log(dataForState);
-
-        setOrdereds(dataForState);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  return (
-    <div className="COMPLETED">
-      <Table
-        columns={columns}
-        dataSource={ordereds}
-        size="large"
-        loading={loading}
-      />
-    </div>
-  );
-}
-
-function FEEDBACK_COMPLETE() {
-  const [ordereds, setOrdereds] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  const columns = [
-    {
-      title: "Đơn hàng",
-      dataIndex: "group",
-      key: "group",
-      render: (record) => (
-        <Flex align="center" gap={15}>
-          <Image
-            width={60}
-            src={record.img_url}
-            style={{ borderRadius: "5px" }}
-          />
-          <Flex vertical>
-            <h3>{record.productName}</h3>
-            <span>{record.subQuantity} sản phẩm</span>
-          </Flex>
-        </Flex>
-      ),
-    },
-    {
-      title: "Ngày đặt hàng",
-      dataIndex: "orderDate",
-      key: "orderDate",
-      render: (text) => convertDateTimeFormat(text),
-    },
-    {
-      title: "Tổng tiền",
-      dataIndex: "totalAmount",
-      key: "totalAmount",
-      render: (text) => (
-        <h3>{text.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ"}</h3>
-      ),
-    },
-    {
-      title: "Phương thức thanh toán",
-      dataIndex: "paymentName",
-      key: "paymentName",
-    },
-    {
-      title: "Trạng thái",
-      key: "status",
-      dataIndex: "status",
-      render: (text) => <Tag color="green">{text.toUpperCase()}</Tag>,
     },
   ];
 
