@@ -10,7 +10,7 @@ public class AccountDTO {
     private String username;
     private String lastName;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private Date createdDate;
+    private LocalDate createdDate;
     private Account.Role role;
 
     public String getUsername() {
@@ -21,7 +21,7 @@ public class AccountDTO {
         return lastName;
     }
 
-    public Date getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
@@ -29,7 +29,7 @@ public class AccountDTO {
         return role;
     }
 
-    public AccountDTO(String username, String fullName, Date createdDate, Account.Role role) {
+    public AccountDTO(String username, String fullName, LocalDate createdDate, Account.Role role) {
         this.username = username;
         this.lastName = fullName;
         this.createdDate = createdDate;

@@ -5,6 +5,7 @@ import { Table, message, Modal, Breadcrumb } from "antd";
 import { Link } from "react-router-dom";
 import React from "react";
 import { format } from "date-fns";
+import moment from "moment";
 
 function FeedbackManagement() {
   const { confirm } = Modal;
@@ -30,7 +31,7 @@ function FeedbackManagement() {
             product_id: feedback.product_id,
             rating: feedback.rating,
             comment: feedback.comment,
-            feedback_date: feedback.feedback_date,
+            feedback_date: moment(feedback.feedback_date).format("YYYY-MM-DD"),
           };
         });
         console.log("response :", response.data);

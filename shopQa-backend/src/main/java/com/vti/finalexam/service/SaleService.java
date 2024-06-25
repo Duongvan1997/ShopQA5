@@ -18,6 +18,8 @@ import org.springframework.util.StringUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 
@@ -37,9 +39,14 @@ public class SaleService implements ISaleService{
 
     @Override
     public void createSale(SaleFormCreating saleFormCreating) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date start_sale = dateFormat.parse(saleFormCreating.getStart_date());
-        Date end_sale = dateFormat.parse(saleFormCreating.getEnd_date());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date start_sale = dateFormat.parse(saleFormCreating.getStart_date());
+//        Date end_sale = dateFormat.parse(saleFormCreating.getEnd_date());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        LocalDate start_sale  =  LocalDate.parse(saleFormCreating.getStart_date(), formatter);
+        LocalDate end_sale  =  LocalDate.parse(saleFormCreating.getEnd_date(), formatter);
+        System.out.println("Start Date: " + start_sale);
+        System.out.println("End Date: " + end_sale);
         Sale sale = new Sale(
                 saleFormCreating.getSale_info(),
                 saleFormCreating.getPercent_sale(),
@@ -47,13 +54,18 @@ public class SaleService implements ISaleService{
                 end_sale
         );
         repository.save(sale);
+        System.out.println("Start Date after: " + sale.getStart_date());
+        System.out.println("End Date after: " + sale.getEnd_date());
     }
 
     @Override
     public void updateSale(int id, SaleFormCreating saleFormCreating) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        Date start_sale = dateFormat.parse(saleFormCreating.getStart_date());
-        Date end_sale = dateFormat.parse(saleFormCreating.getEnd_date());
+//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//        Date start_sale = dateFormat.parse(saleFormCreating.getStart_date());
+//        Date end_sale = dateFormat.parse(saleFormCreating.getEnd_date());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        LocalDate start_sale  =  LocalDate.parse(saleFormCreating.getStart_date(), formatter);
+        LocalDate end_sale  =  LocalDate.parse(saleFormCreating.getEnd_date(), formatter);
         Sale sale = repository.findById(id);
         sale.setSale_info(saleFormCreating.getSale_info());
         sale.setPercent_sale(saleFormCreating.getPercent_sale());

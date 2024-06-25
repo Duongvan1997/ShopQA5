@@ -1,6 +1,7 @@
 package com.vti.finalexam.entity;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Employee extends Account{
         this.orders_check = orders_check;
     }
 
-    public Employee(String username, String phone, String password, String firstName, String lastName, String address, Date birthday, String email, Role role, Gender gender, Date createdDate) {
+    public Employee(String username, String phone, String password, String firstName, String lastName, String address, LocalDate birthday, String email, Role role, Gender gender, LocalDate createdDate) {
         super( username, phone, password, firstName, lastName, address, birthday, email, role, gender, createdDate);
     }
 

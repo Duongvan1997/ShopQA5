@@ -67,18 +67,22 @@ const PaymentMethod = () => {
         );
         setNewMethod(""); // Reset input field
         setNewDescription(""); // Reset description field
+        setError(null); // Clear any previous error
       } catch (error) {
         console.error("Error adding payment method:", error);
+        setError("Thêm phương thức thanh toán thất bại");
       }
+    } else {
+      setError("Please provide all the required fields.");
     }
   };
 
   const handleEditMethod = async () => {
     if (editMethodId && editMethodName && editDescription) {
       try {
-        const response = await axios.put(
+        await axios.put(
           `http://localhost:8080/api/v1/paymentMethods/update/${editMethodId}`,
-          { name: editMethodName, description_payment: editDescription }, // Chú ý tên trường
+          { name: editMethodName, description_payment: editDescription },
           {
             auth: {
               username: adminData.username,
@@ -102,6 +106,7 @@ const PaymentMethod = () => {
         setEditDescription("");
         setError(null); // Clear any previous error
       } catch (error) {
+        console.error("Error updating payment method:", error);
         setError("Chỉnh sửa thất bại");
       }
     } else {
@@ -128,8 +133,8 @@ const PaymentMethod = () => {
         setDeleteMethodId(null); // Clear the delete method id
         setError(null); // Clear any previous error
       } catch (error) {
-        setError("Xóa thất bại");
         console.error("Error deleting payment method:", error);
+        setError("Xóa thất bại");
       }
     }
   };
@@ -145,22 +150,24 @@ const PaymentMethod = () => {
             <li key={method.id}>
               <div className="payment-method">
                 <span>{method.name}</span>
-                <p>{method.descriptionPayment}</p>
-                <FaEdit
-                  className="edit-icon"
-                  onClick={() => {
-                    setEditMethodId(method.id);
-                    setEditMethodName(method.name);
-                    setEditDescription(method.descriptionPayment);
-                  }}
-                />
-                <FaTrash
-                  className="delete-icon"
-                  onClick={() => {
-                    setDeleteMethodId(method.id);
-                    setShowDeleteConfirm(true);
-                  }}
-                />
+                <p>{method.description_payment}</p>
+                <div className="icon-container">
+                  <FaEdit
+                    className="edit-icon"
+                    onClick={() => {
+                      setEditMethodId(method.id);
+                      setEditMethodName(method.name);
+                      setEditDescription(method.description_payment);
+                    }}
+                  />
+                  <FaTrash
+                    className="delete-icon"
+                    onClick={() => {
+                      setDeleteMethodId(method.id);
+                      setShowDeleteConfirm(true);
+                    }}
+                  />
+                </div>
               </div>
             </li>
           ))}
@@ -191,15 +198,17 @@ const PaymentMethod = () => {
       {showDeleteConfirm && (
         <div className="delete-confirm-dialog">
           <p>Are you sure you want to delete this payment method?</p>
-          <button onClick={handleDeleteMethod}>Xóa</button>
-          <button
-            onClick={() => {
-              setShowDeleteConfirm(false);
-              setDeleteMethodId(null);
-            }}
-          >
-            Hủy
-          </button>
+          <div className="button-container">
+            <button onClick={handleDeleteMethod}>Xóa</button>
+            <button
+              onClick={() => {
+                setShowDeleteConfirm(false);
+                setDeleteMethodId(null);
+              }}
+            >
+              Hủy
+            </button>
+          </div>
         </div>
       )}
       <div className="add-method">
@@ -221,6 +230,7 @@ const PaymentMethod = () => {
             <FaPlus /> Add
           </button>
         </div>
+        {error && <p className="error-message">{error}</p>}{" "}
       </div>
     </div>
   );

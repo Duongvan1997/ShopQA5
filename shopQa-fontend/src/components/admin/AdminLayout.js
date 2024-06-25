@@ -41,7 +41,6 @@ import SalesManager from "./Sales-Manager/SalesManager";
 import UpdateSales from "./Sales-Manager/UpdateSales";
 import FeedbackManagement from "./FeedbackManagement/FeedbackManagetment";
 import ReportChart from "./ReportChart/ReportChart";
-
 const { Sider, Content } = Layout;
 
 function AdminLayout() {
@@ -74,7 +73,7 @@ function AdminLayout() {
             </Flex>
             <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
               <Menu.Item key="1" icon={<DashboardOutlined />}>
-                <Link to="reports">Tổng quan</Link>
+
               </Menu.Item>
               <Menu.SubMenu key="UM" icon={<UserOutlined />} title="Người dùng">
                 <Menu.Item key="users" icon={<BarsOutlined />}>
@@ -136,6 +135,7 @@ function AdminLayout() {
           <Layout>
             <Content className="AdminContent">
               <Routes>
+                <Route path="/report" element={<ReportChart/>} />
                 <Route path="/users" element={<UserManager />} />
                 <Route path="/reports" element={<ReportChart />} />
                 <Route path="/products" element={<ProductManager />} />
@@ -176,6 +176,7 @@ function AdminLayout() {
                 <Route path="/sales/create" element={<AddSales/>}></Route>
                 <Route path="/sales/" element={<SalesManager/>}></Route>
                 <Route path="/sales/:id" element={<UpdateSales/>}></Route>
+                
               </Routes>
             </Content>
           </Layout>

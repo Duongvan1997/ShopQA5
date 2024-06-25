@@ -269,7 +269,7 @@ public class OrderController {
         return new ResponseEntity<>(customerOrderDTOS, HttpStatus.OK);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "delete/{id}")
     public ResponseEntity<?> deleteOrder(@PathVariable(name = "id") int id){
         service.deleteOrder(id);
         return new ResponseEntity<String>("Delete successfull!", HttpStatus.OK);
