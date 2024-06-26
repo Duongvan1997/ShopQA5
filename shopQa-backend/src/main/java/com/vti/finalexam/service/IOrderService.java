@@ -33,4 +33,6 @@ public interface IOrderService {
     public  void deleteOrder(int id);
 
     void deleteOrders(List<Integer> ids);
+
+   // void changeStatusByEmployee(int id, int employeeId, changeStatusDTO changeStatusDTO);
 }
