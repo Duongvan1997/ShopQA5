@@ -35,6 +35,7 @@ public class Order implements Serializable {
     @Enumerated(EnumType.STRING)
     private OderStatus oderStatus;
 
+
     public Order(Date oderDate, int customerId, PaymentMethod paymentMethod) {
     }
 
