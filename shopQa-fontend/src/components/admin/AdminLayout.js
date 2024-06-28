@@ -41,6 +41,7 @@ import SalesManager from "./Sales-Manager/SalesManager";
 import UpdateSales from "./Sales-Manager/UpdateSales";
 import FeedbackManagement from "./FeedbackManagement/FeedbackManagetment";
 import ReportChart from "./ReportChart/ReportChart";
+import UpdateAdminEmployee from "./Update-admin-employee/UpdateAdminEmployee";
 const { Sider, Content } = Layout;
 
 function AdminLayout() {
@@ -51,7 +52,7 @@ function AdminLayout() {
 
   useEffect(() => {
     const userData = JSON.parse(localStorage.getItem("user"));
-    if (userData?.role === "ADMIN" || userData?.role === "EMPLOYEE" ) {
+    if (userData?.role === "ADMIN" || userData?.role === "EMPLOYEE") {
       setAdminData(userData);
     } else {
       navigate("/");
@@ -84,7 +85,7 @@ function AdminLayout() {
                   <Link to="feedback-management">Quản lý feedback</Link>
                 </Menu.Item>
                 <Menu.Item key="users/add" icon={<PlusOutlined />}>
-                  <Link to="users/add">Thêm người dùng</Link>
+                  <Link to="users/add">Thêm mới nhân sự</Link>
                 </Menu.Item>
               </Menu.SubMenu>
               <Menu.SubMenu
@@ -116,13 +117,17 @@ function AdminLayout() {
                   <Link to="products-detail">Chi tiết sản phẩm</Link>
                 </Menu.Item>
               </Menu.SubMenu>
-              <Menu.SubMenu key="sale" icon={<PercentageOutlined />} title="Khuyến mãi">
-                  <Menu.Item key="sales/create" icon={<PlusOutlined />}>
-                      <Link to="sales/create">Thêm khuyến mãi</Link>
-                  </Menu.Item>
-                  <Menu.Item key="sales" icon={<BarsOutlined />}>
-                      <Link to="sales">Quản lý khuyến mãi</Link>
-                  </Menu.Item>
+              <Menu.SubMenu
+                key="sale"
+                icon={<PercentageOutlined />}
+                title="Khuyến mãi"
+              >
+                <Menu.Item key="sales/create" icon={<PlusOutlined />}>
+                  <Link to="sales/create">Thêm khuyến mãi</Link>
+                </Menu.Item>
+                <Menu.Item key="sales" icon={<BarsOutlined />}>
+                  <Link to="sales">Quản lý khuyến mãi</Link>
+                </Menu.Item>
               </Menu.SubMenu>
               <Menu.Item key="settings" icon={<SettingOutlined />}>
                 <Link to="settings">Settings</Link>
@@ -135,7 +140,7 @@ function AdminLayout() {
           <Layout>
             <Content className="AdminContent">
               <Routes>
-                <Route path="/report" element={<ReportChart/>} />
+                <Route path="/report" element={<ReportChart />} />
                 <Route path="/users" element={<UserManager />} />
                 <Route path="/reports" element={<ReportChart />} />
                 <Route path="/products" element={<ProductManager />} />
@@ -168,15 +173,15 @@ function AdminLayout() {
                   path="/feedback-management"
                   element={<FeedbackManagement />}
                 />
+                <Route path="users/add" element={<UpdateAdminEmployee />} />
 
                 <Route
                   path="/orders/checkOrder/:id"
                   element={<CheckOrder />}
                 ></Route>
-                <Route path="/sales/create" element={<AddSales/>}></Route>
-                <Route path="/sales/" element={<SalesManager/>}></Route>
-                <Route path="/sales/:id" element={<UpdateSales/>}></Route>
-                
+                <Route path="/sales/create" element={<AddSales />}></Route>
+                <Route path="/sales/" element={<SalesManager />}></Route>
+                <Route path="/sales/:id" element={<UpdateSales />}></Route>
               </Routes>
             </Content>
           </Layout>

@@ -27,13 +27,20 @@ public class AccountController {
     @Autowired
     private IAccountService service;
 
-    @GetMapping()
+    @GetMapping(value = "/getAll")
     public ResponseEntity<?> getAllAccounts(Pageable pageable, @RequestParam String search){
         Page<Account> entities = service.getAllAccounts(pageable, search);
         Page<AccountDTO> dtos = entities.map(new Function<Account, AccountDTO>() {
             @Override
             public AccountDTO apply(Account account) {
-                AccountDTO dto = new AccountDTO(account.getUsername(), account.getLastName(),account.getCreatedDate(), account.getRole());
+                AccountDTO dto = new AccountDTO(account.getUsername(),
+                                                account.getFirstName(),
+                                                account.getLastName(),
+                                                account.getCreatedDate(),
+                                                account.getRole(),
+                                                account.getEmail(),
+                                                account.getId(),
+                                                account.getGender());
                 return dto;
             }
         });
