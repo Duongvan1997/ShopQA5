@@ -1,115 +1,89 @@
-
-import "./UserManager.css"
+import "./UserManager.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import qs from 'qs';
-import { Table } from 'antd';
+import { Table, Input } from "antd";
+
+const adminData = JSON.parse(localStorage.getItem("user"));
 
 const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-        sorter: true,
-        render: (name) => `${name.first} ${name.last}`,
-    },
-    {
-        title: 'Gender',
-        dataIndex: 'gender',
-        filters: [
-            {
-                text: 'Male',
-                value: 'male',
-            },
-            {
-                text: 'Female',
-                value: 'female',
-            },
-        ],
-    },
-    {
-        title: 'Email',
-        dataIndex: 'email',
-    },
+  {
+    title: "Id",
+    dataIndex: "id",
+  },
+  {
+    title: "Name",
+    dataIndex: "fullName",
+  },
+  {
+    title: "Gender",
+    dataIndex: "gender",
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+  },
 ];
 
-const getRandomuserParams = (params) => ({
-    results: params.pagination?.pageSize,
-    page: params.pagination?.current,
-    ...params,
-});
+const UserManager = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [searchText, setSearchText] = useState(""); // Thêm state cho search
 
-function UserManager() {
-
-    const [data, setData] = useState();
-    const [loading, setLoading] = useState(false);
-    const [tableParams, setTableParams] = useState({
-        pagination: {
-            current: 1,
-            pageSize: 10,
+  const fetchData = (search = "") => {
+    setLoading(true);
+    axios
+      .get("http://localhost:8080/api/v1/accounts/getAll", {
+        params: { search }, // Thêm tham số search
+        auth: {
+          username: adminData.username,
+          password: adminData.password,
         },
-    });
+      })
+      .then((response) => {
+        console.log(response.data.content);
+        const accountFormatted = response.data.content.map((account) => ({
+          id: account.id,
+          fullName: account.firstName,
+          gender: account.gender,
+          email: account.email,
+        }));
+        console.log(response);
+        setData(accountFormatted);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error", error);
+        setLoading(false);
+      });
+  };
 
-    const fetchData = () => {
-        setLoading(true);
-        fetch(`https://randomuser.me/api?${qs.stringify(getRandomuserParams(tableParams))}`)
-            .then((res) => res.json())
-            .then(({ results }) => {
-                setData(results);
-                setLoading(false);
-                setTableParams({
-                    ...tableParams,
-                    pagination: {
-                        ...tableParams.pagination,
-                        total: 200,
-                        // 200 is mock data, you should read it from server
-                        // total: data.totalCount,
-                    },
-                });
-            });
-    };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    fetchData(); // Gọi API mà không có searchText khi component mount
+  }, [adminData.username, adminData.password]);
 
-    useEffect(() => {
-        fetchData();
-    }, [JSON.stringify(tableParams)]);
+  const handleSearch = () => {
+    fetchData(searchText); // Gọi API với searchText khi thực hiện tìm kiếm
+  };
 
-    const handleTableChange = (pagination, filters, sorter) => {
-        setTableParams({
-            pagination,
-            filters,
-            ...sorter,
-        });
-
-        // `dataSource` is useless since `pageSize` changed
-        if (pagination.pageSize !== tableParams.pagination?.pageSize) {
-            setData([]);
-        }
-    };
-
-    useEffect(() => {
-        window.scrollTo(0, 0);
-
-        axios.get('http://localhost:8080/api/v1/products/full')
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching data:', error);
-            });
-
-    }, [])
-
-    return (
-        <div className="UserManager">
-            <Table
-                columns={columns}
-                rowKey={(record) => record.login.uuid}
-                dataSource={data}
-                pagination={tableParams.pagination}
-                loading={loading}
-                onChange={handleTableChange}
-            />
-        </div>
-    )
-}
+  return (
+    <div className="UserManager">
+      <Input
+        placeholder="Search by name or phone"
+        value={searchText}
+        onChange={(e) => setSearchText(e.target.value)}
+        style={{ marginBottom: 20, width: 300 }}
+        onPressEnter={handleSearch} // Tìm kiếm khi nhấn Enter
+      />
+      <Table
+        columns={columns}
+        dataSource={data}
+        loading={loading}
+        pagination={{ pageSize: 10 }}
+        rowKey="id"
+      />
+    </div>
+  );
+};
 
 export default UserManager;

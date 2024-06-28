@@ -16,6 +16,7 @@ public interface IAccountRepository extends JpaRepository<Account, Integer> {
    public Account findByUsername(String username);
 
     <T> Page<Account> findAll(Specification<T> where, Pageable pageable);
+
     public boolean existsByUsername(String username);
 
     public Account getAccountById(int id);

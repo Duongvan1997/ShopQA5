@@ -40,7 +40,7 @@ public class AdminController {
         });
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
-    @PostMapping()
+    @PostMapping(value="/create")
     public ResponseEntity<?> createAdmin(@RequestBody AccountFormCreating formCreating) throws ParseException {
         service.createAdmin(formCreating);
         return new ResponseEntity<String>("Create successfully", HttpStatus.CREATED);

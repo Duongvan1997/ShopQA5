@@ -12,7 +12,6 @@ const OrderComfirmation = () => {
   const [itemsData, setItemsData] = useState([]);
   const adminData = JSON.parse(localStorage.getItem("user"));
   const [loading, setLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
 
   const fetchData = () => {
     setLoading(true);
@@ -27,6 +26,7 @@ const OrderComfirmation = () => {
         const ordersFormatted = response.data.map((order) => {
           return {
             order_id: order.id,
+            employee_id: order.employeeId,
             customer_name: order.customer_name,
             phone: order.phone,
             status: order.oderStatus,
@@ -77,11 +77,12 @@ const OrderComfirmation = () => {
           },
         }
       );
+
       const updatedOrder = response.data;
       setItemsData(
         itemsData.map((order) =>
           order.order_id === orderId
-            ? { ...order, status: updatedOrder.status }
+            ? { ...order, status: updatedOrder.oderStatus }
             : order
         )
       );
@@ -118,14 +119,24 @@ const OrderComfirmation = () => {
         <div className="actions">
           <button
             className="button1"
-            onClick={() => handleUpdateStatus(record.order_id, "TO_RECEIVE")}
+            onClick={() =>
+              handleUpdateStatus(
+                record.order_id,
+                record.employee_id,
+                "TO_RECEIVE"
+              )
+            }
           >
             Đã giao
           </button>
           <button
             className="button2"
             onClick={() =>
-              handleUpdateStatus(record.order_id, "ARE TO_RECEIVE")
+              handleUpdateStatus(
+                record.order_id,
+                record.employee_id,
+                "ARE TO_RECEIVE"
+              )
             }
           >
             Giao hàng

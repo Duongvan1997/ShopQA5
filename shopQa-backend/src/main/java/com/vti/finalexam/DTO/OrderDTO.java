@@ -26,6 +26,7 @@ public class OrderDTO {
     private String payment_method;
     private int payment_method_id;
 
+
     public int getId() {
         return id;
     }
@@ -58,13 +59,17 @@ public class OrderDTO {
         this.payment_method = payment_method;
     }
 
+
+
+
+
+
     public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, int customer_id, int employee_id, String address, String phone, int payment_method_id) {
         this.id = id;
         this.total_amount = total_amount;
         this.oder_date = oder_date;
         this.oderStatus = oderStatus;
         this.customer_id = customer_id;
-        this.employee_id = employee_id;
         this.address = address;
         this.phone = phone;
         this.payment_method_id = payment_method_id;
@@ -102,6 +107,16 @@ public class OrderDTO {
         this.address = address;
         this.phone = phone;
         this.payment_method_id = payment_method_id;
+    }
+    public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, String s, String address, int employee_id, String phone, String description_payment) {
+        this.id=id;
+        this.total_amount = total_amount;
+        this.oder_date = oder_date;
+        this.oderStatus = oderStatus;
+        this.employee_id = employee_id;
+        this.address = address;
+        this.phone = phone;
+        this.payment_method = description_payment;
     }
 
     public String getAddress() {
