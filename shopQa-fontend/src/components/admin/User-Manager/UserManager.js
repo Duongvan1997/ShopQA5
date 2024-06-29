@@ -69,7 +69,7 @@ const UserManager = () => {
   return (
     <div className="UserManager">
       <Input
-        placeholder="Search by name or phone"
+        placeholder="Search by name"
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         style={{ marginBottom: 20, width: 300 }}

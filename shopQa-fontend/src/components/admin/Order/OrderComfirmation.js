@@ -4,7 +4,7 @@ import axios from "axios";
 import "./OrderComfirmation.css";
 import moment from "moment";
 
-const ITEMS_PER_PAGE = 4; // Định nghĩa số mục trên mỗi trang
+const ITEMS_PER_PAGE = 4;
 
 const OrderComfirmation = () => {
   const { confirm } = Modal;
@@ -23,18 +23,14 @@ const OrderComfirmation = () => {
         },
       })
       .then((response) => {
-        const ordersFormatted = response.data.map((order) => {
-          return {
-            order_id: order.id,
-            employee_id: order.employeeId,
-            customer_name: order.customer_name,
-            phone: order.phone,
-            status: order.oderStatus,
-            order_date: moment(order.order_date).format("YYYY-MM-DD"),
-          };
-        });
-        console.log("response:", response.data);
-
+        const ordersFormatted = response.data.map((order) => ({
+          order_id: order.id,
+          employee_id: adminData.id,
+          customer_name: order.customer_name,
+          phone: order.phone,
+          status: order.oderStatus,
+          order_date: moment(order.order_date).format("YYYY-MM-DD"),
+        }));
         setItemsData(ordersFormatted);
         setLoading(false);
       })
@@ -119,24 +115,14 @@ const OrderComfirmation = () => {
         <div className="actions">
           <button
             className="button1"
-            onClick={() =>
-              handleUpdateStatus(
-                record.order_id,
-                record.employee_id,
-                "TO_RECEIVE"
-              )
-            }
+            onClick={() => handleUpdateStatus(record.order_id, "TO_RECEIVE")}
           >
             Đã giao
           </button>
           <button
             className="button2"
             onClick={() =>
-              handleUpdateStatus(
-                record.order_id,
-                record.employee_id,
-                "ARE TO_RECEIVE"
-              )
+              handleUpdateStatus(record.order_id, "ARE TO_RECEIVE")
             }
           >
             Giao hàng

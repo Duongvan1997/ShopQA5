@@ -1,9 +1,11 @@
 package com.vti.finalexam.DTO;
 
+import com.sun.istack.NotNull;
 import com.vti.finalexam.entity.Order;
 
 public class changeStatusDTO {
     private int employee_id;
+    @NotNull
     private Order.OderStatus oderStatus;
 
     public int getCustomer_id() {

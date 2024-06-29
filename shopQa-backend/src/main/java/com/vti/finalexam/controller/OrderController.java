@@ -105,7 +105,7 @@ public class OrderController {
                                                 (order.getCustomer().getFirstName()+order.getCustomer().getLastName()),
                                                 order.getAddress(),
                                                 order.getPhone(),
-                                                order.getPayment_method().getDescription_payment());
+                                                order.getPayment_method().getName());
                    orderDTOS.add(dto);
                }else{
                    if(order.getEmployee() == null){
@@ -116,7 +116,7 @@ public class OrderController {
                                (order.getCustomer().getFirstName()+order.getCustomer().getLastName()),
                                order.getAddress(),
                                order.getPhone(),
-                               order.getPayment_method().getDescription_payment());
+                               order.getPayment_method().getName());
                        orderDTOS.add(dto);
                    }else{
                        OrderDTO dto = new OrderDTO(order.getId(),
@@ -127,7 +127,7 @@ public class OrderController {
                                (order.getEmployee().getFirstName()+order.getEmployee().getLastName()),
                                order.getAddress(),
                                order.getPhone(),
-                               order.getPayment_method().getDescription_payment());
+                               order.getPayment_method().getName());
                        orderDTOS.add(dto);
                    }
 

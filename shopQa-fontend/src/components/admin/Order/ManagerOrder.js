@@ -4,7 +4,7 @@ import axios from "axios";
 import { Badge, Breadcrumb, Flex, Table, Button, message, Modal } from "antd";
 import { Link } from "react-router-dom";
 import React from "react";
-import { format } from "date-fns";
+import { format, longFormatters } from "date-fns";
 
 function ManagerOrder() {
   const { confirm } = Modal;
@@ -24,6 +24,7 @@ function ManagerOrder() {
       })
 
       .then((response) => {
+        console.log(response.data);
         const OrdersFormatted = response.data.map((order) => {
           return {
             order_id: order.id,
@@ -31,10 +32,10 @@ function ManagerOrder() {
             oder_date: order.oder_date,
             oderStatus: order.oderStatus,
             customer_name: order.customer_name,
-            employee_name: order.employee_name,
+            employee_id: order.employeeId,
             address: order.address,
             phone: order.phone,
-            payment_method: order.payment_method,
+            paymentName: order.payment_method,
           };
           //   console.log("response :", response.data);
         });
@@ -77,10 +78,10 @@ function ManagerOrder() {
       title: "Khách hàng",
       dataIndex: "customer_name",
     },
-    {
-      title: "Nhân viên",
-      dataIndex: "employee_name",
-    },
+    // {
+    //   title: "Nhân viên",
+    //   dataIndex: "employee_id",
+    // },
     {
       title: "Địa chỉ",
       dataIndex: "address",
@@ -91,7 +92,7 @@ function ManagerOrder() {
     },
     {
       title: "Phương thức",
-      dataIndex: "payment_method",
+      dataIndex: "paymentName",
     },
   ];
 
