@@ -108,7 +108,7 @@ public class OrderDTO {
         this.phone = phone;
         this.payment_method_id = payment_method_id;
     }
-    public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, String s, String address, int employee_id, String phone, String description_payment) {
+    public OrderDTO(int id, float total_amount, LocalDate oder_date, Order.OderStatus oderStatus, String s, String address, int employee_id, String phone, String payment_method) {
         this.id=id;
         this.total_amount = total_amount;
         this.oder_date = oder_date;
@@ -116,7 +116,7 @@ public class OrderDTO {
         this.employee_id = employee_id;
         this.address = address;
         this.phone = phone;
-        this.payment_method = description_payment;
+        this.payment_method = payment_method;
     }
 
     public String getAddress() {

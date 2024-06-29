@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { Input, Button, DatePicker, Radio, notification } from "antd";
-import { CheckCircleOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // Sử dụng useNavigate từ React Router v6
 import "./UpdateAdminEmployee.css";
 
 const UpdateAdminEmployee = () => {
   const userData = JSON.parse(localStorage.getItem("user"));
-  const navigate = useNavigate(); // Sử dụng useNavigate để điều hướng
 
   dayjs.extend(customParseFormat);
   const dateFormat = "YYYY/MM/DD";
@@ -24,7 +22,6 @@ const UpdateAdminEmployee = () => {
     email: "",
     phone: "",
     gender: "",
-    role: ""
   });
 
   const [errors, setErrors] = useState({});
@@ -63,16 +60,15 @@ const UpdateAdminEmployee = () => {
     tempErrors.birthday = formData.birthday ? "" : "Chọn ngày sinh!";
     tempErrors.email = formData.email ? "" : "Nhập email!";
     tempErrors.gender = formData.gender ? "" : "Chọn giới tính!";
-    tempErrors.role = formData.role ? "" : "Chọn vai trò!";
     setErrors(tempErrors);
-    return Object.values(tempErrors).every(x => x === "");
+    return Object.values(tempErrors).every((x) => x === "");
   };
 
   const showSuccessNotification = () => {
     notification.success({
-      message: 'Đăng ký thành công',
-      description: 'Tài khoản đã được tạo thành công.',
-      icon: <CheckCircleOutlined style={{ color: '#52c41a' }} />,
+      message: "Đăng ký thành công",
+      description: "Tài khoản đã được tạo thành công.",
+      icon: <CheckCircleOutlined style={{ color: "#52c41a" }} />,
     });
   };
 
@@ -88,7 +84,7 @@ const UpdateAdminEmployee = () => {
         email: formData.email,
         phone: formData.phone,
         gender: formData.gender,
-        role: formData.role,
+        role: "EMPLOYEE",
       };
 
       try {
@@ -96,19 +92,22 @@ const UpdateAdminEmployee = () => {
           auth: {
             username: userData.username,
             password: userData.password,
-          }
+          },
         };
 
-        if (formData.role === "ADMIN") {
-          await axios.post("http://localhost:8080/api/v1/admins/create", newAccount, config);
-        } else if (formData.role === "EMPLOYEE") {
-          await axios.post("http://localhost:8080/api/v1/employees/create", newAccount, config);
-        }
+        const response = await axios.post(
+          "http://localhost:8080/api/v1/employees/create",
+          newAccount,
+          config
+        );
+        console.log("API Response:", response.data);
         showSuccessNotification();
         window.scrollTo(0, 0); // Cuộn trang lên đầu sau khi đăng ký thành công
-       
       } catch (error) {
-        console.error("Đăng ký không thành công", error);
+        console.error(
+          "Đăng ký không thành công",
+          error.response?.data || error.message
+        );
         window.scrollTo(0, 0); // Cuộn trang lên đầu nếu đăng ký thất bại
       }
     }
@@ -126,7 +125,9 @@ const UpdateAdminEmployee = () => {
               value={formData.username}
               onChange={handleInputChange}
             />
-            {errors.username && <span className="error">{errors.username}</span>}
+            {errors.username && (
+              <span className="error">{errors.username}</span>
+            )}
           </div>
           <div className="form-item">
             <Input
@@ -137,7 +138,9 @@ const UpdateAdminEmployee = () => {
               value={formData.password}
               onChange={handleInputChange}
             />
-            {errors.password && <span className="error">{errors.password}</span>}
+            {errors.password && (
+              <span className="error">{errors.password}</span>
+            )}
           </div>
           <div className="form-item">
             <Input
@@ -147,7 +150,9 @@ const UpdateAdminEmployee = () => {
               value={formData.firstName}
               onChange={handleInputChange}
             />
-            {errors.firstName && <span className="error">{errors.firstName}</span>}
+            {errors.firstName && (
+              <span className="error">{errors.firstName}</span>
+            )}
           </div>
           <div className="form-item">
             <Input
@@ -157,7 +162,9 @@ const UpdateAdminEmployee = () => {
               value={formData.lastName}
               onChange={handleInputChange}
             />
-            {errors.lastName && <span className="error">{errors.lastName}</span>}
+            {errors.lastName && (
+              <span className="error">{errors.lastName}</span>
+            )}
           </div>
           <div className="form-item">
             <Input
@@ -185,9 +192,11 @@ const UpdateAdminEmployee = () => {
               format={dateFormat}
               value={formData.birthday}
               onChange={handleDateChange}
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             />
-            {errors.birthday && <span className="error">{errors.birthday}</span>}
+            {errors.birthday && (
+              <span className="error">{errors.birthday}</span>
+            )}
           </div>
           <div className="form-item">
             <Input
@@ -204,7 +213,7 @@ const UpdateAdminEmployee = () => {
               name="gender"
               value={formData.gender}
               onChange={handleRadioChange}
-              style={{ width: '100%' }}
+              style={{ width: "100%" }}
             >
               <Radio value={"FEMALE"}>FEMALE</Radio>
               <Radio value={"MALE"}>MALE</Radio>
@@ -213,19 +222,9 @@ const UpdateAdminEmployee = () => {
             {errors.gender && <span className="error">{errors.gender}</span>}
           </div>
           <div className="form-item">
-            <Radio.Group
-              name="role"
-              value={formData.role}
-              onChange={handleRadioChange}
-              style={{ width: '100%' }}
-            >
-              <Radio value={"ADMIN"}>ADMIN</Radio>
-              <Radio value={"EMPLOYEE"}>EMPLOYEE</Radio>
-            </Radio.Group>
-            {errors.role && <span className="error">{errors.role}</span>}
-          </div>
-          <div className="form-item">
-            <Button type="primary" size="large" onClick={onFinish}>Đăng ký</Button>
+            <Button type="primary" size="large" onClick={onFinish}>
+              Đăng ký
+            </Button>
           </div>
         </div>
       </div>
