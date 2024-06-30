@@ -37,9 +37,9 @@ const UserManager = () => {
     axios
       .get(`http://localhost:8080/api/v1/accounts/getAll`, {
         params: {
-          page: page - 1, // API page index starts from 0
+          page: page - 1,
           size: 10,
-          sort: "id,asc",
+          sort: "id,desc",
           search: search,
         },
         auth: {
@@ -52,7 +52,7 @@ const UserManager = () => {
         const { content, totalPages, totalElements } = response.data;
         const accountFormatted = content.map((account) => ({
           id: account.id,
-          fullName: account.firstName,
+          fullName: account.fullName,
           gender: account.gender,
           email: account.email,
         }));
@@ -69,11 +69,11 @@ const UserManager = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchData(currentPage, searchText); // Fetch data when component mounts or when currentPage or searchText changes
+    fetchData(currentPage, searchText);
   }, [currentPage, searchText]);
 
   const handleSearch = () => {
-    setCurrentPage(1); // Reset to first page when searching
+    setCurrentPage(1);
     fetchData(1, searchText);
   };
 
@@ -94,27 +94,28 @@ const UserManager = () => {
         columns={columns}
         rowKey={(record) => record.id}
         dataSource={data}
-        pagination={false} // Disable internal pagination of Table
-        loading={loading}
+
       />
+  
       <div style={{ marginTop: 20, textAlign: "center" }}>
-        <Flex >
-            <button
+        <div className="Paginate">
+          <button
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
-            >
+          >
             Previous
-            </button>
-            <span style={{ margin: "0 10px" }}>
+          </button>
+          <span>
             {currentPage} of {totalPages}
-            </span>
-            <button
+          </span>
+          <button
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
-            >
+          >
             Next
-            </button>
-        </Flex >
+          </button>
+        </div>
+
       </div>
     </div>
   );
