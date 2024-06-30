@@ -55,7 +55,7 @@ public class AccountDTO {
     }
 
     public String getFullName() {
-        return firstName + lastName;
+        return firstName + " " + lastName;
     }
 
     public LocalDate getCreatedDate() {
