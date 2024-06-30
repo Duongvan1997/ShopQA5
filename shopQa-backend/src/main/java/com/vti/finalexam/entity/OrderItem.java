@@ -29,7 +29,8 @@ public class OrderItem implements Serializable {
     @ManyToOne
     @JoinColumn(name="product_detailId", nullable = true)
     private ProductDetail product_detail_order;
-    @Column(name = "isfeedback", nullable = true)
+
+    @Column(name = "isfeedback", nullable = false)
     private boolean isFeedbackReceived;
 
     public OrderItem() {

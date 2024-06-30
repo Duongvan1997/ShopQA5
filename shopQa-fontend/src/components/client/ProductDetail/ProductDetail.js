@@ -271,7 +271,7 @@ function ProductDetail() {
         <div style={{ marginLeft: "20px" }}>
           {feedbacks.map((feedback, index) => (
             <div key={index} style={{ display: "flex", marginTop: "25px" }}>
-              Customer: {feedback.customer_id}
+               {feedback.customer_name}
               <div style={{ marginLeft: "20px", display: "flex", flexDirection: "column"}}>
                 <Rate
                   value={feedback.rating}
@@ -285,7 +285,7 @@ function ProductDetail() {
                     color: "black",
                     backgroundColor: "white",
                     resize: "none",
-                    width: "1000px",
+                    width: "250px",
                     height: "40px",
                   }}
                 />
