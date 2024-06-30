@@ -14,7 +14,7 @@ public class Customer extends Account{
     @OneToMany(mappedBy = "customer")
     private List<Order> orders_buy;
 
-    @OneToMany(mappedBy = "customerId")
+    @OneToMany(mappedBy = "customer")
     private List<Feedback> feedbacks;
 
     public Customer(String username, String phone, String password, String firstName, String lastName, String address, LocalDate birthday, String email, Role role, Gender gender, LocalDate createdDate) {

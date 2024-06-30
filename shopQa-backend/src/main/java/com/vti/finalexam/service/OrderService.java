@@ -49,6 +49,11 @@ public class OrderService implements IOrderService{
         return repository.findAll(Specification.where(where), pageable);
     }
 
+    @Override
+    public ArrayList<Order> getOrderToPay() {
+        return repository.findByOderStatus(Order.OderStatus.TO_PAY);
+    }
+
 
     @Override
     public void customer_createOder(OrderCustomerCreatForm formCreating) {
