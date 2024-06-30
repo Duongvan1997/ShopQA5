@@ -246,6 +246,27 @@ public class OrderController {
         return new ResponseEntity<>(cartDTOS, HttpStatus.OK);
     }
 
+    @GetMapping(value = "/getOrderToPay")
+    public ResponseEntity<?> getOrderToPay(){
+        ArrayList<Order> orders = service.getOrderToPay();
+        ArrayList<OrderDTO> orderDTOS = new ArrayList<>();
+        for(Order order : orders){
+            System.out.println(order.getOderStatus());
+                OrderDTO dto = new OrderDTO(order.getId(),
+                        order.getTotal_amount(),
+                        order.getOder_date(),
+                        order.getOderStatus(),
+                        (order.getCustomer().getFirstName()+order.getCustomer().getLastName()),
+                        order.getAddress(),
+                        order.getPhone(),
+                        order.getPayment_method().getName());
+
+                orderDTOS.add(dto);
+        }
+
+        return new ResponseEntity<>(orderDTOS, HttpStatus.OK);
+    }
+
     @GetMapping(value = "/status/{id}")
     public ResponseEntity<?> getOrderByCustomerId(@PathVariable(name = "id") int id){
         Account customer = customerService.getAccountById(id);

@@ -31,7 +31,7 @@ public class FeedbackService implements IFeedbackService{
     @Autowired
     private IFeedbackRepository repository;
     @Autowired
-    private IAccountService customerService;
+    private ICustomerService customerService;
     @Autowired
     private IProductService productService;
 
@@ -47,7 +47,7 @@ public class FeedbackService implements IFeedbackService{
 
 //    @Override
    public void createFeedback(FeedbackCreating feedbackCreating) {
-        Account customer = customerService.getAccountById(feedbackCreating.getCustomer_id());
+        Customer customer = customerService.getCustomerById(feedbackCreating.getCustomer_id());
         LocalDate creating_date = LocalDate.now();
         Product product = productService.getProductById(feedbackCreating.getProduct_id());
         Feedback feedback = new Feedback(feedbackCreating.getComment(),creating_date, feedbackCreating.getRating(), customer, product);

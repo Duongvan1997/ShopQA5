@@ -29,15 +29,15 @@ public class OrderItem implements Serializable {
     @ManyToOne
     @JoinColumn(name="product_detailId", nullable = true)
     private ProductDetail product_detail_order;
-//    @Column(name = "isfeedback", nullable = true)
-//    private boolean isFeedbackReceived;
+    @Column(name = "isfeedback", nullable = true)
+    private boolean isFeedbackReceived;
 
     public OrderItem() {
     }
 
-//    public boolean isFeedbackReceived() {
-//        return isFeedbackReceived;
-//    }
+    public boolean isFeedbackReceived() {
+        return isFeedbackReceived;
+    }
 
     public OrderItem(float sell_price, float subtotal, int quantity, Order order, ProductDetail product_detail_order) {
         this.sell_price = sell_price;
@@ -45,6 +45,10 @@ public class OrderItem implements Serializable {
         this.quantity = quantity;
         this.order = order;
         this.product_detail_order = product_detail_order;
+    }
+
+    public void setFeedbackReceived(boolean feedbackReceived) {
+        isFeedbackReceived = feedbackReceived;
     }
 
     public int getId() {

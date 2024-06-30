@@ -25,6 +25,9 @@ public class OderSpecification implements Specification<Order> {
         if(operator.equalsIgnoreCase("LIKE")) {
             return criteriaBuilder.like(root.get(field), "%" + value.toString() + "%");
         }
+        if (operator.equalsIgnoreCase("=")) {
+            return criteriaBuilder.equal(root.get(field), value);
+        }
         return null;
     }
 }
