@@ -1,7 +1,7 @@
 import "./UserManager.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Table, Input } from "antd";
+import { Table, Input, Flex } from "antd";
 
 const userData = JSON.parse(localStorage.getItem("user"));
 
@@ -94,9 +94,9 @@ const UserManager = () => {
         columns={columns}
         rowKey={(record) => record.id}
         dataSource={data}
-        pagination={false}
-        loading={loading}
+
       />
+  
       <div style={{ marginTop: 20, textAlign: "center" }}>
         <div className="Paginate">
           <button
@@ -115,6 +115,7 @@ const UserManager = () => {
             Next
           </button>
         </div>
+
       </div>
     </div>
   );

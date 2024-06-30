@@ -52,6 +52,7 @@ public class FeedbackService implements IFeedbackService{
         Product product = productService.getProductById(feedbackCreating.getProduct_id());
         Feedback feedback = new Feedback(feedbackCreating.getComment(),creating_date, feedbackCreating.getRating(), customer, product);
         repository.save(feedback);
+        
     }
 
     @Override

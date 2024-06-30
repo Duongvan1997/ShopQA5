@@ -45,7 +45,7 @@ public class FeedbackController {
         public ResponseEntity<?> getFeedback(){
             ArrayList<Feedback> listResponse = service.getAll();
             List<FeedbackDTO> listRespo = listResponse.stream()
-                    .map(e -> new FeedbackDTO(e))
+                    .map(e -> new FeedbackDTO(e.getId(),e.getComment(),e.getFeedback_date(), e.getRating(),e.getAccount_customer().getId(),e.getAccount_customer().getUsername(),e.getProduct_feedback().getId()))
                     .collect(Collectors.toList());
             return new ResponseEntity<>(listRespo, HttpStatus.OK);
         }
