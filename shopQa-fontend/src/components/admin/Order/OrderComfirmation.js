@@ -3,6 +3,7 @@ import { Table, message, Modal, Breadcrumb } from "antd";
 import axios from "axios";
 import "./OrderComfirmation.css";
 import moment from "moment";
+import "../Paginate/Pagination";
 
 const ITEMS_PER_PAGE = 4;
 
@@ -65,7 +66,7 @@ const OrderComfirmation = () => {
     try {
       const response = await axios.put(
         `http://localhost:8080/api/v1/orders/changeStatus/${orderId}`,
-        { status: newStatus },
+        { employee_id: adminData.id, oderStatus: newStatus },
         {
           auth: {
             username: adminData.username,
@@ -78,7 +79,7 @@ const OrderComfirmation = () => {
       setItemsData(
         itemsData.map((order) =>
           order.order_id === orderId
-            ? { ...order, status: updatedOrder.oderStatus }
+            ? { ...order, oderStatus: updatedOrder.oderStatus }
             : order
         )
       );

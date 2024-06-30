@@ -3,7 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Table, Input } from "antd";
 
-const adminData = JSON.parse(localStorage.getItem("user"));
+const userData = JSON.parse(localStorage.getItem("user"));
 
 const columns = [
   {
@@ -27,28 +27,38 @@ const columns = [
 const UserManager = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [searchText, setSearchText] = useState(""); // Thêm state cho search
+  const [searchText, setSearchText] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalElements, setTotalElements] = useState(0);
 
-  const fetchData = (search = "") => {
+  const fetchData = (page = 1, search = "") => {
     setLoading(true);
     axios
-      .get("http://localhost:8080/api/v1/accounts/getAll", {
-        params: { search }, // Thêm tham số search
+      .get(`http://localhost:8080/api/v1/accounts/getAll`, {
+        params: {
+          page: page - 1,
+          size: 10,
+          sort: "id,desc",
+          search: search,
+        },
         auth: {
-          username: adminData.username,
-          password: adminData.password,
+          username: userData.username,
+          password: userData.password,
         },
       })
       .then((response) => {
-        console.log(response.data.content);
-        const accountFormatted = response.data.content.map((account) => ({
+        console.log(response.data);
+        const { content, totalPages, totalElements } = response.data;
+        const accountFormatted = content.map((account) => ({
           id: account.id,
-          fullName: account.firstName,
+          fullName: account.fullName,
           gender: account.gender,
           email: account.email,
         }));
-        console.log(response);
         setData(accountFormatted);
+        setTotalPages(totalPages);
+        setTotalElements(totalElements);
         setLoading(false);
       })
       .catch((error) => {
@@ -59,11 +69,16 @@ const UserManager = () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchData(); // Gọi API mà không có searchText khi component mount
-  }, [adminData.username, adminData.password]);
+    fetchData(currentPage, searchText);
+  }, [currentPage, searchText]);
 
   const handleSearch = () => {
-    fetchData(searchText); // Gọi API với searchText khi thực hiện tìm kiếm
+    setCurrentPage(1);
+    fetchData(1, searchText);
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   return (
@@ -73,15 +88,34 @@ const UserManager = () => {
         value={searchText}
         onChange={(e) => setSearchText(e.target.value)}
         style={{ marginBottom: 20, width: 300 }}
-        onPressEnter={handleSearch} // Tìm kiếm khi nhấn Enter
+        onPressEnter={handleSearch}
       />
       <Table
         columns={columns}
+        rowKey={(record) => record.id}
         dataSource={data}
+        pagination={false}
         loading={loading}
-        pagination={{ pageSize: 10 }}
-        rowKey="id"
       />
+      <div style={{ marginTop: 20, textAlign: "center" }}>
+        <div className="Paginate">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span>
+            {currentPage} of {totalPages}
+          </span>
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
