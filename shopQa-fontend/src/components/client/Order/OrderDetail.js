@@ -30,7 +30,7 @@ const OrderDetail = () => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [orderId, setOrderId] = useState(null); 
   const showModal = () => {
     setIsModalVisible(true);
   };
@@ -188,7 +188,8 @@ const OrderDetail = () => {
 
   useEffect(() => {
     if (userData?.role === "CUSTOMER") {
-      fetchOrderDetails(); // Fetch order details for the specific order ID
+      fetchOrderDetails(id); // Fetch order details for the specific order ID
+      setOrderId(id);
     } else {
       navigate("/");
     }
@@ -232,7 +233,7 @@ const OrderDetail = () => {
           {totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}đ
         </h2>
       </div>
-      <Feedback visible={isModalVisible} hideModal={hideModal} orderData={orderData} fetchOrderDetails={fetchOrderDetails} />
+      <Feedback visible={isModalVisible} hideModal={hideModal} orderData={orderData} fetchOrderDetails={fetchOrderDetails} orderId={orderId} />
     </div>
   );
 };

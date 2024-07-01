@@ -17,7 +17,7 @@ const OrderComfirmation = () => {
   const fetchData = () => {
     setLoading(true);
     axios
-      .get("http://localhost:8080/api/v1/orders/getAll", {
+      .get("http://localhost:8080/api/v1/orders/getOrderToPayAndToReceive", {
         auth: {
           username: adminData.username,
           password: adminData.password,
@@ -116,15 +116,13 @@ const OrderComfirmation = () => {
         <div className="actions">
           <button
             className="button1"
-            onClick={() => handleUpdateStatus(record.order_id, "TO_RECEIVE")}
+            onClick={() => handleUpdateStatus(record.order_id, "COMPLETED")}
           >
             Đã giao
           </button>
           <button
             className="button2"
-            onClick={() =>
-              handleUpdateStatus(record.order_id, "ARE TO_RECEIVE")
-            }
+            onClick={() => handleUpdateStatus(record.order_id, "TO_RECEIVE")}
           >
             Giao hàng
           </button>

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 
+
 const Feedback = ({ visible, hideModal, orderData, fetchOrderDetails }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
@@ -49,6 +50,7 @@ const Feedback = ({ visible, hideModal, orderData, fetchOrderDetails }) => {
       feedback_date: moment().format("YYYY-MM-DD"),
       customer_id: userData.id,
       product_id: productId,
+      order_id: orderId
     };
 
     try {
