@@ -24,9 +24,14 @@ public interface IOderRepository extends JpaRepository<Order, Integer> {
     @Transactional
     @Query("DELETE FROM Order WHERE id IN(:ids)")
     public void deleteByIds(@Param("ids") List<Integer> ids);
-    ArrayList<Order> findByOderStatus(Order.OderStatus orderStatus);
     <T> Page<Order> findAll(Specification<T> where, Pageable pageable);
     ArrayList<Order> findByCustomer(Account customer);
     ArrayList<Order> findAll();
-
+//    ArrayList<Order> findByOderStatus(Order.OderStatus oderStatus);
+    @Query("SELECT o FROM Order o WHERE o.oderStatus IN :statuses")
+    ArrayList<Order> findByOderStatus(List<Order.OderStatus> statuses);
 }
+
+
+
+
