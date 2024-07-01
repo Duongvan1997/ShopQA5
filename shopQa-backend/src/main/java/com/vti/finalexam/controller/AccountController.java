@@ -34,8 +34,9 @@ public class AccountController {
             @Override
             public AccountDTO apply(Account account) {
                 AccountDTO dto = new AccountDTO(account.getUsername(),
+                                                 account.getLastName(),
                                                 account.getFirstName(),
-                                                account.getLastName(),
+
                                                 account.getCreatedDate(),
                                                 account.getRole(),
                                                 account.getEmail(),

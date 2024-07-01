@@ -168,7 +168,7 @@ public class Order implements Serializable {
         return employee;
     }
 
-    public void setEmployee(Account employee) {
+    public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
