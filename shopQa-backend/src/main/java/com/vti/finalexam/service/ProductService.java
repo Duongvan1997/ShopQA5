@@ -94,10 +94,10 @@ public class ProductService implements IProductService{
          repository.deleteById(id);
     }
 
-    @Override
-    public List<Product> getProductsInPriceRange(float minPrice, float maxPrice) {
-        return repository.findByPriceRange(minPrice, maxPrice);
-    }
+//    @Override
+//    public List<Product> getProductsInPriceRange(float minPrice, float maxPrice) {
+//        return repository.findByPriceRange(minPrice, maxPrice);
+//    }
 
     @Override
     public void deleteProducts(List<Integer> ids) {
