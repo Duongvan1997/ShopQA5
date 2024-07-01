@@ -154,12 +154,15 @@ public class OrderService implements IOrderService{
     public void changeStatus(int id, changeStatusDTO changeStatusDTO) {
         Employee employee = employeeRepository.getEmployeeById(changeStatusDTO.getCustomer_id());
         Order order = repository.getOrderById(id);
+<<<<<<< HEAD
+=======
 
         if(employee!=null){
+>>>>>>> 1f514257487cf7d752efea923087967bc132bcf0
             order.setOderStatus(changeStatusDTO.getOderStatus());
             order.setEmployee(employee);
             repository.save(order);
-        }
+
     }
 
     @Override

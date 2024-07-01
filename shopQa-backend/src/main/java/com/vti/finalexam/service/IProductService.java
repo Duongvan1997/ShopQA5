@@ -20,6 +20,6 @@ public interface IProductService {
 
 //    public boolean doesProductExist(String name, String color, String size);
     public  void deleteProduct(int id);
-    public List<Product> getProductsInPriceRange(float minPrice, float maxPrice);
+//    public List<Product> getProductsInPriceRange(float minPrice, float maxPrice);
     void deleteProducts(List<Integer> ids);
 }
