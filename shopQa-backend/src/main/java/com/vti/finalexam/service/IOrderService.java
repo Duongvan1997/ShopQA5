@@ -17,7 +17,7 @@ import java.util.List;
 
 public interface IOrderService {
     public Page<Order> getAllOrders(Pageable pageable, String search);
-    public ArrayList<Order> getOrderToPay();
+    public ArrayList<Order> getOrderToPayAndToReceive();
 
     public void customer_createOder(OrderCustomerCreatForm orderCustomerCreatForm);
 
