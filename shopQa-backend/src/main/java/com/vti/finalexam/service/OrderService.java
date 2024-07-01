@@ -50,8 +50,13 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public ArrayList<Order> getOrderToPay() {
-        return repository.findByOderStatus(Order.OderStatus.TO_PAY);
+    public ArrayList<Order> getOrderToPayAndToReceive() {
+        ArrayList<Order.OderStatus> statuses = new ArrayList<>();
+        statuses.add(Order.OderStatus.TO_PAY);
+        statuses.add(Order.OderStatus.TO_RECEIVE);
+
+        return repository.findByOderStatus(statuses);
+//        return repository.findByOderStatus(Order.OderStatus.TO_PAY);
     }
 
 
@@ -149,6 +154,11 @@ public class OrderService implements IOrderService{
     public void changeStatus(int id, changeStatusDTO changeStatusDTO) {
         Employee employee = employeeRepository.getEmployeeById(changeStatusDTO.getCustomer_id());
         Order order = repository.getOrderById(id);
+<<<<<<< HEAD
+=======
+
+        if(employee!=null){
+>>>>>>> 1f514257487cf7d752efea923087967bc132bcf0
             order.setOderStatus(changeStatusDTO.getOderStatus());
             order.setEmployee(employee);
             repository.save(order);
