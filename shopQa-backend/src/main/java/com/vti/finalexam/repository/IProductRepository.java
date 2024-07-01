@@ -29,5 +29,16 @@ public interface IProductRepository extends JpaRepository<Product, Integer>, Jpa
     @Query("DELETE FROM Product WHERE id IN(:ids)")
     public void deleteByIds(@Param("ids")List<Integer> ids);
 
+    @Query("SELECT p FROM Product p WHERE p.price BETWEEN :minPrice AND :maxPrice")
+    List<Product> findByPriceRange(@Param("minPrice") float minPrice, @Param("maxPrice") float maxPrice);
+
+    @Query("SELECT p FROM Product p " +
+            "WHERE (:color IS NULL OR p.productDetail.color = :color) " +
+            "AND (:size IS NULL OR p.productDetail.size = :size) " +
+            "AND (:typeId IS NULL OR p.typeProduct.id = :typeId)")
+    List<Product> findByColorAndSizeAndTypeId(
+            @Param("color") String color,
+            @Param("size") String size,
+            @Param("typeId") Integer typeId);
 
 }

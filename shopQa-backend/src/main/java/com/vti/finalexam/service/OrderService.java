@@ -149,15 +149,11 @@ public class OrderService implements IOrderService{
     public void changeStatus(int id, changeStatusDTO changeStatusDTO) {
         Employee employee = employeeRepository.getEmployeeById(changeStatusDTO.getCustomer_id());
         Order order = repository.getOrderById(id);
-        try {
-
+        if(employee!=null){
             order.setOderStatus(changeStatusDTO.getOderStatus());
             order.setEmployee(employee);
-        }catch (IllegalArgumentException e) {
-
+            repository.save(order);
         }
-        repository.save(order);
-        //
     }
 
     @Override
