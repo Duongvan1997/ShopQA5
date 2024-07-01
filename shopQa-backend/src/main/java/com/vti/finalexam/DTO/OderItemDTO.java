@@ -16,6 +16,7 @@ public class OderItemDTO {
     private String size;
     private String color;
     private String url_img;
+    private boolean isFeedbackReceived;
     public String getProduct_detail_name() {
         return product_detail_name;
     }
@@ -28,7 +29,7 @@ public class OderItemDTO {
         this.url_img = url_img;
     }
 
-    public OderItemDTO(int id, float sell_price, float subtotal, int quantity, int order_id, int product_detail_id, String product_detail_name, String size, String color, String url_img) {
+    public OderItemDTO(int id, float sell_price, float subtotal, int quantity, int order_id, int product_detail_id, String product_detail_name, String size, String color, String url_img, boolean isFeedbackReceived) {
         this.id = id;
         this.sell_price = sell_price;
         this.subtotal = subtotal;
@@ -39,6 +40,7 @@ public class OderItemDTO {
         this.size = size;
         this.color = color;
         this.url_img = url_img;
+        this.isFeedbackReceived = isFeedbackReceived;
     }
 
     public String getSize() {
@@ -113,6 +115,14 @@ public class OderItemDTO {
 
     public void setOrder_id(int order_id) {
         this.order_id = order_id;
+    }
+
+    public boolean getIsFeedbackReceived(){
+        return isFeedbackReceived;
+    }
+
+    public void setIsFeedbackReceived(boolean isFeedbackReceived){
+        this.isFeedbackReceived = isFeedbackReceived;
     }
 
     public int getProduct_detail_id() {
