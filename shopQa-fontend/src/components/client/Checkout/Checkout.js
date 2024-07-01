@@ -26,6 +26,8 @@ function Checkout() {
   const [customerAddress, setCustomerAddress] = useState("");
   const [customerNote, setCustomerNote] = useState("");
   const [messageApi, contextHolder] = message.useMessage();
+
+
   const successMessage = () => {
     messageApi.open({
       type: "success",
@@ -39,6 +41,40 @@ function Checkout() {
       content: "Đặt hàng thất bại",
     });
   };
+
+  const getDistrict = (cityId) => {
+    axios
+      .get(`https://esgoo.net/api-tinhthanh/2/${cityId}.htm`)
+      .then((response) => {
+        const distrcitList = response.data.data.map((district) => {
+          return {
+            value: district.id,
+            label: district.full_name,
+          };
+        });
+        setDistrict(distrcitList);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }
+
+  const getWard = (districtId) => {
+    axios
+      .get(`https://esgoo.net/api-tinhthanh/3/${districtId}.htm`)
+      .then((response) => {
+        const WardList = response.data.data.map((ward) => {
+          return {
+            value: ward.id,
+            label: ward.full_name,
+          };
+        });
+        setWards(WardList);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }
 
   useEffect(() => {
     const usertemp = JSON.parse(localStorage.getItem("user"));
@@ -59,13 +95,12 @@ function Checkout() {
     window.scrollTo(0, 0);
 
     axios
-      .get("https://provinces.open-api.vn/api/?depth=3")
+      .get("https://esgoo.net/api-tinhthanh/1/0.htm")
       .then((response) => {
-        const citys_arr = response.data.map((city) => {
+        const citys_arr = response.data.data.map((city) => {
           return {
-            value: city.code,
-            label: city.name,
-            districts: city.districts,
+            value: city.id,
+            label: city.full_name,
           };
         });
         setCitys(citys_arr);
@@ -114,24 +149,34 @@ function Checkout() {
     );
   };
 
-  // const handleChangeCityOption = (selectedCityOption) => {
-  //   setSelectedCityOption(selectedCityOption);
-  //   let districts_arr = citys.filter((city) => {
-  //     return city.value === selectedCityOption.value;
-  //   });
+  const handleChangeCityOption = (selectedCityOption) => {
+    setSelectedCityOption(selectedCityOption);
+    getDistrict(selectedCityOption.value)
+    // let districts_arr = citys.filter((city) => {
+    //   return city.value === selectedCityOption.value;
+    // });
 
-  //   districts_arr = districts_arr[0].districts.map((district) => {
-  //     return {
-  //       value: district.code,
-  //       label: district.name,
-  //       wards: district.wards,
-  //     };
-  //   });
+    // districts_arr = districts_arr[0].districts.map((district) => {
+    //   return {
+    //     value: district._id,
+    //     label: district.name,
+    //     wards: district.name_with_type,
+    //   };
+    // });
 
-  //   setDistrict(districts_arr);
-  //   setSelectedDistrictOption(null);
-  //   setSelectedWardOption(null);
-  // };
+    // setDistrict(districts_arr);
+    // setSelectedDistrictOption(null);
+    // setSelectedWardOption(null);
+  };
+
+  const handleChangeDistrictOption = (selectedCityOption) => {
+    setSelectedDistrictOption(selectedCityOption);
+    getWard(selectedCityOption.value)
+  };
+
+  const handleChangeWardOption = (selectedDistrictOption) => {
+    setSelectedWardOption(selectedDistrictOption);
+  };
 
   const handleChangePaymentOption = (selectedPaymentOption) => {
     setSelectedMethod(selectedPaymentOption);
@@ -159,7 +204,7 @@ function Checkout() {
   //   setSelectedWardOption(selectedWardOption);
   // };
   const handleCompleteOrder = () => {
-    // console.log(selectedCityOption);
+     //console.log(selectedCityOption);
     // console.log(selectedDistrictOption);
     // console.log(productForCheckout);
     // console.log(selectedMethod);
@@ -170,11 +215,11 @@ function Checkout() {
     let fullAddress =
       customerAddress +
       ", " +
-      selectedWardOption +
+      selectedWardOption.label +
       ", " +
-      selectedDistrictOption +
+      selectedDistrictOption.label +
       ", " +
-      selectedCityOption;
+      selectedCityOption.label;
 
     const newOrder = {
       address: fullAddress,
@@ -279,7 +324,7 @@ function Checkout() {
 
             <test className="Checkout_left_row">
               <span>Tỉnh (Thành phố)</span>
-              {/* <Select
+              <Select
                 options={citys}
                 value={selectedCityOption}
                 onChange={handleChangeCityOption}
@@ -296,20 +341,13 @@ function Checkout() {
                 })}
                 className="select"
                 placeholder="Chọn tỉnh/thành phố"
-              /> */}
-               <input
-                type="text"
-                placeholder="Nhập tỉnh"
-                onChange={(e) => {
-                  setSelectedCityOption(e.target.value);
-                }}
               />
             </test>
 
             <div className="Checkout_left_row_2col">
               <div className="Checkout_left_row">
                 <span>Quận (Huyện)</span>
-                {/* <Select
+                <Select
                   options={districts}
                   value={selectedDistrictOption}
                   onChange={handleChangeDistrictOption}
@@ -326,18 +364,12 @@ function Checkout() {
                   })}
                   className="select"
                   placeholder="Chọn quận/huyện"
-                /> */}
-                 <input
-                type="text"
-                placeholder="Nhập huyện"
-                onChange={(e) => {
-                  setSelectedDistrictOption(e.target.value);
-                }}
-              />
+                />
+                 
               </div>
               <div className="Checkout_left_row">
                 <span>Phường (Xã)</span>
-                {/* <Select
+                <Select
                   options={wards}
                   value={selectedWardOption}
                   onChange={handleChangeWardOption}
@@ -354,14 +386,8 @@ function Checkout() {
                   })}
                   className="select"
                   placeholder="Chọn phường/xã"
-                /> */}
-                 <input
-                type="text"
-                placeholder="Nhập xã"
-                onChange={(e) => {
-                  setSelectedWardOption(e.target.value);
-                }}
-              />
+                />
+                 
               </div>
             </div>
             <div className="Checkout_left_row">

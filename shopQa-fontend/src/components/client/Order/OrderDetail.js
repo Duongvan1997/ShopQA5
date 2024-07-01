@@ -19,6 +19,8 @@ function convertDateTimeFormat(originalDateTimeString) {
 }
 
 const OrderDetail = () => {
+  const navigate = useNavigate();
+  const { id } = useParams(); // Assuming you have a route parameter for the order ID
   const [ordereds, setOrdereds] = useState([]);
   const [loading, setLoading] = useState(false);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -104,11 +106,13 @@ const OrderDetail = () => {
     },
     showReviewColumn && {
       title: "Đánh giá",
-      render: (value) => <Button color="blue" onClick={() => onReview(value)}>Đánh giá</Button>
+      render: (value, record) => {
+        return <Button color="blue" disabled={record.isFeedbackReceived} onClick={() => onReview(value)}>{record.isFeedbackReceived ? 'Đã đánh giá' : 'Đánh giá'}</Button>
+      }
     },
   ].filter(Boolean);
 
-  const fetchOrderDetails = async (id) => {
+  const fetchOrderDetails = async () => {
     setLoading(true);
     try {
       const responseOrder = await axios.get(
@@ -155,6 +159,7 @@ const OrderDetail = () => {
         orderDate: orderStatus.orderDate,
         paymentName: orderStatus.paymentName,
         action: item.id,
+        isFeedbackReceived: item.isFeedbackReceived
       }));
 
       setOrdereds(dataForState);
@@ -179,8 +184,7 @@ const OrderDetail = () => {
     setTotalAmount(total);
   };
 
-  const navigate = useNavigate();
-  const { id } = useParams(); // Assuming you have a route parameter for the order ID
+  
 
   useEffect(() => {
     if (userData?.role === "CUSTOMER") {
@@ -229,7 +233,7 @@ const OrderDetail = () => {
           {totalAmount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}đ
         </h2>
       </div>
-      <Feedback visible={isModalVisible} hideModal={hideModal} orderData={orderData} orderId={orderId}/>
+      <Feedback visible={isModalVisible} hideModal={hideModal} orderData={orderData} fetchOrderDetails={fetchOrderDetails} orderId={orderId} />
     </div>
   );
 };

@@ -183,7 +183,8 @@ public class OrderController {
                                                 orderItem.getProduct_detail_order().getProduct_detail().getName(),
                                                 orderItem.getProduct_detail_order().getSize(),
                                                 orderItem.getProduct_detail_order().getColor(),
-                                                orderItem.getProduct_detail_order().getImg_url());
+                                                orderItem.getProduct_detail_order().getImg_url(),
+                                                orderItem.isFeedbackReceived());
             oderItemDTOS.add(dto);
         }
         return new ResponseEntity<>(oderItemDTOS, HttpStatus.OK);

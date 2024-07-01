@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 
-const Feedback = ({ visible, hideModal, orderData, orderId }) => {
+
+const Feedback = ({ visible, hideModal, orderData, fetchOrderDetails }) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [productName, setProductName] = useState("");
@@ -59,6 +60,7 @@ const Feedback = ({ visible, hideModal, orderData, orderId }) => {
           password: userData.password,
         },
       });
+      fetchOrderDetails()
       message.success("Feedback created successfully!");
       hideModal();
     } catch (error) {
