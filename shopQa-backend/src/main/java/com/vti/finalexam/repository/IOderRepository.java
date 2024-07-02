@@ -30,6 +30,7 @@ public interface IOderRepository extends JpaRepository<Order, Integer> {
     ArrayList<Order> findAll();
 //    ArrayList<Order> findByOderStatus(Order.OderStatus oderStatus);
     @Query("SELECT o FROM Order o WHERE o.oderStatus IN :statuses")
+
     ArrayList<Order> findByOderStatus(List<Order.OderStatus> statuses);
 
 
@@ -51,6 +52,7 @@ public interface IOderRepository extends JpaRepository<Order, Integer> {
             "ORDER BY MONTH(o.orderDate)",
             nativeQuery = true)
     List<Object[]> getOrderCountByMonthForCurrentYear();
+
 }
 
 
