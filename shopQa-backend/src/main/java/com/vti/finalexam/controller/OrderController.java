@@ -247,9 +247,9 @@ public class OrderController {
         return new ResponseEntity<>(cartDTOS, HttpStatus.OK);
     }
 
-    @GetMapping(value = "/getOrderToPayAndToReceive")
-    public ResponseEntity<?> getOrderToPay(){
-        ArrayList<Order> orders = service.getOrderToPayAndToReceive();
+    @GetMapping(value = "/getOrderToPayAndToReceiveAndCompleted")
+    public ResponseEntity<?> getOrderToPayAndToReceiveAndCompleted(){
+        ArrayList<Order> orders = service.getOrderToPayAndToReceiveAndCompleted();
         ArrayList<OrderDTO> orderDTOS = new ArrayList<>();
         for(Order order : orders){
             System.out.println(order.getOderStatus());
