@@ -4,13 +4,10 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 
-const Feedback = ({
-  visible,
-  hideModal,
-  orderData,
-  fetchOrderDetails,
-  orderId,
-}) => {
+
+
+const Feedback = ({ visible, hideModal, orderData, fetchOrderDetails, orderId }) => {
+
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [productName, setProductName] = useState("");

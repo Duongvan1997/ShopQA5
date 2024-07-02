@@ -1,5 +1,6 @@
 package com.vti.finalexam.repository;
 
+import com.vti.finalexam.DTO.MonthlyOrderCountDTO;
 import com.vti.finalexam.entity.Account;
 import com.vti.finalexam.entity.Customer;
 import com.vti.finalexam.entity.Order;
@@ -29,7 +30,29 @@ public interface IOderRepository extends JpaRepository<Order, Integer> {
     ArrayList<Order> findAll();
 //    ArrayList<Order> findByOderStatus(Order.OderStatus oderStatus);
     @Query("SELECT o FROM Order o WHERE o.oderStatus IN :statuses")
-    ArrayList<Order> findByOderStatus(ArrayList<Order.OderStatus> statuses);
+
+    ArrayList<Order> findByOderStatus(List<Order.OderStatus> statuses);
+
+
+    @Query(value = "SELECT COALESCE(SUM(o.totalAmount), 0) AS totalAmount, " +
+            "MONTH(o.orderDate) AS month " +
+            "FROM `Order` o " +
+            "WHERE o.oderStatus IN ('COMPLETE', 'FEEDBACK_COMPLETED') " +
+            "AND YEAR(o.orderDate) = YEAR(CURDATE()) " +
+            "GROUP BY MONTH(o.orderDate) " +
+            "ORDER BY MONTH(o.orderDate)",
+            nativeQuery = true)
+    List<Object[]> getTotalAmountByMonthForCurrentYear();
+
+    @Query(value = "SELECT MONTH(o.orderDate) AS month, COUNT(*) AS orderCount " +
+            "FROM `Order` o " +
+            "WHERE o.oderStatus IN ('COMPLETE', 'FEEDBACK_COMPLETED') " +
+            "AND YEAR(o.orderDate) = YEAR(CURDATE()) " +
+            "GROUP BY MONTH(o.orderDate) " +
+            "ORDER BY MONTH(o.orderDate)",
+            nativeQuery = true)
+    List<Object[]> getOrderCountByMonthForCurrentYear();
+
 }
 
 
