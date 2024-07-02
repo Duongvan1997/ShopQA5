@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
+import "./reportchart.css";
 import {
     Breadcrumb,
     Button,
@@ -8,7 +9,8 @@ import {
     Modal,
     Form, Input,
     message,
-    Spin
+    Spin,
+    Div
 } from 'antd';
 import BarChart from "./BarChart";
 import LineChartExample from "./LineChart";
@@ -19,11 +21,15 @@ function ReportChart() {
   }, []);
 
   return (
-    <Flex className="ReportManager">
-        <BarChart />
-        <LineChartExample/>
+    <div className="ReportManager" >
+
+        <div className="barchart"><h2>Doanh thu các tháng trong năm 2024</h2><BarChart /></div>
+        <div className="barchart">
+          <h2>Số lượng đơn hàng các tháng trong năm 2024</h2>
+          <LineChartExample/>
+          </div>
         {/* <RadialBarChartExample/> */}
-    </Flex>
+    </div>
   );
 }
 

@@ -36,6 +36,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/v1/orders/changeStatus/{id}").hasAnyAuthority("EMPLOYEE","ADMIN")
                 .antMatchers("/api/v1/orders/getAll").hasAnyAuthority("ADMIN","EMPLOYEE")
                 .antMatchers("/api/v1/orders/getOrderToPayAndToReceive").hasAnyAuthority("ADMIN","EMPLOYEE")
+                .antMatchers("/api/v1/orders/monthly").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/v1/orders/CountOrderMonthly").hasAnyAuthority("ADMIN")
 
                 .antMatchers("/api/v1/orders/getOrderbyID/{id}").hasAnyAuthority("ADMIN", "CUSTOMER")
                 .antMatchers("/api/v1/orders/getByID/{id}").hasAnyAuthority("ADMIN", "CUSTOMER")

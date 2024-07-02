@@ -1,5 +1,7 @@
 package com.vti.finalexam.service;
 
+import com.vti.finalexam.DTO.MonthlyOrderCountDTO;
+import com.vti.finalexam.DTO.MonthlyRevenueDTO;
 import com.vti.finalexam.DTO.changeStatusDTO;
 import com.vti.finalexam.entity.*;
 import com.vti.finalexam.form.OrderCustomerCreatForm;
@@ -15,6 +17,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
@@ -92,6 +96,11 @@ public class OrderService implements IOrderService{
     }
 
     @Override
+    public List<Object[]> getTotalAmountByMonthForCurrentYear() {
+        return repository.getTotalAmountByMonthForCurrentYear();
+    }
+
+    @Override
     public void createCart(OrderFormCreating formCreating) {
         Account customer = customerRepository.getAccountById(formCreating.getCustomer_id());
         LocalDate creating_date = LocalDate.now();
@@ -103,6 +112,20 @@ public class OrderService implements IOrderService{
                 customer
         );
         repository.save(order);
+    }
+
+    @Override
+    public List<MonthlyRevenueDTO> getMonthlyRevenues() {
+            List<Object[]> results = repository.getTotalAmountByMonthForCurrentYear();
+            List<MonthlyRevenueDTO> revenues = new ArrayList<>();
+            for (Object[] result : results) {
+//                BigDecimal totalAmount = (BigDecimal) result[0];
+//
+                BigDecimal totalAmount = new BigDecimal(result[0].toString());
+                int month = (int) result[1];
+                revenues.add(new MonthlyRevenueDTO(month, totalAmount));
+            }
+            return revenues;
     }
 
     @Override
@@ -154,20 +177,35 @@ public class OrderService implements IOrderService{
     public void changeStatus(int id, changeStatusDTO changeStatusDTO) {
         Employee employee = employeeRepository.getEmployeeById(changeStatusDTO.getCustomer_id());
         Order order = repository.getOrderById(id);
-<<<<<<< HEAD
-=======
-
         if(employee!=null){
->>>>>>> 1f514257487cf7d752efea923087967bc132bcf0
             order.setOderStatus(changeStatusDTO.getOderStatus());
             order.setEmployee(employee);
             repository.save(order);
+        }
 
     }
 
     @Override
     public void deleteOrder(int id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<MonthlyOrderCountDTO> getOrderCountByMonthForCurrentYear() {
+            return null;
+    }
+
+    @Override
+    public List<MonthlyOrderCountDTO> getMonthlyCount() {
+            List<Object[]> results = repository.getOrderCountByMonthForCurrentYear();
+            List<MonthlyOrderCountDTO> countDTOS = new ArrayList<>();
+            for (Object[] result : results) {
+//                BigInteger count = new BigInteger(result[0].toString());
+                ;
+                countDTOS.add(new MonthlyOrderCountDTO(result[0].toString(),result[1].toString()));
+            }
+            return countDTOS;
+
     }
 
     @Override

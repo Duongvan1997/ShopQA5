@@ -305,6 +305,16 @@ public class OrderController {
         service.deleteOrders(ids);
     }
 
+    @GetMapping("/monthly")
+    public ResponseEntity<?> getMonthlyRevenues() {
+        List<MonthlyRevenueDTO> revenues = service.getMonthlyRevenues();
+        return ResponseEntity.ok(revenues);
+    }
 
+    @GetMapping("/CountOrderMonthly")
+    public ResponseEntity<?> getCountOrderMonthly() {
+        List<MonthlyOrderCountDTO> orderCountDTOS = service.getMonthlyCount();
+        return ResponseEntity.ok(orderCountDTOS);
+    }
 
 }

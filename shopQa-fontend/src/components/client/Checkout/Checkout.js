@@ -176,6 +176,7 @@ function Checkout() {
 
   const handleChangeWardOption = (selectedDistrictOption) => {
     setSelectedWardOption(selectedDistrictOption);
+    
   };
 
   const handleChangePaymentOption = (selectedPaymentOption) => {
@@ -233,7 +234,7 @@ function Checkout() {
         };
       }),
     };
-    console.log(newOrder);
+    // console.log(fullAddress);
 
     axios
       .post("http://localhost:8080/api/v1/orders/create", newOrder, {
