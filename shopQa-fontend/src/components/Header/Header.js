@@ -98,9 +98,9 @@ function Header() {
                         <Link to="/female" className={location.pathname.startsWith('/female') ? 'active_link' : ''}>
                             GIÀY NỮ
                         </Link>
-                        <Link to="/about-us" className={location.pathname.startsWith('/about-us') ? 'active_link' : ''}>
+                        {/* <Link to="/about-us" className={location.pathname.startsWith('/about-us') ? 'active_link' : ''}>
                             VỀ CHÚNG TÔI
-                        </Link>
+                        </Link> */}
                     </div>
                 }
                 {
@@ -111,7 +111,7 @@ function Header() {
                     </div>
                 }
                 <div className="Header_option">
-                    <div className="HO_main_option" onClick={(e) => handleSearchVisible(e)}><i className="fa-solid fa-magnifying-glass"></i></div>
+                    {/* <div className="HO_main_option" onClick={(e) => handleSearchVisible(e)}><i className="fa-solid fa-magnifying-glass"></i></div> */}
                     {
                         !currentUser ?
                             <div className="HO_main_option" onClick={() => setIsLoginPopup(!isLoginPopup)}><i className="fa-solid fa-user"></i></div>

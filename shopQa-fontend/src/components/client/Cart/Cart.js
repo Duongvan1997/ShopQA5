@@ -154,14 +154,14 @@ function Cart() {
                 <h4>Tổng sản phẩm ({Object.values(selectedItems).reduce((count, value) => count + (value === true ? 1 : 0), 0)})</h4>
                 <span>{handleGetTotal().toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}đ</span>
               </div>
-              <div>
+              {/* <div>
                 <h4>Phí vận chuyển</h4>
                 <span>50.000đ</span>
-              </div>
+              </div> */}
               <hr></hr>
               <div className="Cart_right_total">
                 <h4>Tổng cộng</h4>
-                <span>{(handleGetTotal() + 50000).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}đ</span>
+                <span>{(handleGetTotal()).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')}đ</span>
               </div>
 
               <button onClick={() => handleSendCheckout()}>

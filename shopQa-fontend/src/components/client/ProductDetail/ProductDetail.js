@@ -307,7 +307,9 @@ function ProductDetail() {
               >
                 <div className="shoes_top">
                   <div className="shoes_top_img">
-                    <span className="shoes_tags">-{shoes.sale_percent}%</span>
+                  {shoes.sale_percent !== 0 && (
+                      <span className="shoes_tags">-{shoes.sale_percent}%</span>
+                  )}
                     <img src={shoes.image_url} alt="" />
                   </div>
                   <div className="shoes_top_info">
@@ -316,13 +318,15 @@ function ProductDetail() {
                   </div>
                 </div>
                 <div className="shoes_bottom">
-                  <h4>
+                  {/* <h4>
                     {(shoes.price * (1 - product.sale_percent / 100)).toFixed(
                       2
                     )}
                     $
-                  </h4>
-                  <span>{shoes.price}$</span>
+                    
+                  </h4> */}
+                  
+                  <h4>{shoes.price} Vnd</h4>
                 </div>
               </Link>
             );
