@@ -16,29 +16,31 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `paymentmethod`
+-- Table structure for table `sale`
 --
 
-DROP TABLE IF EXISTS `paymentmethod`;
+DROP TABLE IF EXISTS `sale`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `paymentmethod` (
-  `paymentMethodId` int unsigned NOT NULL AUTO_INCREMENT,
-  `paymentName` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `descriptionPayment` varchar(200) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  PRIMARY KEY (`paymentMethodId`),
-  UNIQUE KEY `paymentName` (`paymentName`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `sale` (
+  `saleId` int unsigned NOT NULL AUTO_INCREMENT,
+  `saleInfo` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `percentSale` float NOT NULL,
+  `startSale` date DEFAULT NULL,
+  `endSale` date DEFAULT NULL,
+  PRIMARY KEY (`saleId`),
+  UNIQUE KEY `saleInfo` (`saleInfo`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `paymentmethod`
+-- Dumping data for table `sale`
 --
 
-LOCK TABLES `paymentmethod` WRITE;
-/*!40000 ALTER TABLE `paymentmethod` DISABLE KEYS */;
-INSERT INTO `paymentmethod` VALUES (1,'Credit Card','Pay with your credit card'),(2,'PayPal','Secure online payments'),(3,'Cash on Delivery','Pay when you receive the product');
-/*!40000 ALTER TABLE `paymentmethod` ENABLE KEYS */;
+LOCK TABLES `sale` WRITE;
+/*!40000 ALTER TABLE `sale` DISABLE KEYS */;
+INSERT INTO `sale` VALUES (1,'Summer Sale',15,'2023-06-01','2023-06-30'),(2,'Back to School Sale',10,'2023-08-01','2023-08-15'),(3,'Siêu sale hè',10,'2024-06-22','2024-06-22'),(4,'Siêu sale hè 2023',10,'2024-06-22','2024-06-22'),(5,'Siêu sale hè 2020',67,'2024-06-22','2024-06-22'),(6,'Siêu sale thu đông',10,'2024-06-22','2024-06-22'),(8,'Siêu sale hè 4',10,'2024-06-28','2024-07-03'),(9,'Siêu sale hè 5',10,'2024-06-21','2024-06-25');
+/*!40000 ALTER TABLE `sale` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-02 17:14:39
+-- Dump completed on 2024-07-02 18:10:43
