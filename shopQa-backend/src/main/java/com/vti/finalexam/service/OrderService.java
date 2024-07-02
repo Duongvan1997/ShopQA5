@@ -61,8 +61,6 @@ public class OrderService implements IOrderService{
         statuses.add(Order.OderStatus.TO_PAY);
         statuses.add(Order.OderStatus.TO_RECEIVE);
         statuses.add(Order.OderStatus.COMPLETED);
-
-
         return repository.findByOderStatus(statuses);
 //        return repository.findByOderStatus(Order.OderStatus.TO_PAY);
     }
@@ -181,16 +179,13 @@ public class OrderService implements IOrderService{
     public void changeStatus(int id, changeStatusDTO changeStatusDTO) {
         Employee employee = employeeRepository.getEmployeeById(changeStatusDTO.getCustomer_id());
         Order order = repository.getOrderById(id);
-
-
-
         if (employee != null) {
             order.setOderStatus(changeStatusDTO.getOderStatus());
             order.setEmployee(employee);
             repository.save(order);
         }
 
-        }
+
     }
 
     @Override

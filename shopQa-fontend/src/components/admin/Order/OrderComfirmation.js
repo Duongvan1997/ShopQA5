@@ -83,6 +83,7 @@ const OrderComfirmation = () => {
   };
 
   const handleUpdateStatus = async (orderId, newStatus) => {
+    console.log(adminData);
     try {
       const response = await axios.put(
         `http://localhost:8080/api/v1/orders/changeStatus/${orderId}`,
@@ -135,24 +136,43 @@ const OrderComfirmation = () => {
       dataIndex: "actions",
       render: (_, record) => (
         <div className="actions">
-          <button
-            className="button1"
-            onClick={() => handleUpdateStatus(record.order_id, "COMPLETED")}
-          >
-            Đã giao
+          
+          {record.status !== "TO_PAY" && record.status !== 'COMPLETED' && (
+            <button
+              className="button1"
+              onClick={() => handleUpdateStatus(record.order_id, "COMPLETED")}
+            >
+              Đã giao
           </button>
-          <button
+          )}
+          {/* <button
             className="button2"
             onClick={() => handleUpdateStatus(record.order_id, "TO_RECEIVE")}
           >
             Giao hàng
-          </button>
-          <button
+          </button> */}
+          {record.status !== "COMPLETED" && record.status !== 'TO_RECEIVE' && (
+            <button
+              className="button2"
+              onClick={() => handleUpdateStatus(record.order_id, "TO_RECEIVE")}
+            >
+              Giao hàng
+            </button>
+          )}
+          {record.status !== 'COMPLETED' && record.status !== 'TO_RECEIVE' && (
+            <button
+              className="button3"
+              onClick={() => showDeleteConfirm(record.order_id)}
+            >
+              Xóa
+            </button>
+          )}
+          {/* <button
             className="button3"
             onClick={() => showDeleteConfirm(record.order_id)}
           >
             Xóa
-          </button>
+          </button> */}
         </div>
       ),
     },

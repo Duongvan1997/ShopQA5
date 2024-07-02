@@ -252,7 +252,7 @@ public class OrderController {
         ArrayList<Order> orders = service.getOrderToPayAndToReceiveAndCompleted();
         ArrayList<OrderDTO> orderDTOS = new ArrayList<>();
         for(Order order : orders){
-            System.out.println(order.getOderStatus());
+//            System.out.println(order.getOderStatus());
                 OrderDTO dto = new OrderDTO(order.getId(),
                         order.getTotal_amount(),
                         order.getOder_date(),
