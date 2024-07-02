@@ -16,36 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `feedback`
+-- Table structure for table `sale`
 --
 
-DROP TABLE IF EXISTS `feedback`;
+DROP TABLE IF EXISTS `sale`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `feedback` (
-  `feedbackID` int unsigned NOT NULL AUTO_INCREMENT,
-  `customerId` int unsigned DEFAULT NULL,
-  `productId` int unsigned DEFAULT NULL,
-  `rating` enum('VERY_BAD','BAD','AVERAGE','GOOD','EXCELLENT') NOT NULL,
-  `comment` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `feedbackDate` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`feedbackID`),
-  KEY `customerId` (`customerId`),
-  KEY `productId` (`productId`),
-  CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `account` (`id`) ,
-  CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) 
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+CREATE TABLE `sale` (
+  `saleId` int unsigned NOT NULL AUTO_INCREMENT,
+  `saleInfo` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `percentSale` float NOT NULL,
+  `startSale` date DEFAULT NULL,
+  `endSale` date DEFAULT NULL,
+  PRIMARY KEY (`saleId`),
+  UNIQUE KEY `saleInfo` (`saleInfo`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `feedback`
+-- Dumping data for table `sale`
 --
 
-LOCK TABLES `feedback` WRITE;
-/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
-/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
+LOCK TABLES `sale` WRITE;
+/*!40000 ALTER TABLE `sale` DISABLE KEYS */;
+INSERT INTO `sale` VALUES (1,'Summer Sale',15,'2023-06-01','2023-06-30'),(2,'Back to School Sale',10,'2023-08-01','2023-08-15'),(3,'Siêu sale hè',10,'2024-06-22','2024-06-22'),(4,'Siêu sale hè 2023',10,'2024-06-22','2024-06-22'),(5,'Siêu sale hè 2020',67,'2024-06-22','2024-06-22'),(6,'Siêu sale thu đông',10,'2024-06-22','2024-06-22'),(8,'Siêu sale hè 4',10,'2024-06-28','2024-07-03'),(9,'Siêu sale hè 5',10,'2024-06-21','2024-06-25');
+/*!40000 ALTER TABLE `sale` ENABLE KEYS */;
 UNLOCK TABLES;
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -56,4 +52,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-02 17:14:39
+-- Dump completed on 2024-07-02 17:58:14

@@ -129,12 +129,7 @@ function AdminLayout() {
                   <Link to="sales">Quản lý khuyến mãi</Link>
                 </Menu.Item>
               </Menu.SubMenu>
-              <Menu.Item key="settings" icon={<SettingOutlined />}>
-                <Link to="settings">Settings</Link>
-              </Menu.Item>
-              <Menu.Item key="table" icon={<TableOutlined />}>
-                <Link to="table">Table View</Link>
-              </Menu.Item>
+              
             </Menu>
           </Sider>
           <Layout>
