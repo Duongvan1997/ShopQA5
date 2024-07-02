@@ -4,8 +4,13 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 
-
-const Feedback = ({ visible, hideModal, orderData, fetchOrderDetails }) => {
+const Feedback = ({
+  visible,
+  hideModal,
+  orderData,
+  fetchOrderDetails,
+  orderId,
+}) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [productName, setProductName] = useState("");
@@ -25,13 +30,16 @@ const Feedback = ({ visible, hideModal, orderData, fetchOrderDetails }) => {
 
   const fetchProductDetails = async () => {
     try {
-      const {data} = await axios.get(`http://localhost:8080/api/v1/productDetails/${orderData.group.product_detail_id}`,{
-        auth: {
-          username: userData.username,
-          password: userData.password,
-        },
-      });
-      setProductId(data.product_id)
+      const { data } = await axios.get(
+        `http://localhost:8080/api/v1/productDetails/${orderData.group.product_detail_id}`,
+        {
+          auth: {
+            username: userData.username,
+            password: userData.password,
+          },
+        }
+      );
+      setProductId(data.product_id);
     } catch (error) {
       console.error("Error fetching product details:", error);
       message.error("Failed to fetch product details. Please try again.");
@@ -46,21 +54,25 @@ const Feedback = ({ visible, hideModal, orderData, fetchOrderDetails }) => {
 
     const feedbackData = {
       comment: comment,
-      rating: rating-1,
+      rating: rating - 1,
       feedback_date: moment().format("YYYY-MM-DD"),
       customer_id: userData.id,
       product_id: productId,
-      order_id: orderId
+      order_id: orderId,
     };
 
     try {
-      await axios.post("http://localhost:8080/api/v1/feedbacks/customer", feedbackData, {
-        auth: {
-          username: userData.username,
-          password: userData.password,
-        },
-      });
-      fetchOrderDetails()
+      await axios.post(
+        "http://localhost:8080/api/v1/feedbacks/customer",
+        feedbackData,
+        {
+          auth: {
+            username: userData.username,
+            password: userData.password,
+          },
+        }
+      );
+      fetchOrderDetails();
       message.success("Feedback created successfully!");
       hideModal();
     } catch (error) {
@@ -70,15 +82,15 @@ const Feedback = ({ visible, hideModal, orderData, fetchOrderDetails }) => {
   };
 
   useEffect(() => {
-    const orderDataEmpty = Object.keys(orderData).length === 0
-    if(!orderDataEmpty){
-      setProductImage(orderData.group.url_img)
-      setProductPrice(orderData.totalAmount)
-      setProductName(orderData.group.product_detail_name)
+    const orderDataEmpty = Object.keys(orderData).length === 0;
+    if (!orderDataEmpty) {
+      setProductImage(orderData.group.url_img);
+      setProductPrice(orderData.totalAmount);
+      setProductName(orderData.group.product_detail_name);
       fetchProductDetails();
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orderData])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderData]);
 
   return (
     <Modal
@@ -92,7 +104,11 @@ const Feedback = ({ visible, hideModal, orderData, fetchOrderDetails }) => {
       ]}
     >
       <div style={{ textAlign: "center" }}>
-        <img src={productImage} alt={productName} style={{ width: "100px", height: "100px", objectFit: "cover" }} />
+        <img
+          src={productImage}
+          alt={productName}
+          style={{ width: "100px", height: "100px", objectFit: "cover" }}
+        />
         <h2>{productName}</h2>
         <p>Price: ${productPrice} đ</p>
       </div>

@@ -3,9 +3,6 @@ import { Table, message, Modal, Breadcrumb } from "antd";
 import axios from "axios";
 import "./OrderComfirmation.css";
 import moment from "moment";
-import "../Paginate/Pagination";
-
-const ITEMS_PER_PAGE = 4;
 
 const OrderComfirmation = () => {
   const { confirm } = Modal;
@@ -17,12 +14,15 @@ const OrderComfirmation = () => {
   const fetchData = () => {
     setLoading(true);
     axios
-      .get("http://localhost:8080/api/v1/orders/getOrderToPayAndToReceive", {
-        auth: {
-          username: adminData.username,
-          password: adminData.password,
-        },
-      })
+      .get(
+        "http://localhost:8080/api/v1/orders/getOrderToPayAndToReceiveAndCompleted",
+        {
+          auth: {
+            username: adminData.username,
+            password: adminData.password,
+          },
+        }
+      )
       .then((response) => {
         const ordersFormatted = response.data.map((order) => ({
           order_id: order.id,
@@ -32,11 +32,13 @@ const OrderComfirmation = () => {
           status: order.oderStatus,
           order_date: moment(order.order_date).format("YYYY-MM-DD"),
         }));
+        console.log(response.data);
         setItemsData(ordersFormatted);
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setLoading(false);
       });
   };
 
@@ -57,9 +59,27 @@ const OrderComfirmation = () => {
         }
       );
       setItemsData(itemsData.filter((order) => order.order_id !== orderId));
+      message.success("Order deleted successfully");
     } catch (error) {
       console.error("Error deleting order: ", error);
+      message.error("Error deleting order");
     }
+  };
+
+  const showDeleteConfirm = (orderId) => {
+    confirm({
+      title: "Xác nhận xóa?",
+      // content: "This action cannot be undone.",
+      okText: "Xóa",
+      okType: "danger",
+      cancelText: "Hủy",
+      onOk() {
+        handleDelete(orderId);
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
   };
 
   const handleUpdateStatus = async (orderId, newStatus) => {
@@ -74,12 +94,13 @@ const OrderComfirmation = () => {
           },
         }
       );
+      fetchData();
 
       const updatedOrder = response.data;
       setItemsData(
         itemsData.map((order) =>
           order.order_id === orderId
-            ? { ...order, oderStatus: updatedOrder.oderStatus }
+            ? { ...order, status: updatedOrder.oderStatus }
             : order
         )
       );
@@ -128,7 +149,7 @@ const OrderComfirmation = () => {
           </button>
           <button
             className="button3"
-            onClick={() => handleDelete(record.order_id)}
+            onClick={() => showDeleteConfirm(record.order_id)}
           >
             Xóa
           </button>
