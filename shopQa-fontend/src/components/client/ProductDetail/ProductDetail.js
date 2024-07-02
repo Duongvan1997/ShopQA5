@@ -270,9 +270,22 @@ function ProductDetail() {
         <h3>Phản hồi từ khách hàng</h3>
         <div style={{ marginLeft: "20px", display: "flex", gap: "20px", maxWidth: "1000vh", overflowX: "auto",whiteSpace: "nowrap" }}>
           {feedbacks.map((feedback, index) => (
-            <div key={index} style={{ display: "flex", marginTop: "25px" }}>
-               {feedback.customer_name}
-              <div style={{ marginLeft: "20px", display: "flex", flexDirection: "column"}}>
+            <div
+              key={index}
+              style={{
+                display: "flex",
+                marginTop: "25px",
+                alignItems: "center",
+              }}
+            >
+              <div style={{ width: "150px" }}> {feedback.customer_name} </div>
+              <div
+                style={{
+                  marginLeft: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
                 <Rate
                   value={feedback.rating}
                   disabled
@@ -307,9 +320,9 @@ function ProductDetail() {
               >
                 <div className="shoes_top">
                   <div className="shoes_top_img">
-                  {shoes.sale_percent !== 0 && (
+                    {shoes.sale_percent !== 0 && (
                       <span className="shoes_tags">-{shoes.sale_percent}%</span>
-                  )}
+                    )}
                     <img src={shoes.image_url} alt="" />
                   </div>
                   <div className="shoes_top_info">
@@ -325,7 +338,7 @@ function ProductDetail() {
                     $
                     
                   </h4> */}
-                  
+
                   <h4>{shoes.price} Vnd</h4>
                 </div>
               </Link>

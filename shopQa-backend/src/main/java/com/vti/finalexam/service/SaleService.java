@@ -63,7 +63,7 @@ public class SaleService implements ISaleService{
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 //        Date start_sale = dateFormat.parse(saleFormCreating.getStart_date());
 //        Date end_sale = dateFormat.parse(saleFormCreating.getEnd_date());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate start_sale  =  LocalDate.parse(saleFormCreating.getStart_date(), formatter);
         LocalDate end_sale  =  LocalDate.parse(saleFormCreating.getEnd_date(), formatter);
         Sale sale = repository.findById(id);
