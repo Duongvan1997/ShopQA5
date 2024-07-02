@@ -16,36 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `feedback`
+-- Table structure for table `producttype`
 --
 
-DROP TABLE IF EXISTS `feedback`;
+DROP TABLE IF EXISTS `producttype`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `feedback` (
-  `feedbackID` int unsigned NOT NULL AUTO_INCREMENT,
-  `customerId` int unsigned DEFAULT NULL,
-  `productId` int unsigned DEFAULT NULL,
-  `rating` enum('VERY_BAD','BAD','AVERAGE','GOOD','EXCELLENT') NOT NULL,
-  `comment` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `feedbackDate` datetime DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`feedbackID`),
-  KEY `customerId` (`customerId`),
-  KEY `productId` (`productId`),
-  CONSTRAINT `feedback_ibfk_1` FOREIGN KEY (`customerId`) REFERENCES `account` (`id`) ,
-  CONSTRAINT `feedback_ibfk_2` FOREIGN KEY (`productId`) REFERENCES `product` (`id`) 
+CREATE TABLE `producttype` (
+  `type_id` int unsigned NOT NULL AUTO_INCREMENT,
+  `type_name` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  PRIMARY KEY (`type_id`),
+  UNIQUE KEY `type_name` (`type_name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `feedback`
+-- Dumping data for table `producttype`
 --
 
-LOCK TABLES `feedback` WRITE;
-/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
-/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
+LOCK TABLES `producttype` WRITE;
+/*!40000 ALTER TABLE `producttype` DISABLE KEYS */;
+INSERT INTO `producttype` VALUES (3,'Boots'),(4,'Business Casual'),(6,'Dep'),(5,'High heels'),(2,'Sandals'),(1,'Sneakers');
+/*!40000 ALTER TABLE `producttype` ENABLE KEYS */;
 UNLOCK TABLES;
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -56,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-07-02 17:14:39
+-- Dump completed on 2024-07-02 18:10:43
