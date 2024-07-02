@@ -267,8 +267,8 @@ function ProductDetail() {
       </div>
 
       <div className="ProductDetail_recommended">
-        <h3>Đánh giá</h3>
-        <div style={{ marginLeft: "20px" }}>
+        <h3>Phản hồi từ khách hàng</h3>
+        <div style={{ marginLeft: "20px", display: "flex", gap: "20px", maxWidth: "1000vh", overflowX: "auto",whiteSpace: "nowrap" }}>
           {feedbacks.map((feedback, index) => (
             <div key={index} style={{ display: "flex", marginTop: "25px" }}>
                {feedback.customer_name}
