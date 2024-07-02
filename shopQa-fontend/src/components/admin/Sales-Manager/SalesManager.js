@@ -107,7 +107,7 @@ const SalesManager = () => {
       title: "Sửa",
       dataIndex: "update_sales",
       render: (_, record) => (
-        <Link to={`/admin/sales/update/${record.id}`}><i class="fa-solid fa-pen-to-square" style={{fontSize: "18px"}}></i></Link>
+        <Link to={`/admin/sales/${record.id}`}><i class="fa-solid fa-pen-to-square" style={{fontSize: "18px"}}></i></Link>
       ),
     },
   ];
