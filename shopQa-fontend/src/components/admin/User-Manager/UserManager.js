@@ -39,7 +39,7 @@ const UserManager = () => {
         params: {
           page: page - 1,
           size: 10,
-          sort: "id,desc",
+          sort: "id,asc",
           search: search,
         },
         auth: {
@@ -94,9 +94,8 @@ const UserManager = () => {
         columns={columns}
         rowKey={(record) => record.id}
         dataSource={data}
-
       />
-  
+
       <div style={{ marginTop: 20, textAlign: "center" }}>
         <div className="Paginate">
           <button
@@ -115,7 +114,6 @@ const UserManager = () => {
             Next
           </button>
         </div>
-
       </div>
     </div>
   );
